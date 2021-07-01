@@ -1,18 +1,18 @@
 package com.inventory;
 
 
-
 import javafx.collections.ObservableList;
 
+import java.util.Random;
+
 /**
- *
  * @author Omar Imam
  */
 
 public class Product {
 
-    /*
-     * Fields
+/*
+ * Fields
      */
     private ObservableList<Part> associatedParts;
     private int id;
@@ -31,27 +31,35 @@ public class Product {
      * @param min the minimum number on hand
      * @param max the maximum number on hand
      */
-    public Product(int id, String name, double price, int stock, int min, int max, int machineId) {
-        this.id = id;
-        this.price = price;
-        this.stock = stock;
-        this.min = min;
-        this.max = max;
+    public Product( String name, double price, int stock, int min, int max, int machineId ) {
+        int randomId = getRandomNumber( );
+        this.id        = randomId;
+        this.name      = name;
+        this.price     = price;
+        this.stock     = stock;
+        this.min       = min;
+        this.max       = max;
         this.machineId = machineId;
     }
 
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-    
-    public void setId(int id) {
-        this.id = id;
-    }
+private int getRandomNumber( ) {
+    Random randomNumbers = new Random( );
+    int    randomNumber  = Math.abs( randomNumbers.nextInt( 1000 ) );
+    return randomNumber;
+}
 
-    /**
+/**
+ * @return the id
+ */
+public int getId( ) {
+    return id;
+}
+
+private void setId( int id ) {
+    this.id = id;
+}
+
+/**
      * @return the name
      */
     public String getName() {

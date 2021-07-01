@@ -1,9 +1,5 @@
 package com.inventory;
 
-/**
- * @author Omar Imam
- */
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,32 +8,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.util.Random;
-
-import static com.inventory.InventoryController.*;
 
 public class Inventory extends Application {
-    
-    /**
-     * Fields
-     */
-    private static final ObservableList<Part>    allParts      = FXCollections.observableArrayList( );
-    private static final ObservableList<Product> allProducts   = FXCollections.observableArrayList( );
+
+/**
+ * Fields
+ */
+private static final ObservableList<Part>    allParts    = FXCollections.observableArrayList( );
+private static final ObservableList<Product> allProducts = FXCollections.observableArrayList( );
 //    private final        Part[]                  parts         = { part1, part2 };
 
-    
+
 //    private final Product[] products = { product1, product2 };
-    
-    
-    /**
-     * @param newPart the new Part object that is to be added to the ObservableList<Part> object
-     * @function addPart(Part newPart) Add a new part to the ObservableList<Part> object
-     */
+
+
+/**
+ * @param newPart the new Part object that is to be added to the ObservableList<Part> object
+ * @function addPart(Part newPart) Add a new part to the ObservableList<Part> object
+ */
     public static void addPart( Part newPart ) {
         allParts.add( newPart );
     }
@@ -196,59 +186,28 @@ public class Inventory extends Application {
     
     // Load the FXML file
         FXMLLoader loader = new FXMLLoader( );
+//
+        Parent parent = FXMLLoader.load( getClass( ).getResource( "mainScene.fxml" ) );
+//        // Build the scene graph
+        Scene scene = new Scene( parent );
+//
+//    // Create the controller
+        InventoryController controller = new InventoryController( );
+        loader.setController( controller );
     
-       Parent parent = FXMLLoader.load(getClass().getResource( "mainScene.fxml" ));
-//       loader.load(parent);
-//       Parent parent = FXMLLoader.load(getClass().getResource( "mainScene.fxml" ));
-        // Build the scene graph
-    Scene scene = new Scene( parent,1000, 1000);
-    
-    // Create the controller
-    InventoryController controller = new InventoryController();
-    
-    
-    //FXMLLoader loader2 = new FXMLLoader(getClass().getResource("mainScene.fxml"));
-    
-//    loader2.setController( controller );
-    // Create variables for the nodes
-    Node partsTableNode    = parent.lookup( "#partsTableView" );
-    Node productsTableNode = parent.lookup( "#productsTableView" );
-    
-    // Create TableViews for parts and products
-    TableView<Part> partsTableView = new TableView<>( );
-    allParts.addAll(part1);
-    partsTableView.setItems( allParts );
-    
-    TableView<Product> productTableView = new TableView<>( );
-    allProducts.addAll( product1, product2 );
-    productTableView.setItems( allProducts );
-    controller.setData( allParts, partsTableView );
-    controller.setProductData( allProducts, productTableView );
+        // Create variables for the nodes
+        Node partsTableNode    = parent.lookup( "#partsTableView" );
+        Node productsTableNode = parent.lookup( "#productsTableView" );
     
     
-    // Create the TableColumns for the Parts and Products tables
-//        InventoryController TableColumn<Part, Integer> = ;
-    TableColumn<Part, Integer> b = partsIdCol;
-    partsIdCol.setCellValueFactory( new PropertyValueFactory<Part, Integer>( ( "Id" ) ) );
-    TableColumn<Part, String> c = partsNameCol;
-    partsNameCol.setCellValueFactory( new PropertyValueFactory<Part, String>( ( "Name" ) ) );
-    TableColumn<Part, Integer> a = partsStockCol;
-    partsStockCol.setCellValueFactory( new PropertyValueFactory<Part, Integer>( ( "Stock" ) ) );
-    TableColumn<Part, Double> d = partsPriceCol;
-    partsPriceCol.setCellValueFactory( new PropertyValueFactory<Part, Double>( ( "Price" ) ) );
-    
-
-        
         // Display our window, using the scene graph.
         stage.setTitle( "Inventory System" );
         stage.setScene( scene );
-        stage.show();
+        stage.show( );
     }
 
- 
-           
-           
-    public static void main( String args[] ) {
+
+public static void main( String args[] ) {
         launch( args );
     }
 }

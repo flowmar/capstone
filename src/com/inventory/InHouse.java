@@ -13,18 +13,18 @@ private String companyName;
 
 /**
  * Constructor
- * @param id the numerical identification number of the item
- * @param price the cost of the item
- * @param stock the quantity in stock
- * @param min the minimum number on hand
- * @param max the maximum number on hand
+ *
+ * @param id          the numerical identification number of the item
+ * @param price       the cost of the item
+ * @param stock       the quantity in stock
+ * @param min         the minimum number on hand
+ * @param max         the maximum number on hand
  * @param companyName the name of the company the product was outsourced from
  */
 
-public InHouse(int id, String name, double price, double stock, int min, int max, String companyName)
-{
+public InHouse( String name, double price, int stock, int min, int max, String companyName ) {
   // Calls the superclass constructor
-  super(id, name, price, stock, min, max, companyName);
+  super( name, price, stock, min, max );
   this.companyName = companyName;
 }
 
