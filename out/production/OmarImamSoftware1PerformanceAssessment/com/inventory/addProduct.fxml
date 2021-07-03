@@ -107,59 +107,59 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
-                           <font>
+                      <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
+                          <font>
                               <Font size="22.0" />
-                           </font>
-                        </Label>
+                          </font>
+                      </Label>
                         <Label layoutX="110.0" layoutY="326.0" text="Price" textFill="#ffffea">
                            <font>
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="110.0" layoutY="368.0" text="Max" textFill="#ffffea">
-                           <font>
+                      <Label layoutX="110.0" layoutY="368.0" text="Max" textFill="#ffffea">
+                          <font>
                               <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
-                           <font>
+                          </font>
+                      </Label>
+                      <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
+                          <font>
                               <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="addProductNameTextField" layoutX="238.0" layoutY="239.0" />
-                        <TextField fx:id="addProductStockTextField" layoutX="238.0" layoutY="285.0" />
-                        <TextField fx:id="addProductPriceTextField" layoutX="238.0" layoutY="329.0" />
-                        <TextField fx:id="addProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="addProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false" text="Save">
-                           <font>
+                          </font>
+                      </Label>
+                      <TextField fx:id="addProductNameTextField" layoutX="238.0" layoutY="239.0" />
+                      <TextField fx:id="addProductStockTextField" layoutX="238.0" layoutY="285.0" />
+                      <TextField fx:id="addProductPriceTextField" layoutX="238.0" layoutY="329.0" />
+                      <TextField fx:id="addProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
+                      <Button fx:id="addProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false" onAction="#addProductSaveListener" text="Save">
+                          <font>
                               <Font size="16.0" />
-                           </font>
-                        </Button>
+                          </font>
+                      </Button>
                       <Button fx:id="addProductCancelButton" layoutX="1244.0" layoutY="595.0" mnemonicParsing="false" onAction="#addProductCancelButtonListener" text="Cancel">
                           <font>
                               <Font size="16.0" />
                           </font>
                       </Button>
-                        <TextField fx:id="addProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0" mnemonicParsing="false" text="Remove Associated Part">
-                           <font>
+                      <TextField fx:id="addProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
+                      <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0" mnemonicParsing="false" onAction="#removeAssociatedPartButtonListener" text="Remove Associated Part">
+                          <font>
                               <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="addProductAddButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false" text="Add">
-                           <font>
+                          </font>
+                      </Button>
+                      <Button fx:id="addProductAddButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false" onAction="#addProductAddButtonListener" text="Add">
+                          <font>
                               <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <TableView fx:id="associatedPartTableView" layoutX="773.0" layoutY="329.0" prefHeight="200.0" prefWidth="550.0" />
-                        <TableView fx:id="addProductTableView" layoutX="773.0" layoutY="62.0" prefHeight="200.0" prefWidth="550.0" />
-                        <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0" />
-                        <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0" prefWidth="335.0" textFill="#f54b4b">
-                           <font>
+                          </font>
+                      </Button>
+                      <TableView fx:id="associatedPartTableView" layoutX="773.0" layoutY="329.0" prefHeight="200.0" prefWidth="550.0" />
+                      <TableView fx:id="addProductTableView" layoutX="773.0" layoutY="62.0" prefHeight="200.0" prefWidth="550.0" />
+                      <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0" />
+                      <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0" prefWidth="335.0" textFill="#f54b4b">
+                          <font>
                               <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Label>
+                          </font>
+                      </Label>
                   </children>
                 </AnchorPane>
               </children>

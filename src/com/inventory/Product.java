@@ -3,8 +3,6 @@ package com.inventory;
 
 import javafx.collections.ObservableList;
 
-import java.util.Random;
-
 /**
  * @author Omar Imam
  */
@@ -21,32 +19,27 @@ public class Product {
     private int stock;
     private int min;
     private int max;
-    private int machineId;
 
     /**
      * Constructor
-     * @param id the numerical identification number of the item
+     *
+     * @param id    the numerical identification number of the item
      * @param price the cost of the item
      * @param stock the quantity in stock
-     * @param min the minimum number on hand
-     * @param max the maximum number on hand
+     * @param min   the minimum number on hand
+     * @param max   the maximum number on hand
      */
-    public Product( String name, double price, int stock, int min, int max, int machineId ) {
-        int randomId = getRandomNumber( );
-        this.id        = randomId;
-        this.name      = name;
-        this.price     = price;
-        this.stock     = stock;
-        this.min       = min;
-        this.max       = max;
-        this.machineId = machineId;
+    public Product( int id, String name, double price, int stock, int min, int max,
+                    ObservableList<Part> associatedParts ) {
+        this.id              = id;
+        this.name            = name;
+        this.price           = price;
+        this.stock           = stock;
+        this.min             = min;
+        this.max             = max;
+        this.associatedParts = associatedParts;
     }
-
-private int getRandomNumber( ) {
-    Random randomNumbers = new Random( );
-    int    randomNumber  = Math.abs( randomNumbers.nextInt( 1000 ) );
-    return randomNumber;
-}
+    
 
 /**
  * @return the id
@@ -132,25 +125,30 @@ private void setId( int id ) {
     /**
      * @function addAssociatedPart(Part part)
      */
-    public void addAssociatedPart(Part part) {
+    public void addAssociatedPart( Part part ) {
+        this.associatedParts.add( part );
     }
 
-    /**
-     * @function deleteAssociatedPart(Part selectedAssociatedPart())
-     * @param selectedAssociatedPart Deletes the part that is passed into the function.
-     * @return
-     */
-    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-        boolean partDeleted = false;
-
-        // Delete Associated Part
-        return partDeleted;
+/**
+ * @function deleteAssociatedPart(Part selectedAssociatedPart ())
+ * @param selectedAssociatedPart Deletes the part that is passed into the function.
+ * @return true if the part is deleted, false if not
+ */
+public boolean deleteAssociatedPart( Part selectedAssociatedPart ) {
+    // Delete Associated Part
+    if ( associatedParts.contains( selectedAssociatedPart ) ) {
+        this.associatedParts.remove( selectedAssociatedPart );
+        return true;
     }
+    else {
+        return false;
+    }
+}
 
-    /**
-     * @function getAllAssociatedParts()
-     */
-    public ObservableList<Part> getAllAssociatedParts() {
+/**
+ * @function getAllAssociatedParts()
+ */
+public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;
     }
 }

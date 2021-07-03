@@ -18,6 +18,10 @@ public static ObservableList<Part>    allParts;
 public static ObservableList<Product> allProducts;
 public static int                     selectedPartId;
 public static int                     selectedPartIndex;
+public static Part                    selectedPart;
+public static Product                 selectedProduct;
+public static int                     selectedProductId;
+public static int                     selectedProductIndex;
 
 
 /**

@@ -127,11 +127,15 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
       new Outsourced( 79, "Wrench", 15.00, 17, 3, 18, "Acme" )
   );
   
+  ObservableList<Part> associatedPartsSample = FXCollections.observableArrayList(
+      new InHouse( 652, "Screws", 14.00, 50, 60, 10, 40656 )
+  );
+  
   Inventory.allProducts = FXCollections.observableArrayList(
-      new Product( "Tool Set", 60.35, 10, 2, 15, 4000 ),
-      new Product( "Ladder", 45.80, 8, 2, 10, 4000 ),
-      new Product( "Drill Set", 60.35, 10, 2, 15, 2058 ),
-      new Product( "Wood Panel Set", 40.50, 8, 2, 10, 2076 )
+      new Product( 604, "Tool Set", 60.35, 10, 2, 15, associatedPartsSample ),
+      new Product( 985, "Ladder", 45.80, 8, 2, 10, associatedPartsSample ),
+      new Product( 562, "Drill Set", 60.35, 10, 2, 15, associatedPartsSample ),
+      new Product( 235, "Wood Panel Set", 40.50, 8, 2, 10, associatedPartsSample )
   );
   
   // Associate the data with the columns
@@ -288,6 +292,7 @@ public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exceptio
   System.out.println( selectedPartId );
   
   // Place the ID of the selected part and the index into variables
+  Inventory.selectedPart      = selectedPart;
   Inventory.selectedPartId    = selectedPartId;
   Inventory.selectedPartIndex = partsTableView.getItems( ).indexOf( selectedPart );
   
@@ -313,7 +318,7 @@ public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exceptio
  *
  * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
  */
-public void partsDeleteButtonListener( ActionEvent actionEvent ) throws Exception {
+public void partsDeleteButtonListener( ActionEvent actionEvent ) {
   // Present error message if Parts list is empty
   if ( Inventory.allParts.size( ) == 0 ) {
     partsErrorLabel.setText( "Error: Cannot Delete, the parts list is empty!" );
@@ -356,6 +361,17 @@ public void productsAddButtonListener( ActionEvent actionEvent ) throws Exceptio
 public void productsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
   // Clear the error message
   productsErrorLabel.setText( "" );
+  
+  // Get the currently selected part
+  Product selectedProduct = productsTableView.getSelectionModel( ).getSelectedItem( );
+  System.out.println( selectedProduct );
+  int selectedProductId = selectedProduct.getId( );
+  System.out.println( selectedProductId );
+  
+  // Place the ID of the selected part and the index into variables
+  Inventory.selectedProduct      = selectedProduct;
+  Inventory.selectedProductId    = selectedProductId;
+  Inventory.selectedProductIndex = productsTableView.getItems( ).indexOf( selectedProduct );
   
   // Load the FXML file
   Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyProduct.fxml" ) );

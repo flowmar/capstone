@@ -1,5 +1,7 @@
 package com.inventory;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -37,6 +39,9 @@ private TextField addProductIdTextField;
 private TextField addProductNameTextField;
 
 @FXML
+private TextField addProductPriceTextField;
+
+@FXML
 private TextField addProductStockTextField;
 
 @FXML
@@ -49,10 +54,13 @@ private TextField addProductMinTextField;
 private TextField addProductFilterField;
 
 @FXML
-private TableView addProductTableView;
+private TableView<Part> addProductTableView;
 
 @FXML
-private TableView associatedPartTableView;
+private TableView<Part> associatedPartTableView;
+
+// Create an ObservableList to hold the associated Parts
+ObservableList<Part> associatedPartsList = FXCollections.observableArrayList( );
 
 
 /**
@@ -65,12 +73,55 @@ public int getRandomNumber( ) {
     return Math.abs( randomNumbers.nextInt( 1000 ) );
 }
 
-public void addProductAddButtonListener( ) {}
+/**
+ * This function associates a part with a product
+ *
+ * @param actionEvent fired when the add button is clicked
+ */
+public void addProductAddButtonListener( ActionEvent actionEvent ) {
+    // Get the selected Part in the top TableView
+    Part selectedPart = ( Part ) addProductTableView.getSelectionModel( ).getSelectedItem( );
+    
+    // Add the selected Part to the associated parts list
+    associatedPartsList.add( selectedPart );
+    
+    // Set the data from the parts list into the TableView
+    associatedPartTableView.setItems( associatedPartsList );
+}
 
-public void removeAssociatedPartButtonListener( ) {}
+/**
+ * This function removes a part-product association
+ *
+ * @param actionEvent fired when the remove associated part button is clicked
+ */
+public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
+    // Get the selected Part in the bottom TableView
+    Part selectedPart = ( Part ) associatedPartTableView.getSelectionModel( ).getSelectedItem( );
+    
+    // Remove the selected part from the associated parts list
+    associatedPartsList.remove( selectedPart );
+    
+}
 
+/**
+ * This function saves a product to the inventory
+ *
+ * @param actionEvent fired when the save button is clicked
+ */
 public void addProductSaveListener( ActionEvent actionEvent ) {
-
+    // Get the information from the text fields and place them into variables
+    String newProductName  = addProductNameTextField.getText( );
+    int    newProductStock = Integer.parseInt( addProductStockTextField.getText( ) );
+    double newProductPrice = Double.parseDouble( addProductPriceTextField.getText( ) );
+    int    newProductMax   = Integer.parseInt( addProductMaxTextField.getText( ) );
+    int    newProductMin   = Integer.parseInt( addProductMinTextField.getText( ) );
+    int    randomId        = Integer.parseInt( addProductIdTextField.getText( ) );
+    
+    Inventory.allProducts.add( new Product( randomId, newProductName, newProductPrice, newProductStock, newProductMin,
+        newProductMax, associatedPartsList ) );
+    
+    Stage stage = ( Stage ) addProductSaveButton.getScene( ).getWindow( );
+    stage.close( );
 }
 
 /**
@@ -108,7 +159,6 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
         associatedPartsPriceColumn,
         associatedPartsStockColumn );
     
-    // Associate the data with the columns
     // Associate the data with the columns
     partsIdColumn.setCellValueFactory( new PropertyValueFactory<>( ( "id" ) ) );
     partsNameColumn.setCellValueFactory( new PropertyValueFactory<Part, String>( ( "Name" ) ) );

@@ -28,104 +28,111 @@
                                         <SeparatorMenuItem mnemonicParsing="false"/>
                                         <MenuItem mnemonicParsing="false" text="Quit"/>
                                     </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Edit">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" />
-                        <MenuItem mnemonicParsing="false" text="Unselect All" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Help">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                      </items>
-                    </Menu>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Edit">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Undo"/>
+                                        <MenuItem mnemonicParsing="false" text="Redo"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Cut"/>
+                                        <MenuItem mnemonicParsing="false" text="Copy"/>
+                                        <MenuItem mnemonicParsing="false" text="Paste"/>
+                                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Select All"/>
+                                        <MenuItem mnemonicParsing="false" text="Unselect All"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="About MyHelloApp"/>
+                                    </items>
+                                </Menu>
                   </menus>
                 </MenuBar>
                 <AnchorPane id="mainForm" maxHeight="-1.0" maxWidth="-1.0" prefHeight="642.0" prefWidth="662.0" style="-fx-background-color: #0d2c54; -fx-border-radius: 2%;" VBox.vgrow="ALWAYS">
                   <children>
-                        <Label fx:id="mainFormTitle" layoutX="45.0" layoutY="18.0" style="-fx-border-color: #FFFFEA; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-insets: 4px; -fx-label-padding: 9px; -fx-border-radius: 2%;" styleClass="title-border" text="Modify Product" textFill="#ffffea">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="108.0" layoutY="189.0" text="ID" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <TextField disable="true" layoutX="238.0" layoutY="192.0" />
-                        <Label layoutX="108.0" layoutY="236.0" text="Name" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
+                      <Label fx:id="mainFormTitle" layoutX="45.0" layoutY="18.0"
+                             style="-fx-border-color: #FFFFEA; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-insets: 4px; -fx-label-padding: 9px; -fx-border-radius: 2%;"
+                             styleClass="title-border" text="Modify Product" textFill="#ffffea">
+                          <font>
+                              <Font name="System Bold" size="24.0"/>
+                          </font>
+                      </Label>
+                      <Label layoutX="108.0" layoutY="189.0" text="ID" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <TextField fx:id="modifyProductIdTextField" disable="true" layoutX="238.0" layoutY="192.0"/>
+                      <Label layoutX="108.0" layoutY="236.0" text="Name" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
                       <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
                           <font>
                               <Font size="22.0"/>
                           </font>
                       </Label>
-                        <Label layoutX="110.0" layoutY="326.0" text="Price" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="110.0" layoutY="368.0" text="Max" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="238.0" layoutY="239.0" />
-                        <TextField layoutX="238.0" layoutY="285.0" />
-                        <TextField layoutX="238.0" layoutY="329.0" />
-                        <TextField layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="addPartSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false" text="Save">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
+                      <Label layoutX="110.0" layoutY="326.0" text="Price" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <Label layoutX="110.0" layoutY="368.0" text="Max" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <TextField fx:id="modifyProductNameTextField" layoutX="238.0" layoutY="239.0"/>
+                      <TextField fx:id="modifyProductStockTextField" layoutX="238.0" layoutY="285.0"/>
+                      <TextField fx:id="modifyProductPriceTextField" layoutX="238.0" layoutY="329.0"/>
+                      <TextField fx:id="modifyProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0"
+                                 prefWidth="155.0"/>
+                      <Button fx:id="modifyProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false"
+                              onAction="#modifyProductSaveButtonListener" text="Save">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
                       <Button fx:id="modifyProductCancelButton" layoutX="1244.0" layoutY="595.0" mnemonicParsing="false"
                               onAction="#modifyProductCancelButtonListener" text="Cancel">
                           <font>
                               <Font size="16.0"/>
                           </font>
                       </Button>
-                        <TextField layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="addPartSaveButton1" layoutX="1127.0" layoutY="553.0" mnemonicParsing="false" text="Remove Associated Part">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="addPartSaveButton2" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false" text="Add">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <TableView layoutX="773.0" layoutY="329.0" prefHeight="200.0" prefWidth="550.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
-                           </columns>
-                        </TableView>
-                        <TableView layoutX="773.0" layoutY="51.0" prefHeight="200.0" prefWidth="550.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
-                           </columns>
-                        </TableView>
+                      <TextField fx:id="modifyProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0"
+                                 prefWidth="155.0"/>
+                      <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0"
+                              mnemonicParsing="false" onAction="#removeAssociatedPartButtonListener"
+                              text="Remove Associated Part">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
+                      <Button fx:id="addAssociatedPartButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false"
+                              onAction="#addAssociatedPartButtonListener" text="Add">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
+                      <TableView fx:id="modifyProductAssociatedPartsTableView" layoutX="773.0" layoutY="341.0"
+                                 prefHeight="200.0" prefWidth="550.0"/>
+                      <TableView fx:id="modifyProductPartsTableView" layoutX="773.0" layoutY="51.0" prefHeight="200.0"
+                                 prefWidth="550.0"/>
+                      <TextField fx:id="modifyProductSearchField" layoutX="1164.0" layoutY="18.0"/>
+                      <Label fx:id="modifyProductErrorLabel" layoutX="773.0" layoutY="15.0" prefHeight="25.0"
+                             prefWidth="376.0" textFill="#f23737">
+                          <font>
+                              <Font name="System Bold" size="16.0"/>
+                          </font>
+                      </Label>
                   </children>
                 </AnchorPane>
               </children>

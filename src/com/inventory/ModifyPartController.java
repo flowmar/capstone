@@ -22,6 +22,9 @@ public class ModifyPartController implements Initializable {
 private RadioButton modifyPartInHouseRadio;
 
 @FXML
+private RadioButton modifyPartOutsourcedRadio;
+
+@FXML
 private Button modifyPartSaveButton;
 
 @FXML
@@ -115,12 +118,30 @@ public void modifyPartCancelButtonListener( ActionEvent actionEvent ) {
 
 
 /**
- * This function initializes the new scene by placing the ID into the UI
+ * This function initializes the new scene by placing the selected part data into the UI
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
   // Set the ID TextField to the selected part id
   modifyPartIdTextField.setText( Integer.toString( Inventory.selectedPartId ) );
+  // Place the data from the selected part into the text field
+  modifyPartNameTextField.setText( Inventory.selectedPart.getName( ) );
+  modifyPartStockTextField.setText( Integer.toString( Inventory.selectedPart.getStock( ) ) );
+  modifyPartPriceTextField.setText( Double.toString( Inventory.selectedPart.getPrice( ) ) );
+  modifyPartMaxTextField.setText( Integer.toString( Inventory.selectedPart.getMax( ) ) );
+  modifyPartMinTextField.setText( Integer.toString( Inventory.selectedPart.getMin( ) ) );
+  // If the selected part is an instance of InHouse, set the text to the machine Id and select the radio button
+  if ( Inventory.selectedPart instanceof InHouse ) {
+    modifyPartInHouseRadio.setSelected( true );
+    modifyPartExtraLabel.setText( "Machine ID" );
+    modifyPartExtraTextField.setText( Integer.toString( ( ( InHouse ) Inventory.selectedPart ).getMachineId( ) ) );
+  }
+  // Otherwise, set it to the Company Name
+  else {
+    modifyPartOutsourcedRadio.setSelected( true );
+    modifyPartExtraLabel.setText( "Company Name" );
+    modifyPartExtraTextField.setText( ( ( Outsourced ) Inventory.selectedPart ).getCompanyName( ) );
+  }
 }
 
 }

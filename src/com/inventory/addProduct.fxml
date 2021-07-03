@@ -124,7 +124,7 @@
                       <TextField fx:id="addProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0"
                                  prefWidth="155.0"/>
                       <Button fx:id="addProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false"
-                              text="Save">
+                              onAction="#addProductSaveListener" text="Save">
                           <font>
                               <Font size="16.0"/>
                           </font>
@@ -138,13 +138,14 @@
                       <TextField fx:id="addProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0"
                                  prefWidth="155.0"/>
                       <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0"
-                              mnemonicParsing="false" text="Remove Associated Part">
+                              mnemonicParsing="false" onAction="#removeAssociatedPartButtonListener"
+                              text="Remove Associated Part">
                           <font>
                               <Font size="16.0"/>
                           </font>
                       </Button>
                       <Button fx:id="addProductAddButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false"
-                              text="Add">
+                              onAction="#addProductAddButtonListener" text="Add">
                           <font>
                               <Font size="16.0"/>
                           </font>
