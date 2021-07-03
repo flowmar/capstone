@@ -121,14 +121,14 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   
   // Define the data in an observable list
   Inventory.allParts = FXCollections.observableArrayList(
-      new InHouse( 505, "Paint", 30.25, 15, 3, 2, 5024 ),
-      new InHouse( 1025, "Screwdrivers", 15.00, 17, 3, 18, 6996 ),
-      new Outsourced( 88, "Trash Can", 30.25, 15, 3, 2, "The Company" ),
+      new InHouse( 505, "Paint", 30.25, 8, 5, 10, 5024 ),
+      new InHouse( 1025, "Screwdrivers", 15.00, 8, 3, 18, 6996 ),
+      new Outsourced( 88, "Trash Can", 30.25, 6, 3, 10, "The Company" ),
       new Outsourced( 79, "Wrench", 15.00, 17, 3, 18, "Acme" )
   );
   
   ObservableList<Part> associatedPartsSample = FXCollections.observableArrayList(
-      new InHouse( 652, "Screws", 14.00, 50, 60, 10, 40656 )
+      new InHouse( 652, "Screws", 14.00, 50, 10, 60, 40656 )
   );
   
   Inventory.allProducts = FXCollections.observableArrayList(
@@ -328,6 +328,8 @@ public void partsDeleteButtonListener( ActionEvent actionEvent ) {
     Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
     // Delete the part
     Inventory.allParts.remove( selectedPart );
+    partsErrorLabel.setText( "Part Deleted!" );
+    partsErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
   }
 }
 
@@ -394,14 +396,25 @@ public void productsModifyButtonListener( ActionEvent actionEvent ) throws Excep
  * @param actionEvent is fired when the delete product button is clicked
  */
 public void productsDeleteButtonListener( ActionEvent actionEvent ) {
-  // Present error message if Products list is empty
-  if ( Inventory.allProducts.size( ) == 0 ) {
-    productsErrorLabel.setText( "Error: Cannot Delete, the products list is empty!" );
-  }
-  // Find out which product is selected in the table
+  // Check if the selected Product has any parts associated with it
   Product selectedProduct = productsTableView.getSelectionModel( ).getSelectedItem( );
-  // Delete the product
-  Inventory.allProducts.remove( selectedProduct );
+  // Prevent deletion if a product has an associated part
+  if ( selectedProduct.getAllAssociatedParts( ).size( ) != 0 ) {
+    // Present the error message if there is an associated part.
+    productsErrorLabel.setText( "Error: Cannot delete a part which has an associated part." );
+  }
+  else {
+    // Present error message if Products list is empty
+    if ( Inventory.allProducts.size( ) == 0 ) {
+      productsErrorLabel.setText( "Error: Cannot Delete, the products list is empty!" );
+    }
+    else {
+      // Delete the product
+      Inventory.allProducts.remove( selectedProduct );
+      productsErrorLabel.setText( "Product Deleted!" );
+      productsErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+    }
+  }
 }
 
 public void exitButtonListener( ActionEvent actionEvent ) {

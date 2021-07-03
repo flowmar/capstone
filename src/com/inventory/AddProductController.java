@@ -33,6 +33,9 @@ private Button addProductSaveButton;
 private Label addProductErrorLabel;
 
 @FXML
+private Label addProductSaveErrorLabel;
+
+@FXML
 private TextField addProductIdTextField;
 
 @FXML
@@ -117,11 +120,35 @@ public void addProductSaveListener( ActionEvent actionEvent ) {
     int    newProductMin   = Integer.parseInt( addProductMinTextField.getText( ) );
     int    randomId        = Integer.parseInt( addProductIdTextField.getText( ) );
     
-    Inventory.allProducts.add( new Product( randomId, newProductName, newProductPrice, newProductStock, newProductMin,
-        newProductMax, associatedPartsList ) );
+    boolean passCheck = true;
+    // Input Validation Logic
+    if ( newProductMin > newProductMax ) {
+        addProductSaveErrorLabel.setText( "Error: Minimum cannot be more than maximum!" );
+        passCheck = false;
+    }
+    else if ( newProductStock > newProductMax ) {
+        addProductSaveErrorLabel.setText( "Error: Current Stock cannot be more than the maximum!" );
+        passCheck = false;
+    }
+    else if ( newProductStock < newProductMin ) {
+        addProductSaveErrorLabel.setText( "Error: Current Stock cannot be less than the minimum!" );
+        passCheck = false;
+    }
+    else {
+        passCheck = true;
+    }
     
-    Stage stage = ( Stage ) addProductSaveButton.getScene( ).getWindow( );
-    stage.close( );
+    if ( passCheck == true ) {
+        Inventory.allProducts.add( new Product( randomId, newProductName, newProductPrice, newProductStock,
+            newProductMin,
+            newProductMax, associatedPartsList ) );
+        
+        Stage stage = ( Stage ) addProductSaveButton.getScene( ).getWindow( );
+        stage.close( );
+    }
+    else {
+        System.out.print( "Didn't Pass." );
+    }
 }
 
 /**

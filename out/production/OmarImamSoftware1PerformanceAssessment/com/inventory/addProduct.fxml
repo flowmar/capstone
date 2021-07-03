@@ -160,6 +160,11 @@
                               <Font name="System Bold" size="16.0" />
                           </font>
                       </Label>
+                        <Label fx:id="addProductSaveErrorLabel" layoutX="110.0" layoutY="429.0" prefHeight="23.0" prefWidth="539.0" textFill="#f54b4b">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
                   </children>
                 </AnchorPane>
               </children>

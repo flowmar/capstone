@@ -33,6 +33,9 @@ private Button removeAssociatedPartButton;
 private Label modifyProductErrorLabel;
 
 @FXML
+private Label modifyProductSaveErrorLabel;
+
+@FXML
 private TableView<Part> modifyProductPartsTableView;
 
 @FXML
@@ -84,19 +87,44 @@ public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
 
 public void modifyProductSaveButtonListener( ActionEvent actionEvent ) {
     // Get the information from the text fields and place them into variables
-    String modifyPartName  = modifyProductNameTextField.getText( );
-    int    modifyPartStock = Integer.parseInt( modifyProductStockTextField.getText( ) );
-    double modifyPartPrice = Double.parseDouble( modifyProductPriceTextField.getText( ) );
-    int    modifyPartMax   = Integer.parseInt( modifyProductMaxTextField.getText( ) );
-    int    modifyPartMin   = Integer.parseInt( modifyProductMinTextField.getText( ) );
-    int    randomId        = Integer.parseInt( modifyProductIdTextField.getText( ) );
-    // Save the modified product
-    Inventory.allProducts.set( Inventory.selectedProductIndex, new Product( randomId, modifyPartName, modifyPartPrice,
-        modifyPartStock, modifyPartMin, modifyPartMax, associatedPartsList ) );
+    String modifyProductName  = modifyProductNameTextField.getText( );
+    int    modifyProductStock = Integer.parseInt( modifyProductStockTextField.getText( ) );
+    double modifyProductPrice = Double.parseDouble( modifyProductPriceTextField.getText( ) );
+    int    modifyProductMax   = Integer.parseInt( modifyProductMaxTextField.getText( ) );
+    int    modifyProductMin   = Integer.parseInt( modifyProductMinTextField.getText( ) );
+    int    randomId           = Integer.parseInt( modifyProductIdTextField.getText( ) );
     
-    // Close the window
-    Stage stage = ( Stage ) modifyProductSaveButton.getScene( ).getWindow( );
-    stage.close( );
+    boolean passCheck = true;
+    // Input Validation Logic
+    if ( modifyProductMin > modifyProductMax ) {
+        modifyProductSaveErrorLabel.setText( "Error: Minimum cannot be more than maximum!" );
+        passCheck = false;
+    }
+    else if ( modifyProductStock > modifyProductMax ) {
+        modifyProductSaveErrorLabel.setText( "Error: Current Stock cannot be more than the maximum!" );
+        passCheck = false;
+    }
+    else if ( modifyProductStock < modifyProductMin ) {
+        modifyProductSaveErrorLabel.setText( "Error: Current Stock cannot be less than the minimum!" );
+        passCheck = false;
+    }
+    else {
+        passCheck = true;
+    }
+    
+    if ( passCheck == true ) {
+        // Save the modified product
+        Inventory.allProducts.set( Inventory.selectedProductIndex, new Product( randomId, modifyProductName,
+            modifyProductPrice,
+            modifyProductStock, modifyProductMin, modifyProductMax, associatedPartsList ) );
+        
+        // Close the window
+        Stage stage = ( Stage ) modifyProductSaveButton.getScene( ).getWindow( );
+        stage.close( );
+    }
+    else {
+        System.out.println( "Didn't Pass" );
+    }
 }
 
 /**

@@ -34,6 +34,9 @@ private Button modifyPartCancelButton;
 private Label modifyPartExtraLabel;
 
 @FXML
+private Label modifyPartSaveErrorLabel;
+
+@FXML
 private TextField modifyPartIdTextField;
 
 @FXML
@@ -69,25 +72,49 @@ public void modifyPartSaveListener( ActionEvent actionEvent ) {
   int    modifyPartMin   = Integer.parseInt( modifyPartMinTextField.getText( ) );
   int    randomId        = Integer.parseInt( modifyPartIdTextField.getText( ) );
   
-  // Depending on which radio button is selected, add an InHouse or Outsourced part
-  if ( modifyPartInHouseRadio.isSelected( ) ) {
-    int modifyPartExtra = Integer.parseInt( modifyPartExtraTextField.getText( ) );
-    Inventory.allParts.set( Inventory.selectedPartIndex, new InHouse( randomId, modifyPartName, modifyPartPrice,
-        modifyPartStock, modifyPartMin,
-        modifyPartMax, modifyPartExtra ) );
-    // Close the window
-    Stage stage = ( Stage ) modifyPartSaveButton.getScene( ).getWindow( );
-    stage.close( );
+  boolean passCheck = true;
+  
+  // Input Validation Logic
+  if ( modifyPartMin > modifyPartMax ) {
+    modifyPartSaveErrorLabel.setText( "Error: Minimum cannot be more than maximum!" );
+    passCheck = false;
+  }
+  else if ( modifyPartStock > modifyPartMax ) {
+    modifyPartSaveErrorLabel.setText( "Error: Current Stock cannot be more than the maximum!" );
+    passCheck = false;
+  }
+  else if ( modifyPartStock < modifyPartMin ) {
+    modifyPartSaveErrorLabel.setText( "Error: Current Stock cannot be less than the minimum!" );
+    passCheck = false;
   }
   else {
-    String modifyPartExtra = modifyPartExtraTextField.getText( );
-    Inventory.allParts.set( Inventory.selectedPartIndex, new Outsourced( randomId, modifyPartName, modifyPartPrice,
-        modifyPartStock,
-        modifyPartMin, modifyPartMax, modifyPartExtra ) );
-    
-    // Close the window
-    Stage stage = ( Stage ) modifyPartSaveButton.getScene( ).getWindow( );
-    stage.close( );
+    passCheck = true;
+  }
+  
+  if ( passCheck == true ) {
+    // Depending on which radio button is selected, add an InHouse or Outsourced part
+    if ( modifyPartInHouseRadio.isSelected( ) ) {
+      int modifyPartExtra = Integer.parseInt( modifyPartExtraTextField.getText( ) );
+      Inventory.allParts.set( Inventory.selectedPartIndex, new InHouse( randomId, modifyPartName, modifyPartPrice,
+          modifyPartStock, modifyPartMin,
+          modifyPartMax, modifyPartExtra ) );
+      // Close the window
+      Stage stage = ( Stage ) modifyPartSaveButton.getScene( ).getWindow( );
+      stage.close( );
+    }
+    else {
+      String modifyPartExtra = modifyPartExtraTextField.getText( );
+      Inventory.allParts.set( Inventory.selectedPartIndex, new Outsourced( randomId, modifyPartName, modifyPartPrice,
+          modifyPartStock,
+          modifyPartMin, modifyPartMax, modifyPartExtra ) );
+      
+      // Close the window
+      Stage stage = ( Stage ) modifyPartSaveButton.getScene( ).getWindow( );
+      stage.close( );
+    }
+  }
+  else {
+    System.out.print( "Didn't Pass." );
   }
 }
 

@@ -130,6 +130,12 @@
                       </Button>
                       <TextField fx:id="modifyPartMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0"
                                  prefWidth="155.0"/>
+                      <Label fx:id="modifyPartSaveErrorLabel" layoutX="113.0" layoutY="467.0" prefHeight="28.0"
+                             prefWidth="465.0" textFill="#e81d1d">
+                          <font>
+                              <Font name="System Bold" size="16.0"/>
+                          </font>
+                      </Label>
                   </children>
                 </AnchorPane>
               </children>

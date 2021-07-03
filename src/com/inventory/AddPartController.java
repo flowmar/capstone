@@ -51,6 +51,9 @@ private TextField addPartExtraTextField;
 @FXML
 private TextField addPartIdTextField;
 
+@FXML
+private Label addPartErrorLabel;
+
 /**
  * This function saves the information in the text fields to the inventory
  *
@@ -65,22 +68,45 @@ public void addPartSaveListener( ActionEvent actionEvent ) {
   int    newPartMin   = Integer.parseInt( addPartMinTextField.getText( ) );
   int    randomId     = Integer.parseInt( addPartIdTextField.getText( ) );
   
-  // Depending on which radio button is selected, the information is saved and a part is added to the inventory
-  if ( addPartInHouseRadio.isSelected( ) ) {
-    // If InHouse is selected, create an InHouse part
-    int newPartExtra = Integer.parseInt( addPartExtraTextField.getText( ) );
-    allParts.add( new InHouse( randomId, newPartName, newPartPrice, newPartStock, newPartMin, newPartMax,
-        newPartExtra ) );
-    Stage stage = ( Stage ) addPartSaveButton.getScene( ).getWindow( );
-    stage.close( );
+  boolean passCheck = true;
+  // Input Validation Logic
+  if ( newPartMin > newPartMax ) {
+    addPartErrorLabel.setText( "Error: Minimum cannot be more than maximum!" );
+    passCheck = false;
+  }
+  else if ( newPartStock > newPartMax ) {
+    addPartErrorLabel.setText( "Error: Current Stock cannot be more than the maximum!" );
+    passCheck = false;
+  }
+  else if ( newPartStock < newPartMin ) {
+    addPartErrorLabel.setText( "Error: Current Stock cannot be less than the minimum!" );
+    passCheck = false;
   }
   else {
-    // Otherwise if Outsourced is selected, create an Outsourced part
-    String newPartExtra = addPartExtraTextField.getText( );
-    allParts.add( new Outsourced( randomId, newPartName, newPartPrice, newPartStock, newPartMin, newPartMax,
-        newPartExtra ) );
-    Stage stage = ( Stage ) addPartSaveButton.getScene( ).getWindow( );
-    stage.close( );
+    passCheck = true;
+  }
+  
+  if ( passCheck == true ) {
+    // Depending on which radio button is selected, the information is saved and a part is added to the inventory
+    if ( addPartInHouseRadio.isSelected( ) ) {
+      // If InHouse is selected, create an InHouse part
+      int newPartExtra = Integer.parseInt( addPartExtraTextField.getText( ) );
+      allParts.add( new InHouse( randomId, newPartName, newPartPrice, newPartStock, newPartMin, newPartMax,
+          newPartExtra ) );
+      Stage stage = ( Stage ) addPartSaveButton.getScene( ).getWindow( );
+      stage.close( );
+    }
+    else {
+      // Otherwise if Outsourced is selected, create an Outsourced part
+      String newPartExtra = addPartExtraTextField.getText( );
+      allParts.add( new Outsourced( randomId, newPartName, newPartPrice, newPartStock, newPartMin, newPartMax,
+          newPartExtra ) );
+      Stage stage = ( Stage ) addPartSaveButton.getScene( ).getWindow( );
+      stage.close( );
+    }
+  }
+  else {
+    System.out.print( "Didn't pass." );
   }
   
 }
