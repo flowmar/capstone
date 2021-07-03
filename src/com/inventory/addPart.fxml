@@ -109,17 +109,17 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <TextField disable="true" layoutX="238.0" layoutY="192.0" />
+                      <TextField fx:id="addPartIdTextField" disable="true" layoutX="238.0" layoutY="192.0"/>
                         <Label layoutX="108.0" layoutY="236.0" text="Name" textFill="#ffffea">
                            <font>
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="108.0" layoutY="282.0" text="Inventory" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
+                      <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
                         <Label layoutX="110.0" layoutY="326.0" text="Price/Cost" textFill="#ffffea">
                            <font>
                               <Font size="22.0" />
