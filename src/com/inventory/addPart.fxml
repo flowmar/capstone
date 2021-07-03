@@ -87,19 +87,23 @@
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <RadioButton fx:id="addPartInHouseRadio" layoutX="209.0" layoutY="45.0" mnemonicParsing="false" selected="true" text="In-House" textFill="#ffffea">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="addPart" />
-                           </toggleGroup>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
+                        <RadioButton fx:id="addPartInHouseRadio" layoutX="209.0" layoutY="45.0" mnemonicParsing="false"
+                                     onAction="#addPartRadioListener" selected="true" text="In-House"
+                                     textFill="#ffffea">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="addPart"/>
+                            </toggleGroup>
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="addPartOutsourcedRadio" layoutX="341.0" layoutY="45.0" mnemonicParsing="false" text="Outsourced" textFill="#ffffea" toggleGroup="$addPart">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
+                      <RadioButton fx:id="addPartOutsourcedRadio" layoutX="341.0" layoutY="45.0" mnemonicParsing="false"
+                                   onAction="#addPartRadioListener" text="Outsourced" textFill="#ffffea"
+                                   toggleGroup="$addPart">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </RadioButton>
                         <Label layoutX="108.0" layoutY="189.0" text="ID" textFill="#ffffea">
                            <font>
                               <Font size="22.0" />
@@ -126,33 +130,38 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="112.0" layoutY="410.0" text="Machine ID" textFill="#ffffea">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="238.0" layoutY="239.0" />
-                        <TextField layoutX="238.0" layoutY="285.0" />
-                        <TextField layoutX="238.0" layoutY="329.0" />
-                        <TextField layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <TextField layoutX="238.0" layoutY="413.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="addPartSaveButton" layoutX="428.0" layoutY="539.0" mnemonicParsing="false" text="Save">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
+                      <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <Label fx:id="addPartExtraLabel" layoutX="112.0" layoutY="410.0" text="Machine ID"
+                             textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <TextField fx:id="addPartNameTextField" layoutX="238.0" layoutY="239.0"/>
+                      <TextField fx:id="addPartInventoryTextField" layoutX="238.0" layoutY="285.0"/>
+                      <TextField fx:id="addPartPriceTextField" layoutX="238.0" layoutY="329.0"/>
+                      <TextField fx:id="addPartMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0"
+                                 prefWidth="155.0"/>
+                      <TextField fx:id="addPartExtraTextField" layoutX="331.0" layoutY="413.0" prefHeight="23.0"
+                                 prefWidth="155.0"/>
+                      <Button fx:id="addPartSaveButton" layoutX="428.0" layoutY="539.0" mnemonicParsing="false"
+                              onAction="#addPartSaveListener" text="Save">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
                       <Button fx:id="addPartCancelButton" layoutX="500.0" layoutY="539.0" mnemonicParsing="false"
                               onAction="#addPartCancelButtonListener" text="Cancel">
                           <font>
                               <Font size="16.0"/>
                           </font>
                       </Button>
-                        <TextField layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
+                      <TextField fx:id="addPartMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0"
+                                 prefWidth="155.0"/>
                   </children>
                 </AnchorPane>
               </children>

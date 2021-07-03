@@ -15,16 +15,16 @@
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="789.0" prefWidth="1589.0" style="-fx-border-radius: 50%;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventory.InventoryController">
-  <children>
-    <MenuBar fx:id="mainWindow" prefHeight="25.0" prefWidth="640.0" style="-fx-border-radius: 2%;" VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
+    <children>
+        <MenuBar fx:id="mainWindow" prefHeight="25.0" prefWidth="640.0" style="-fx-border-radius: 2%;" VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open…" />
+                        <Menu mnemonicParsing="false" text="Open Recent" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
             <MenuItem mnemonicParsing="false" text="Save" />
             <MenuItem mnemonicParsing="false" text="Save As…" />
             <MenuItem mnemonicParsing="false" text="Revert" />
@@ -64,44 +64,55 @@
             </Label>
             <Pane id="Parts Pane" fx:id="partsPane" layoutX="28.0" layoutY="94.0" prefHeight="500.0" prefWidth="760.0" style="-fx-background-color: #00a6ed; -fx-border-radius: 2%; -fx-border-style: solid; -fx-background-radius: 3%; -fx-border-color: #ffffea;">
                <children>
-                  <ButtonBar id="Parts Button Bar" fx:id="partsButtonBar" layoutX="449.0" layoutY="408.0" prefHeight="47.0" prefWidth="261.0" style="-fx-border-radius: 2px;">
-                    <buttons>
-                      <Button fx:id="partsAddButton" mnemonicParsing="false" onAction="#partsAddButtonListener" style="-fx-background-color: #27B611; -fx-border-color: black; -fx-border-radius: 3%;" text="Add" />
-                        <Button fx:id="partsModifyButton" layoutX="277.0" layoutY="23.0" mnemonicParsing="false" onAction="#partsModifyButtonListener" style="-fx-background-color: #CF700C#CF700C; -fx-border-color: black; -fx-border-radius: 3%;" text="Modify" />
-                        <Button fx:id="partsDeleteButton" layoutX="197.0" layoutY="23.0" mnemonicParsing="false" onAction="#partsDeleteButtonListener" style="-fx-border-color: black; -fx-border-radius: 2%; -fx-background-color: red;" text="Delete" />
-                    </buttons>
-                  </ButtonBar>
-                  <Label id="Parts Title" layoutX="51.0" layoutY="20.0" prefHeight="40.0" prefWidth="56.0" text="Parts">
+                   <ButtonBar id="Parts Button Bar" fx:id="partsButtonBar" layoutX="449.0" layoutY="408.0" prefHeight="47.0" prefWidth="261.0" style="-fx-border-radius: 2px;">
+                       <buttons>
+                           <Button fx:id="partsAddButton" mnemonicParsing="false" onAction="#partsAddButtonListener" style="-fx-background-color: #27B611; -fx-border-color: black; -fx-border-radius: 3%;" text="Add" />
+                           <Button fx:id="partsModifyButton" layoutX="277.0" layoutY="23.0" mnemonicParsing="false" onAction="#partsModifyButtonListener" style="-fx-background-color: #CF700C#CF700C; -fx-border-color: black; -fx-border-radius: 3%;" text="Modify" />
+                           <Button fx:id="partsDeleteButton" layoutX="197.0" layoutY="23.0" mnemonicParsing="false" onAction="#partsDeleteButtonListener" style="-fx-border-color: black; -fx-border-radius: 2%; -fx-background-color: red;" text="Delete" />
+                       </buttons>
+                   </ButtonBar>
+                   <Label id="Parts Title" layoutX="51.0" layoutY="20.0" prefHeight="40.0" prefWidth="56.0" text="Parts">
+                       <font>
+                           <Font name="System Bold" size="17.0" />
+                       </font>
+                   </Label>
+                   <TableView id="Parts Table" fx:id="partsTableView" layoutX="51.0" layoutY="51.0" prefHeight="352.0" prefWidth="659.0" style="-fx-border-color: #000000;" />
+                   <TextField fx:id="filterFieldParts" layoutX="555.0" layoutY="20.0" />
+                  <Label fx:id="partsErrorLabel" layoutX="51.0" layoutY="438.0" prefHeight="32.0" prefWidth="413.0" textFill="RED">
                      <font>
-                        <Font name="System Bold" size="17.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TableView id="Parts Table" fx:id="partsTableView" layoutX="51.0" layoutY="51.0" prefHeight="352.0" prefWidth="659.0" style="-fx-border-color: #000000;" />
-                  <TextField fx:id="filterFieldParts" layoutX="555.0" layoutY="20.0" />
                </children>
             </Pane>
-            <Pane id="Products Pane" fx:id="productsPane" layoutX="788.0" layoutY="94.0" prefHeight="500.0" prefWidth="760.0" style="-fx-background-color: #00a6ed; -fx-border-radius: 2%; -fx-border-color: black; -fx-border-style: solid; -fx-background-radius: 3%; -fx-border-color: #ffffea;">
-               <children>
+          <Pane id="Products Pane" fx:id="productsPane" layoutX="788.0" layoutY="94.0" prefHeight="500.0" prefWidth="760.0" style="-fx-background-color: #00a6ed; -fx-border-radius: 2%; -fx-border-color: black; -fx-border-style: solid; -fx-background-radius: 3%; -fx-border-color: #ffffea;">
+              <children>
                   <ButtonBar id="Products Button Bar" fx:id="productsButtonBar" layoutX="453.0" layoutY="407.0" prefHeight="47.0" prefWidth="261.0">
-                     <buttons>
-                        <Button fx:id="productsAddButton" mnemonicParsing="false" onAction="#productsAddButtonListener" style="-fx-background-color: #27B611 #27B611; -fx-border-radius: 2%; -fx-border-color: black;" text="Add" />
-                        <Button fx:id="productsModifyButton" layoutX="277.0" layoutY="23.0" mnemonicParsing="false" onAction="#productsModifyButtonListener" style="-fx-background-color: #CF700C#CF700C #CF700C#CF700C; -fx-border-color: black; -fx-border-radius: 2%;" text="Modify" />
-                        <Button fx:id="productsDeleteButton" layoutX="197.0" layoutY="23.0" mnemonicParsing="false" onAction="#productsDeleteButtonListener" style="-fx-background-color: red; -fx-border-color: black; -fx-border-radius: 2%;" text="Delete" />
-                     </buttons>
+                      <buttons>
+                          <Button fx:id="productsAddButton" mnemonicParsing="false" onAction="#productsAddButtonListener" style="-fx-background-color: #27B611 #27B611; -fx-border-radius: 2%; -fx-border-color: black;" text="Add" />
+                          <Button fx:id="productsModifyButton" layoutX="277.0" layoutY="23.0" mnemonicParsing="false" onAction="#productsModifyButtonListener" style="-fx-background-color: #CF700C#CF700C #CF700C#CF700C; -fx-border-color: black; -fx-border-radius: 2%;" text="Modify" />
+                          <Button fx:id="productsDeleteButton" layoutX="197.0" layoutY="23.0" mnemonicParsing="false" onAction="#productsDeleteButtonListener" style="-fx-background-color: red; -fx-border-color: black; -fx-border-radius: 2%;" text="Delete" />
+                      </buttons>
                   </ButtonBar>
                   <Label id="Products Title" layoutX="43.0" layoutY="22.0" prefHeight="32.0" prefWidth="70.0" text="Products">
-                     <font>
-                        <Font name="System Bold" size="17.0" />
-                     </font>
+                      <font>
+                          <Font name="System Bold" size="17.0" />
+                      </font>
                   </Label>
                   <TableView id="Products Table" fx:id="productsTableView" layoutX="43.0" layoutY="55.0" prefHeight="352.0" prefWidth="671.0" style="-fx-border-color: #000000;" />
                   <TextField fx:id="filterFieldProducts" layoutX="559.0" layoutY="22.0" />
-               </children>
+                  <Label fx:id="productsErrorLabel" layoutX="43.0" layoutY="438.0" prefHeight="32.0" prefWidth="413.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+              </children>
             </Pane>
-            <Button id="Exit Button" fx:id="mainFormExitButton" layoutX="717.0" layoutY="630.0" mnemonicParsing="false" onAction="#exitButtonListener" prefHeight="47.0" prefWidth="156.0" style="-fx-border-color: #ffffea;" text="Exit">
-               <font>
+          <Button id="Exit Button" fx:id="mainFormExitButton" layoutX="717.0" layoutY="630.0" mnemonicParsing="false" onAction="#exitButtonListener" prefHeight="47.0" prefWidth="156.0" style="-fx-border-color: #ffffea;" text="Exit">
+              <font>
                   <Font size="22.0" />
-               </font></Button>
+              </font>
+          </Button>
       </children>
     </AnchorPane>
   </children>

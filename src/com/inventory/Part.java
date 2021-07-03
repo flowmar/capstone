@@ -3,25 +3,19 @@ package com.inventory;
  * Supplied class Part.java
  */
 
-import java.util.Random;
-
 /**
- *
  * @author Omar Imam
  */
 public abstract class Part {
-protected        int    id;
-protected static String name;
-protected        double price;
-protected        int    stock;
-protected        int    min;
-protected        int    max;
+private int    id;
+private String name;
+private double price;
+private int    stock;
+private int    min;
+private int    max;
 
-public Part( String name, double price, int stock, int min, int max ) {
-    int randomId = getRandomNumber( );
-    System.out.println( "RANDOMID: " + randomId );
-    id         = randomId;
-    this.id    = randomId;
+public Part( int id, String name, double price, int stock, int min, int max ) {
+    this.id    = id;
     this.name  = name;
     this.price = price;
     this.stock = stock;
@@ -36,13 +30,17 @@ public Part( String name, double price, int stock, int min, int max ) {
         return id;
     }
 
+/**
+ * @param id the id to set
+ */
+public void setId( int id ) { this.id = id; }
 
 /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+ * @return the name
+ */
+public String getName() {
+    return name;
+}
 
     /**
      * @param name the name to set
@@ -107,10 +105,4 @@ public void setMax( int max ) {
     this.max = max;
 }
 
-protected int getRandomNumber( ) {
-    Random randomNumbers = new Random( );
-    int    randomNumber  = Math.abs( randomNumbers.nextInt( 1000 ) );
-    return randomNumber;
-}
-    
 }

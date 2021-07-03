@@ -9,9 +9,18 @@
       <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
@@ -33,6 +42,12 @@
       <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
       <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="file://$PATH_TO_FX$" />
     </SOURCES>
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
@@ -41,6 +56,18 @@
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
     <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />

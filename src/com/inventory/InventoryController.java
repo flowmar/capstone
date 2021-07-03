@@ -1,7 +1,6 @@
 package com.inventory;
 
 
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +20,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+
 
 /**
  * @author Omar Imam
@@ -47,6 +47,7 @@ private Button          partsAddButton;
 private Button          partsModifyButton;
 @FXML
 private Button          partsDeleteButton;
+
 @FXML
 private TextField       partsSearchField;
 @FXML
@@ -54,10 +55,10 @@ private TextField       productsSearchField;
 @FXML
 public  Random          randomNumbers  = new Random( );
 @FXML
-public  TableView<Part> partsTableView = new TableView<Part>( );
+public  TableView<Part> partsTableView = new TableView<>( );
 
 @FXML
-public TableView<Product> productsTableView = new TableView<Product>( );
+public TableView<Product> productsTableView = new TableView<>( );
 
 
 // Parts List
@@ -73,7 +74,7 @@ ObservableList<Product> allProducts;
 private Pane productsPane;
 
 @FXML
-public static Stage stage = new Stage( );
+public Stage stage = new Stage( );
 
 @FXML
 private ButtonBar productsButtonBar;
@@ -93,108 +94,14 @@ private TextField filterFieldParts;
 @FXML
 private TextField filterFieldProducts;
 
-public void setProductData( ObservableList<Product> productsList, TableView<Product> productsTableView ) {
-  productsTableView.setItems( productsList );
-}
-
-public void setData( ObservableList<Part> partsList, TableView<Part> partsTableView ) {
-  partsTableView.setItems( partsList );
-}
-
-
 @FXML
 public Button mainFormExitButton;
 
-/**
- * This function opens the Add Part menu
- *
- * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
- * @throws Exception if the file is not found
- */
+@FXML
+private Label partsErrorLabel;
 
-
-public void partsAddButtonListener( ActionEvent actionEvent ) throws Exception {
-  // Load the FXML file
-  Parent parent = FXMLLoader.load( getClass( ).getResource( "addPart.fxml" ) );
-  Stage  stage  = new Stage( );
-  
-  // Build the scene graph
-  Scene scene1 = new Scene( parent );
-  
-  // Display our window, using the scene graph.
-  stage.setTitle( "Add Part" );
-  stage.setScene( scene1 );
-  stage.show( );
-}
-
-/**
- * This function opens the Modify Part menu
- *
- * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
- * @throws Exception if the file is not found
- */
-
-public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
-  // Load the FXML file
-  Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyPart.fxml" ) );
-  Stage  stage  = new Stage( );
-  
-  // Build the scene graph
-  Scene scene = new Scene( parent );
-  
-  // Display our window, using the scene graph.
-  stage.setTitle( "Modify Part" );
-  stage.setScene( scene );
-  stage.show( );
-}
-
-/**
- * This function deletes the selected entry from the parts TableView
- *
- * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
- */
-
-public void partsDeleteButtonListener( ActionEvent actionEvent ) {
-  System.out.print( actionEvent );
-}
-
-public void productsAddButtonListener( ActionEvent actionEvent ) throws Exception {
-  // Load the FXML file
-  Parent parent = FXMLLoader.load( getClass( ).getResource( "addProduct.fxml" ) );
-  
-  Stage stage = new Stage( );
-  
-  // Build the scene graph
-  Scene scene = new Scene( parent );
-  
-  // Display our window, using the scene graph.
-  stage.setTitle( "Add Product" );
-  stage.setScene( scene );
-  stage.show( );
-}
-
-public void productsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
-  // Load the FXML file
-  Parent parent = FXMLLoader.load(
-      getClass( ).getResource( "modifyProduct.fxml" ) );
-  
-  Stage stage = new Stage( );
-  
-  // Build the scene graph
-  Scene scene = new Scene( parent );
-  
-  // Display our window, using the scene graph.
-  stage.setTitle( "Modify Product" );
-  stage.setScene( scene );
-  stage.show( );
-  
-}
-
-public void productsDeleteButtonListener( ) throws Exception {
-  // Find out which product is selected in the table
-  // Delete the entry
-  System.out.println( "DELETE!" );
-}
+@FXML
+private Label productsErrorLabel;
 
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
@@ -213,18 +120,17 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
       productsStockColumn );
   
   // Define the data in an observable list
-  ObservableList<Part> allParts = FXCollections.observableArrayList(
-      new InHouse( "Hammer", 30.25, 15, 3, 2, "The Company" ),
-      new InHouse( "Wrench", 15.00, 17, 3, 18, "Acme" ),
-      new Outsourced( "Hammer", 30.25, 15, 3, 2, "TheCompany" ),
-      new Outsourced( "Wrench", 15.00, 17, 3, 18, "Acme" )
+  Inventory.allParts = FXCollections.observableArrayList(
+      new InHouse( 505, "Paint", 30.25, 15, 3, 2, 5024 ),
+      new InHouse( 1025, "Screwdrivers", 15.00, 17, 3, 18, 6996 ),
+      new Outsourced( 88, "Trash Can", 30.25, 15, 3, 2, "The Company" ),
+      new Outsourced( 79, "Wrench", 15.00, 17, 3, 18, "Acme" )
   );
   
-  
-  ObservableList<Product> allProducts = FXCollections.observableArrayList(
+  Inventory.allProducts = FXCollections.observableArrayList(
       new Product( "Tool Set", 60.35, 10, 2, 15, 4000 ),
-      new Product( "Wood Panel Set", 40.50, 8, 2, 10, 4000 ),
-      new Product( "Tool Set", 60.35, 10, 2, 15, 2058 ),
+      new Product( "Ladder", 45.80, 8, 2, 10, 4000 ),
+      new Product( "Drill Set", 60.35, 10, 2, 15, 2058 ),
       new Product( "Wood Panel Set", 40.50, 8, 2, 10, 2076 )
   );
   
@@ -240,11 +146,11 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   productsPriceColumn.setCellValueFactory( new PropertyValueFactory<Product, Double>( ( "Price" ) ) );
   
   // Wrap the Observable list in a FilteredList
-  FilteredList<Part> filteredData = new FilteredList<>( allParts, t -> true );
+  FilteredList<Part> filteredData = new FilteredList<>( Inventory.allParts, t -> true );
   
   // Add the data to the table
-  partsTableView.setItems( allParts );
-  productsTableView.setItems( allProducts );
+  partsTableView.setItems( Inventory.allParts );
+  productsTableView.setItems( Inventory.allProducts );
   
   // Set the filter to change whenever the filter changes
   filterFieldParts.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
@@ -278,7 +184,7 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   partsTableView.setItems( sortedData );
   
   // Wrap the Observable list in a FilteredList
-  FilteredList<Product> filteredProductData = new FilteredList<>( allProducts, t -> true );
+  FilteredList<Product> filteredProductData = new FilteredList<>( Inventory.allProducts, t -> true );
   
   // Set the filter to change whenever the filter changes
   filterFieldProducts.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
@@ -311,6 +217,139 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   
   productsTableView.setItems( sortedProductData );
   
+}
+
+public int getRandomNumber( ) {
+  Random randomNumbers = new Random( );
+  return Math.abs( randomNumbers.nextInt( 1000 ) );
+}
+
+public void setProductData( ObservableList<Product> productsList, TableView<Product> productsTableView ) {
+  productsTableView.setItems( productsList );
+}
+
+public void setData( ObservableList<Part> partsList, TableView<Part> partsTableView ) {
+  partsTableView.setItems( partsList );
+}
+
+/**
+ * This function opens the Add Part menu
+ *
+ * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
+ * @throws Exception if the file is not found
+ */
+
+public void partsAddButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Clear the error message
+  partsErrorLabel.setText( "" );
+  // Load the FXML file
+  Parent parent = FXMLLoader.load( getClass( ).getResource( "addPart.fxml" ) );
+  Stage  stage  = new Stage( );
+  
+  // Build the scene graph
+  Scene scene1 = new Scene( parent );
+  
+  // Display our window, using the scene graph.
+  stage.setTitle( "Add Part" );
+  stage.setScene( scene1 );
+  stage.show( );
+}
+
+/**
+ * This function opens the Modify Part menu
+ *
+ * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
+ * @throws Exception if the file is not found
+ */
+
+public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Clear the error message
+  partsErrorLabel.setText( "" );
+  
+  // Get the currently selected part
+  
+  // Load the FXML file
+  Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyPart.fxml" ) );
+  Stage  stage  = new Stage( );
+  
+  // Build the scene graph
+  Scene scene = new Scene( parent );
+  
+  // Display our window, using the scene graph.
+  stage.setTitle( "Modify Part" );
+  stage.setScene( scene );
+  stage.show( );
+  
+  // Fill in the text fields with the information about the selected part
+  
+}
+
+/**
+ * This function deletes the selected entry from the parts TableView
+ *
+ * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
+ */
+
+
+public void productsAddButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Clear the error message
+  productsErrorLabel.setText( "" );
+  // Load the FXML file
+  Parent parent = FXMLLoader.load( getClass( ).getResource( "addProduct.fxml" ) );
+  
+  Stage stage = new Stage( );
+  
+  // Build the scene graph
+  Scene scene = new Scene( parent );
+  
+  // Display our window, using the scene graph.
+  stage.setTitle( "Add Product" );
+  stage.setScene( scene );
+  stage.show( );
+}
+
+public void productsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Clear the error message
+  productsErrorLabel.setText( "" );
+  
+  // Load the FXML file
+  Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyProduct.fxml" ) );
+  
+  Stage stage = new Stage( );
+  
+  // Build the scene graph
+  Scene scene = new Scene( parent );
+  
+  // Display our window, using the scene graph.
+  stage.setTitle( "Modify Product" );
+  stage.setScene( scene );
+  stage.show( );
+  
+}
+
+
+public void partsDeleteButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Present error message if Parts list is empty
+  if ( Inventory.allParts.size( ) == 0 ) {
+    partsErrorLabel.setText( "Error: Cannot Delete, the parts list is empty!" );
+  }
+  else {
+    // Find out which part is selected in the table
+    Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
+    // Delete the part
+    Inventory.allParts.remove( selectedPart );
+  }
+}
+
+public void productsDeleteButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Present error message if Products list is empty
+  if ( Inventory.allProducts.size( ) == 0 ) {
+    productsErrorLabel.setText( "Error: Cannot Delete, the products list is empty!" );
+  }
+  // Find out which product is selected in the table
+  Product selectedProduct = productsTableView.getSelectionModel( ).getSelectedItem( );
+  // Delete the product
+  Inventory.allProducts.remove( selectedProduct );
 }
 
 public void exitButtonListener( ActionEvent actionEvent ) {

@@ -23,8 +23,8 @@ public class Outsourced extends Part {
      * @param companyName the name of the company the product was outsourced from
      */
 
-    public Outsourced( String name, double price, int stock, int min, int max, String companyName ) {
-      super( name, price, stock, min, max );
+    public Outsourced( int id, String name, double price, int stock, int min, int max, String companyName ) {
+      super( id, name, price, stock, min, max );
       this.companyName = companyName;
     }
  
@@ -42,8 +42,7 @@ public class Outsourced extends Part {
      * @return the desired value
      */
     public String getCompanyName(){
-        String retrievedName = this.companyName;
-        return retrievedName;
+      return this.companyName;
     }
     
 

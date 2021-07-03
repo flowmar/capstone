@@ -12,23 +12,41 @@ public class ModifyPartController {
     
     @FXML
     private Label mainFormTitle;
-    
-    @FXML
-    private RadioButton addPartInHouseRadio;
 
 @FXML
-private ToggleGroup addPart;
+private RadioButton modifyPartInHouseRadio;
 
 @FXML
-private RadioButton addPartOutsourcedRadio;
+private ToggleGroup modifyPart;
 
 @FXML
-private Button addPartSaveButton;
+private RadioButton modifyPartOutsourcedRadio;
+
+@FXML
+private Button modifyPartSaveButton;
 
 @FXML
 private Button modifyPartCancelButton;
 
+@FXML
+private Label modifyPartExtraLabel;
+
+public void modifyPartSaveListener( ActionEvent actionEvent ) {
+    // Replace the information for the selected part with the information in the text fields
+}
+
+public void modifyPartRadioListener( ActionEvent actionEvent ) {
+    // Set the text of the form based upon which radio button is selected
+    if ( modifyPartInHouseRadio.isSelected( ) ) {
+        modifyPartExtraLabel.setText( "Machine ID" );
+    }
+    else {
+        modifyPartExtraLabel.setText( "Company Name" );
+    }
+}
+
 public void modifyPartCancelButtonListener( ActionEvent actionEvent ) {
+    // Close the window if the cancel button is clicked
     Stage stage = ( Stage ) modifyPartCancelButton.getScene( ).getWindow( );
     stage.close( );
 }
