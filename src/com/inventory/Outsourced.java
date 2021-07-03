@@ -1,7 +1,6 @@
 package com.inventory;
 
 /**
- *
  * @author Omar Imam
  */
 
@@ -16,6 +15,7 @@ public class Outsourced extends Part {
     /**
      * Constructor
      *
+     * @param id          the id number of the item
      * @param price       the cost of the item
      * @param stock       the quantity in stock
      * @param min         the minimum number on hand

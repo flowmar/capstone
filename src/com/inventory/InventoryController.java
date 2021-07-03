@@ -145,12 +145,12 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   productsStockColumn.setCellValueFactory( new PropertyValueFactory<Product, Integer>( ( "Stock" ) ) );
   productsPriceColumn.setCellValueFactory( new PropertyValueFactory<Product, Double>( ( "Price" ) ) );
   
-  // Wrap the Observable list in a FilteredList
-  FilteredList<Part> filteredData = new FilteredList<>( Inventory.allParts, t -> true );
-  
   // Add the data to the table
   partsTableView.setItems( Inventory.allParts );
   productsTableView.setItems( Inventory.allProducts );
+  
+  // Wrap the Observable list in a FilteredList
+  FilteredList<Part> filteredData = new FilteredList<>( Inventory.allParts, t -> true );
   
   // Set the filter to change whenever the filter changes
   filterFieldParts.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
@@ -158,22 +158,30 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
     filteredData.setPredicate( part -> {
       
       if ( newValue == null || newValue.isEmpty( ) ) {
+        partsErrorLabel.setText( "" );
         return true;
       }
       
-      // Compare first name and last name of every person with filter text.
+      // Compare first name and last name of every part with filter text
       String lowerCaseFilter = newValue.toLowerCase( );
       
       if ( part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( part.getId( ) ) ).contains( lowerCaseFilter ) ) {
+        partsErrorLabel.setText( "Error: No matching part found.1" );
         return true;
       }
-      else if ( part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( part.getId( ) ) ).contains( lowerCaseFilter ) ) {
-        return true;
+//      else if ( part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( part.getId( ) ) )
+//      .contains( lowerCaseFilter ) ) {
+//        partsErrorLabel.setText("Error: No matching part found.2");
+//        return true;
+//      }
+//      else if ( String.valueOf( part.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
+//        partsErrorLabel.setText("Error: No matching part found.3");
+//        return true;
+//      }
+      else {
+        partsErrorLabel.setText( "4" );
+        return false;
       }
-      else if ( String.valueOf( part.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
-        return true;
-      }
-      else { return false; }
     } );
   } );
   
@@ -183,6 +191,7 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   
   partsTableView.setItems( sortedData );
   
+  
   // Wrap the Observable list in a FilteredList
   FilteredList<Product> filteredProductData = new FilteredList<>( Inventory.allProducts, t -> true );
   
@@ -190,24 +199,31 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   filterFieldProducts.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
     
     filteredProductData.setPredicate( product -> {
-      
+  
       if ( newValue == null || newValue.isEmpty( ) ) {
+        productsErrorLabel.setText( "" );
         return true;
       }
-      
-      // Compare first name and last name of every person with filter text.
+  
+      // Compare first name and last name of every product with filter text.
       String lowerCaseFilter = newValue.toLowerCase( );
-      
-      if ( product.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( product.getId( ) ) ).contains( lowerCaseFilter ) ) {
+  
+      if ( product.getName( ).toLowerCase( ).contains( lowerCaseFilter ) ) {
+        productsErrorLabel.setText( "1" );
         return true;
       }
-      else if ( product.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( product.getId( ) ) ).contains( lowerCaseFilter ) ) {
+      else if ( Integer.toString( ( product.getId( ) ) ).contains( lowerCaseFilter ) ) {
+        productsErrorLabel.setText( "2" );
         return true;
       }
-      else if ( String.valueOf( product.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
-        return true;
+//      else if ( String.valueOf( product.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
+//        productsErrorLabel.setText("3");
+//        return true;
+//      }
+      else {
+        productsErrorLabel.setText( "4" );
+        return false;
       }
-      else { return false; }
     } );
   } );
   
@@ -216,20 +232,17 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   sortedProductData.comparatorProperty( ).bind( productsTableView.comparatorProperty( ) );
   
   productsTableView.setItems( sortedProductData );
-  
 }
 
+/**
+ * This function creates a random number for the randomly generated product IDs. The absolute value is used so that
+ * there are no negative id numbers.
+ *
+ * @return The random id number
+ */
 public int getRandomNumber( ) {
   Random randomNumbers = new Random( );
   return Math.abs( randomNumbers.nextInt( 1000 ) );
-}
-
-public void setProductData( ObservableList<Product> productsList, TableView<Product> productsTableView ) {
-  productsTableView.setItems( productsList );
-}
-
-public void setData( ObservableList<Part> partsList, TableView<Part> partsTableView ) {
-  partsTableView.setItems( partsList );
 }
 
 /**
@@ -263,14 +276,26 @@ public void partsAddButtonListener( ActionEvent actionEvent ) throws Exception {
  */
 
 public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
+
+//  sendData(actionEvent);
   // Clear the error message
   partsErrorLabel.setText( "" );
   
   // Get the currently selected part
+  Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
+  System.out.println( selectedPart );
+  int selectedPartId = selectedPart.getId( );
+  System.out.println( selectedPartId );
+  
+  // Place the ID of the selected part and the index into variables
+  Inventory.selectedPartId    = selectedPartId;
+  Inventory.selectedPartIndex = partsTableView.getItems( ).indexOf( selectedPart );
   
   // Load the FXML file
   Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyPart.fxml" ) );
-  Stage  stage  = new Stage( );
+  
+  // Create a new Stage
+  Stage stage = new Stage( );
   
   // Build the scene graph
   Scene scene = new Scene( parent );
@@ -280,17 +305,32 @@ public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exceptio
   stage.setScene( scene );
   stage.show( );
   
-  // Fill in the text fields with the information about the selected part
-  
 }
+
 
 /**
  * This function deletes the selected entry from the parts TableView
  *
  * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
  */
+public void partsDeleteButtonListener( ActionEvent actionEvent ) throws Exception {
+  // Present error message if Parts list is empty
+  if ( Inventory.allParts.size( ) == 0 ) {
+    partsErrorLabel.setText( "Error: Cannot Delete, the parts list is empty!" );
+  }
+  else {
+    // Find out which part is selected in the table
+    Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
+    // Delete the part
+    Inventory.allParts.remove( selectedPart );
+  }
+}
 
-
+/**
+ * This function opens the Add Product Menu
+ * @param actionEvent is fired when the Add Product button is clicked
+ * @throws Exception is thrown if the fxml file is not found
+ */
 public void productsAddButtonListener( ActionEvent actionEvent ) throws Exception {
   // Clear the error message
   productsErrorLabel.setText( "" );
@@ -308,6 +348,11 @@ public void productsAddButtonListener( ActionEvent actionEvent ) throws Exceptio
   stage.show( );
 }
 
+/**
+ * This function opens the Modify Product Menu
+ * @param actionEvent is fired when the Modify Product button is clicked
+ * @throws Exception is thrown if the fxml file is not found
+ */
 public void productsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
   // Clear the error message
   productsErrorLabel.setText( "" );
@@ -327,21 +372,12 @@ public void productsModifyButtonListener( ActionEvent actionEvent ) throws Excep
   
 }
 
-
-public void partsDeleteButtonListener( ActionEvent actionEvent ) throws Exception {
-  // Present error message if Parts list is empty
-  if ( Inventory.allParts.size( ) == 0 ) {
-    partsErrorLabel.setText( "Error: Cannot Delete, the parts list is empty!" );
-  }
-  else {
-    // Find out which part is selected in the table
-    Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
-    // Delete the part
-    Inventory.allParts.remove( selectedPart );
-  }
-}
-
-public void productsDeleteButtonListener( ActionEvent actionEvent ) throws Exception {
+/**
+ * This function deletes a product from the products table
+ *
+ * @param actionEvent is fired when the delete product button is clicked
+ */
+public void productsDeleteButtonListener( ActionEvent actionEvent ) {
   // Present error message if Products list is empty
   if ( Inventory.allProducts.size( ) == 0 ) {
     productsErrorLabel.setText( "Error: Cannot Delete, the products list is empty!" );
@@ -355,5 +391,27 @@ public void productsDeleteButtonListener( ActionEvent actionEvent ) throws Excep
 public void exitButtonListener( ActionEvent actionEvent ) {
   // Exit the application
   Platform.exit( );
+}
+
+/**
+ * This function is called when "Enter" is pressed when searching for a part in the parts table. It selects the matching
+ * part
+ *
+ * @param actionEvent fired when the user presses "Enter"
+ */
+public void partsSearchFieldListener( ActionEvent actionEvent ) {
+  partsTableView.getSelectionModel( ).clearSelection( );
+  partsTableView.getSelectionModel( ).selectFirst( );
+}
+
+/**
+ * This function is called when "Enter" is pressed when searching for a product in the product table. It selects the
+ * matching product
+ *
+ * @param actionEvent fired when the user presses "Enter"
+ */
+public void productsSearchFieldListener( ActionEvent actionEvent ) {
+  productsTableView.getSelectionModel( ).clearSelection( );
+  productsTableView.getSelectionModel( ).selectFirst();
 }
 }

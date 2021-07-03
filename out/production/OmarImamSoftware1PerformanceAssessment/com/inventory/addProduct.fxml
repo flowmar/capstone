@@ -38,7 +38,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -102,13 +101,13 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <TextField disable="true" layoutX="238.0" layoutY="192.0" />
+                        <TextField fx:id="addProductIdTextField" disable="true" layoutX="238.0" layoutY="192.0" />
                         <Label layoutX="108.0" layoutY="236.0" text="Name" textFill="#ffffea">
                            <font>
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="108.0" layoutY="282.0" text="Inventory" textFill="#ffffea">
+                        <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
                            <font>
                               <Font size="22.0" />
                            </font>
@@ -128,11 +127,11 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="238.0" layoutY="239.0" />
-                        <TextField layoutX="238.0" layoutY="285.0" />
-                        <TextField layoutX="238.0" layoutY="329.0" />
-                        <TextField layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="addPartSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false" text="Save">
+                        <TextField fx:id="addProductNameTextField" layoutX="238.0" layoutY="239.0" />
+                        <TextField fx:id="addProductStockTextField" layoutX="238.0" layoutY="285.0" />
+                        <TextField fx:id="addProductPriceTextField" layoutX="238.0" layoutY="329.0" />
+                        <TextField fx:id="addProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
+                        <Button fx:id="addProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false" text="Save">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -142,29 +141,25 @@
                               <Font size="16.0" />
                           </font>
                       </Button>
-                        <TextField layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="addPartSaveButton1" layoutX="1127.0" layoutY="553.0" mnemonicParsing="false" text="Remove Associated Part">
+                        <TextField fx:id="addProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
+                        <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0" mnemonicParsing="false" text="Remove Associated Part">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="addPartSaveButton2" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false" text="Add">
+                        <Button fx:id="addProductAddButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false" text="Add">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <TableView layoutX="773.0" layoutY="329.0" prefHeight="200.0" prefWidth="550.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
-                           </columns>
-                        </TableView>
-                        <TableView layoutX="773.0" layoutY="51.0" prefHeight="200.0" prefWidth="550.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
-                           </columns>
-                        </TableView>
+                        <TableView fx:id="associatedPartTableView" layoutX="773.0" layoutY="329.0" prefHeight="200.0" prefWidth="550.0" />
+                        <TableView fx:id="addProductTableView" layoutX="773.0" layoutY="62.0" prefHeight="200.0" prefWidth="550.0" />
+                        <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0" />
+                        <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0" prefWidth="335.0" textFill="#f54b4b">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
                   </children>
                 </AnchorPane>
               </children>

@@ -16,6 +16,8 @@ public class Inventory extends Application {
  */
 public static ObservableList<Part>    allParts;
 public static ObservableList<Product> allProducts;
+public static int                     selectedPartId;
+public static int                     selectedPartIndex;
 
 
 /**

@@ -15,20 +15,20 @@ private int    min;
 private int    max;
 
 public Part( int id, String name, double price, int stock, int min, int max ) {
-    this.id    = id;
-    this.name  = name;
-    this.price = price;
-    this.stock = stock;
-    this.min   = min;
-    this.max   = max;
+  this.id    = id;
+  this.name  = name;
+  this.price = price;
+  this.stock = stock;
+  this.min   = min;
+  this.max   = max;
 }
 
 /**
  * @return the id
  */
-    public int getId() {
-        return id;
-    }
+public int getId( ) {
+  return id;
+}
 
 /**
  * @param id the id to set
@@ -38,16 +38,16 @@ public void setId( int id ) { this.id = id; }
 /**
  * @return the name
  */
-public String getName() {
-    return name;
+public String getName( ) {
+  return name;
 }
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+/**
+ * @param name the name to set
+ */
+public void setName( String name ) {
+  this.name = name;
+}
 
     /**
      * @return the price
@@ -87,22 +87,22 @@ public String getName() {
     /**
      * @param min the min to set
      */
-    public void setMin(int min) {
-        this.min = min;
+    public void setMin(int min ) {
+      this.min = min;
     }
 
-    /**
-     * @return the max
-     */
-    public int getMax( ) {
-        return max;
-    }
+/**
+ * @return the max
+ */
+public int getMax( ) {
+  return max;
+}
 
 /**
  * @param max the max to set
  */
 public void setMax( int max ) {
-    this.max = max;
+  this.max = max;
 }
 
 }
