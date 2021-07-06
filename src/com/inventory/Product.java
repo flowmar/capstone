@@ -11,19 +11,41 @@ public class Product {
 
 /*
  * Fields
-     */
-    private ObservableList<Part> associatedParts;
-    private int id;
-    private String name;
-    private double price;
-    private int stock;
-    private int min;
-    private int max;
+ */
 
-    /**
-     * Constructor
-     *
-     * @param id    the numerical identification number of the item
+/**
+ * an ObservableList object containing each {@link com.inventory.Part} that is associated with the product
+ */
+private ObservableList<Part> associatedParts;
+/**
+ * the identification number of the product
+ */
+private int                  id;
+/**
+ * that name of the product
+ */
+private String               name;
+/**
+ * the price of the product
+ */
+private double               price;
+/**
+ * the quantity of the product available on hand
+ */
+private int                  stock;
+/**
+ * the minimum quantity of the product required to be on hand
+ */
+private int                  min;
+/**
+ * the maximum quantity of the product required to be on hand
+ */
+private int                  max;
+
+/**
+ * Constructor
+ *
+ * @param id    the numerical identification number of the item
      * @param price the cost of the item
      * @param stock the quantity in stock
      * @param min   the minimum number on hand
@@ -39,41 +61,56 @@ public class Product {
         this.max             = max;
         this.associatedParts = associatedParts;
     }
-    
+
 
 /**
- * @return the id
+ * Returns the <code>id</code> of the product
+ *
+ * @return the <code>id</code>
  */
 public int getId( ) {
     return id;
 }
 
+/**
+ * Sets the <code>id</code> of the product
+ *
+ * @param id the identification number of the product
+ */
 private void setId( int id ) {
-    this.id = id;
+  this.id = id;
 }
 
 /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+ * Returns the <code>name</code> of the product
+ *
+ * @return the <code>name</code>
+ */
+public String getName( ) {
+  return name;
+}
+
+/**
+ * Sets the <code>name</code> of the product
+ *
+ * @param name the name of the product
+ */
+public void setName( String name ) {
+  this.name = name;
+}
+
+/**
+ * Returns the <code>price</code> of the product
+ *
+ * @return the <code>price</code>
+ */
+public double getPrice( ) {
+  return price;
     }
 
     /**
-     * @param name the name of the set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the price
-     */
-    public double getPrice() {
-        return price;
-    }
-
-    /**
+     * Sets the <code>price</code> of the product
+     *
      * @param price the price of the product
      */
     public void setPrice(double price) {
@@ -81,13 +118,17 @@ private void setId( int id ) {
     }
 
     /**
-     * @return the stock
+     * Returns the <code>stock</code> of the product
+     *
+     * @return the <code>stock</code>
      */
     public int getStock() {
         return stock;
     }
 
     /**
+     * Sets the <code>stock</code> of the product
+     *
      * @param stock the number of items on hand
      */
     public void setStock(int stock) {
@@ -95,13 +136,17 @@ private void setId( int id ) {
     }
 
     /**
-     * @return the min quantity
+     * Returns the <code>min</code> of the product
+     *
+     * @return the <code>min</code> quantity
      */
     public int getMin() {
         return min;
     }
 
     /**
+     * Sets the <code>min</code> of the product
+     *
      * @param min the minimum quantity on hand
      */
     public void setMin(int min) {
@@ -109,6 +154,8 @@ private void setId( int id ) {
     }
 
     /**
+     * Returns the <code>max</code> of the product
+     *
      * @return the max quantity
      */
     public int getMax() {
@@ -116,23 +163,26 @@ private void setId( int id ) {
     }
 
     /**
+     * Sets the <code>max</code> of the product
+     *
      * @param max the maximum quantity on hand
      */
     public void setMax(int max) {
         this.max = max;
     }
 
-    /**
-     * @function addAssociatedPart(Part part)
-     */
-    public void addAssociatedPart( Part part ) {
-        this.associatedParts.add( part );
-    }
+/**
+ * adds an associated {@link com.inventory.Part} to the product
+ * @param part the {@link com.inventory.Part} to be associated with the product
+ */
+public void addAssociatedPart( Part part ) {
+  this.associatedParts.add( part );
+}
 
 /**
- * @function deleteAssociatedPart(Part selectedAssociatedPart ())
- * @param selectedAssociatedPart Deletes the part that is passed into the function.
- * @return true if the part is deleted, false if not
+ * Deletes the selected associated part
+ * @param selectedAssociatedPart the selected {@link com.inventory.Part} which will have its association removed
+ * @return true if the {@link com.inventory.Part} is deleted, false if not
  */
 public boolean deleteAssociatedPart( Part selectedAssociatedPart ) {
     // Delete Associated Part
@@ -146,7 +196,8 @@ public boolean deleteAssociatedPart( Part selectedAssociatedPart ) {
 }
 
 /**
- * @function getAllAssociatedParts()
+ * Retrieves a list of the associated parts
+ * @return an <code>ObservableList</code> of the associated parts
  */
 public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;

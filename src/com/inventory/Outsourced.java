@@ -6,11 +6,14 @@ package com.inventory;
 
 public class Outsourced extends Part {
 
-    /**
+    /*
      * Fields
      */
 
-    private String companyName;
+/**
+ * The name of the company that the {@link com.inventory.Part} was outsourced from
+ */
+private String companyName;
 
     /**
      * Constructor
@@ -27,19 +30,20 @@ public class Outsourced extends Part {
       super( id, name, price, stock, min, max );
       this.companyName = companyName;
     }
- 
 
-    /**
-     * @function setCompanyName(String companyName) - sets the companyName parameter of an Outsourced Object
-     * @param companyName the name of the company that the outsourced product was purchased from
-     */
+
+/**
+ * Sets the <code>companyName</code> parameter of an Outsourced Object
+ *
+ * @param companyName the name of the company that the outsourced product was purchased from
+ */
     public void setCompanyName(String companyName){
         this.companyName = companyName;
     }
 
     /**
-     * @function getCompanyName() - retrieves the name of the companyName of the Outsourced part
-     * @return the desired value
+     * Retrieves the name of the <code>companyName</code> of the Outsourced {@link com.inventory.Part}
+     * @return the <code>companyName</code> of the Outsourced {@link com.inventory.Part}
      */
     public String getCompanyName(){
       return this.companyName;

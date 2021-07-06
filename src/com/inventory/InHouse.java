@@ -6,8 +6,12 @@ package com.inventory;
 
 public class InHouse extends Part {
 
-/**
+/*
  * Fields
+ */
+
+/**
+ * The id number of the machine used to create the part
  */
 private int machineId;
 
@@ -20,7 +24,6 @@ private int machineId;
  * @param max       the maximum number on hand
  * @param machineId the id number of the machine that was used to create the part
  */
-
 public InHouse( int id, String name, double price, int stock, int min, int max, int machineId ) {
   // Calls the superclass constructor
   super( id, name, price, stock, min, max );
@@ -28,16 +31,17 @@ public InHouse( int id, String name, double price, int stock, int min, int max, 
 }
 
 /**
- * @function setMachineId(String machineId) - sets the machineId parameter of an InHouse Object
- * @param machineId the name of the company that the outsourced product was purchased from
+ * Sets the <code>machineId</code> parameter of an InHouse Object
+ *
+ * @param machineId the id number of the machine used to create the part
  */
 public void setMachineId( int machineId ) {
   this.machineId = machineId;
 }
 
 /**
- * @function getMachineId() - retrieves the name of the machineId of the InHouse part
- * @return the desired value
+ * Retrieves the name of the <code>machineId</code> of the InHouse {@link com.inventory.Part}
+ * @return the <code>machineId</code> of the InHouse {@link com.inventory.Part}
  */
 public int getMachineId( ) {
   return this.machineId;
