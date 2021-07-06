@@ -35,33 +35,67 @@ public class InventoryController implements Initializable {
  * Fields
  */
 
+/**
+ * A {@link javafx.scene.control.TableView} containing each {@link com.inventory.Part} in the {@link
+ * com.inventory.Inventory}
+ */
 @FXML
-public  TableView<Part> partsTableView = new TableView<>( );
+public TableView<Part> partsTableView = new TableView<>( );
 
+/**
+ * A {@link javafx.scene.control.TableView} containing each {@link com.inventory.Product} in the {@link
+ * com.inventory.Inventory}
+ */
 @FXML
 public TableView<Product> productsTableView = new TableView<>( );
 
+/**
+ * The {@link javafx.stage.Stage} that the {@link javafx.scene.Scene} is placed in.
+ */
 @FXML
 public Stage stage = new Stage( );
 
+/**
+ * a {@link javafx.scene.control.TextField} used to filter the contents of the {@link #partsTableView}
+ */
 @FXML
 private TextField filterFieldParts;
 
+/**
+ * a {@link javafx.scene.control.TextField} used to filter the contents of the {@link #productsTableView}
+ */
 @FXML
 private TextField filterFieldProducts;
 
+/**
+ * a {@link javafx.scene.control.Button} used to exit the application
+ */
 @FXML
 public Button mainFormExitButton;
 
+/**
+ * a {@link javafx.scene.control.Label} that is used to display error messages for the {@link #partsTableView}
+ */
 @FXML
 private Label partsErrorLabel;
 
+/**
+ * a {@link javafx.scene.control.Label} that is used to display error messages for the {@link #productsTableView}
+ */
 @FXML
 private Label productsErrorLabel;
 
 /**
- * @function Initializes the TableColumns, the allParts and allProducts ObservableLists, associates the data with
- *     the columns, and initializes the filter TextFields.
+ * Initializes each the scene including:
+ * <ul>
+ * <li>{@link javafx.scene.control.TableColumn},</li>
+ * <li>{@link Inventory.allParts} <code>ObservableList</code>,</li>
+ * <li>{@link Inventory.allProducts} <code>ObservableList</code>,</li>
+ * <li>{@link #filterFieldParts},</li>
+ * <li>{@link #filterFieldProducts}</li>
+ * </ul>
+ *
+ * in addition to associating the data with the columns
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
@@ -194,9 +228,13 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
 }
 
 /**
- * @function Creates a random number for the randomly generated product IDs. The absolute value is used so that
- * there are no negative id numbers.
- * @return The random id number
+ * Creates a random number for the randomly generated {@link com.inventory.Part} or {@link com.inventory.Product} IDs
+ * using the {@link java.util.Random} class.&nbsp; The
+ * absolute
+ * value is used so
+ * that
+ * there are no negative <code>id</code> numbers.
+ * @return The random <code>id</code> number
  */
 public int getRandomNumber( ) {
   Random randomNumbers = new Random( );
@@ -204,7 +242,7 @@ public int getRandomNumber( ) {
 }
 
 /**
- * @function Opens the Add Part menu
+ * Opens the Add Part menu
  * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
  * @throws Exception if the fxml file is not found
  */
@@ -232,8 +270,8 @@ public void partsAddButtonListener( ActionEvent actionEvent ) throws Exception {
 }
 
 /**
- * @function Opens the Modify Part menu
- * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
+ * Opens the Modify Part menu
+ * @param actionEvent the event that fires when the "Modify" Button is clicked on the main form
  * @throws Exception if the fxml file is not found
  */
 public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
@@ -281,7 +319,8 @@ public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exceptio
 
 
 /**
- * @function Deletes the selected entry from the parts TableView
+ * Deletes the selected entry from the {@link #partsTableView}
+ *
  * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
  */
 public void partsDeleteButtonListener( ActionEvent actionEvent ) {
@@ -300,7 +339,7 @@ public void partsDeleteButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Opens the Add Product Menu
+ * Opens the Add Product Menu
  * @param actionEvent is fired when the Add Product button is clicked
  * @throws Exception is thrown if the fxml file is not found
  */
@@ -323,12 +362,12 @@ public void productsAddButtonListener( ActionEvent actionEvent ) throws Exceptio
 }
 
 /**
- * @function Opens the Modify Product Menu. It also passes the selectedProduct to the main Inventory
+ * Opens the Modify Product Menu. It also passes the selectedProduct to the main {@link com.inventory.Inventory}
  * class.
  * @param actionEvent is fired when the Modify Product button is clicked
  * @throws Exception is thrown if the fxml file is not found
- *
- * @RUNTIME-ERROR I was having trouble figuring out how to get the selectedProduct over to the modifyProduct
+ *<br><br>
+ * RUNTIME ERROR I was having trouble figuring out how to get the selectedProduct over to the modifyProduct
  * controller. I ended up having to declare the ObservableLists as static variables in the Inventory class so that
  * I could access them anywhere in the application.
  */
@@ -368,7 +407,7 @@ public void productsModifyButtonListener( ActionEvent actionEvent ) throws Excep
 }
 
 /**
- * @function Deletes a product from the products table
+ * Deletes a {@link com.inventory.Product} from the {@link #productsTableView}
  * @param actionEvent is fired when the delete product button is clicked
  */
 public void productsDeleteButtonListener( ActionEvent actionEvent ) {
@@ -396,7 +435,7 @@ public void productsDeleteButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Closes the window and exits the program
+ * Closes the window and exits the program
  * @param actionEvent fires when the "Exit" button is clicked
  */
 public void exitButtonListener( ActionEvent actionEvent ) {
@@ -405,11 +444,13 @@ public void exitButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function is called when "Enter" is pressed when searching for a part in the parts
- * table. It selects the matching part
+ * Called when "Enter" is pressed when searching for a {@link com.inventory.Part} in the {@link #partsTableView}
+ * .&nbsp;It
+ * selects the
+ * matching <code>Part</code>.
  * @param actionEvent fired when the user presses "Enter"
- *
- * @RUNTIME-ERROR I originally had the Error message-setting code in the initialize() function, and struggled with
+ *<br><br>
+ * RUNTIME ERROR I originally had the Error message-setting code in the initialize() function, and struggled with
  * getting the error message to show up at the right time. I ended up having to move it to a separate function.
  */
 public void partsSearchFieldListener( ActionEvent actionEvent ) {
@@ -422,8 +463,10 @@ public void partsSearchFieldListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function is called when "Enter" is pressed when searching for a product in the product
- * table. It selects the matching product
+ * Called when "Enter" is pressed when searching for a {@link com.inventory.Product} in the
+ * {@link #productsTableView}.&nbsp;It
+ * selects the
+ * matching <code>Product</code>.
  * @param actionEvent fired when the user presses "Enter"
  */
 public void productsSearchFieldListener( ActionEvent actionEvent ) {
