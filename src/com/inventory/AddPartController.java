@@ -19,51 +19,86 @@ import static com.inventory.Inventory.allParts;
 
 public class AddPartController implements Initializable {
 
-/**
+/*
  * Fields
  */
 
+/**
+ * a RadioButton that allows you to select the type of {@link com.inventory.Part}
+ */
 @FXML
 private RadioButton addPartInHouseRadio;
 
+/**
+ * saves the {@link com.inventory.Part} to the {@link com.inventory.Inventory}
+ */
 @FXML
 private Button addPartSaveButton;
 
+/**
+ * cancels the form and closes the window
+ */
 @FXML
 private Button addPartCancelButton;
 
+/**
+ * the label for the last field in the {@link com.inventory.Part} form
+ */
 @FXML
 private Label addPartExtraLabel;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the name of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartNameTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the stock of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartInventoryTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the price of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartPriceTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the max of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartMaxTextField;
 
-
+/**
+ * the {@link javafx.scene.control.TextField} for the min of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartMinTextField;
 
-
+/**
+ * the {@link javafx.scene.control.TextField} for the extra of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartExtraTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the id of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField addPartIdTextField;
 
+/**
+ * the {@link javafx.scene.control.Label} that is used to display error messages
+ */
 @FXML
 private Label addPartErrorLabel;
 
 /**
+ * Saves the information in the text fields to the inventory and applies input validation
+ *
  * @param actionEvent fired when the save button is clicked
- * @function This function saves the information in the text fields to the inventory
  */
 public void addPartSaveListener( ActionEvent actionEvent ) {
   // Get the information from the text fields and place them into variables
@@ -117,9 +152,9 @@ public void addPartSaveListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @return the random ID number
+ * Creates a random ID number for the new {@link com.inventory.Part}
  *
- * @function Creates a random ID number for the new Part
+ * @return the random ID number
  */
 public int getRandomNumber( ) {
   Random randomNumbers = new Random( );
@@ -127,8 +162,9 @@ public int getRandomNumber( ) {
 }
 
 /**
+ * Cancels the add part form and closes out the window
+ *
  * @param actionEvent fired when the add part button is clicked
- * @function Cancels the add part form and closes out the window
  */
 public void addPartCancelButtonListener( ActionEvent actionEvent ) {
   Stage stage = ( Stage ) addPartCancelButton.getScene( ).getWindow( );
@@ -136,10 +172,12 @@ public void addPartCancelButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
+ * Changes the text of the last text field depending on which radio button is selected
+ *
  * @param actionEvent fired when a radio button is selected
- * @function Changes the text of the last text field depending on which radio button is selected
- * @RUNTIME-ERROR: When creating the TextFormatters, I had a little bit of trouble with where to place the formatter
- *     for the MachineID/Company Name fields
+ *                    <br><br>
+ *                    RUNTIME ERROR When creating the TextFormatters, I had a little bit of trouble with where to place
+ *                    the formatter for the MachineID/Company Name fields
  */
 public void addPartRadioListener( ActionEvent actionEvent ) {
   if ( addPartInHouseRadio.isSelected( ) ) {
@@ -151,7 +189,7 @@ public void addPartRadioListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function initialize() initializes the randomId number and the input validation for each of the text fields
+ * Initializes the randomId number and the input validation for each {@link javafx.scene.control.TextField}
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
