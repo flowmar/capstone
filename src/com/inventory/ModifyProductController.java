@@ -84,18 +84,23 @@ public void addAssociatedPartButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Removes the selected part in the bottom TableView's association with the product on the
- * left hand side. The part will be removed from the bottom TableView
  * @param actionEvent fired when the Remove button is clicked
+ * @function Removes the selected part in the bottom TableView's association with the product on the left hand side.
+ *     The part will be removed from the bottom TableView
  */
 public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
   // Get the selected part from the bottom table view
   Part selectedPart = ( Part ) modifyProductAssociatedPartsTableView.getSelectionModel( ).getSelectedItem( );
   
-  // Remove the selected part from the associated parts list
-  associatedPartsList.remove( selectedPart );
-  modifyProductSaveErrorLabel.setText( "Part association removed!" );
-  modifyProductSaveErrorLabel.setStyle( "-fx-text-fill: #00ff00;");
+  if ( selectedPart == null ) {
+    modifyProductErrorLabel.setText( "Error: No part selected!" );
+  }
+  else {
+    // Remove the selected part from the associated parts list
+    associatedPartsList.remove( selectedPart );
+    modifyProductSaveErrorLabel.setText( "Part association removed!" );
+    modifyProductSaveErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+  }
 }
 
 /**
@@ -149,8 +154,8 @@ public void modifyProductSaveButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Cancels the form and closes out the window
  * @param actionEvent fires when the cancel button is clicked
+ * @function Cancels the form and closes out the window
  */
 public void modifyProductCancelButtonListener( ActionEvent actionEvent ) {
   Stage stage = ( Stage ) modifyProductCancelButton.getScene( ).getWindow( );
@@ -158,10 +163,9 @@ public void modifyProductCancelButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Initializes the new scene by placing the selected product data into the UI, creating
- * TableColumns for the TableViews, associating the data with the columns, and adding a filtering
- * function to the TextField in the upper right corner. It also sets TextFormatters on the
- * TextFields for input validation.
+ * @function Initializes the new scene by placing the selected product data into the UI, creating TableColumns for
+ *     the TableViews, associating the data with the columns, and adding a filtering function to the TextField in the
+ *     upper right corner. It also sets TextFormatters on the TextFields for input validation.
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
@@ -209,7 +213,8 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   FilteredList<Part> filteredProductData = new FilteredList<Part>( Inventory.allParts, t -> true );
   
   // Set the filter to change whenever the filter changes
-  modifyProductSearchField.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
+  modifyProductSearchField.textProperty( ).addListener( ( observable, oldValue, newValue ) ->
+  {
     
     filteredProductData.setPredicate( product -> {
       

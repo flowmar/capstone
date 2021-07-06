@@ -102,11 +102,15 @@ public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
   // Get the selected Part in the bottom TableView
   Part selectedPart = ( Part ) associatedPartTableView.getSelectionModel( ).getSelectedItem( );
   
-  // Remove the selected part from the associated parts list
-  associatedPartsList.remove( selectedPart );
-  addProductSaveErrorLabel.setText( "Part association removed!" );
-  addProductSaveErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
-  
+  if ( selectedPart == null ) {
+    addProductErrorLabel.setText( "Error: No part selected." );
+  }
+  else {
+    // Remove the selected part from the associated parts list
+    associatedPartsList.remove( selectedPart );
+    addProductSaveErrorLabel.setText( "Part association removed!" );
+    addProductSaveErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+  }
 }
 
 /**

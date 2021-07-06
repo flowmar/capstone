@@ -13,56 +13,78 @@ import java.io.IOException;
 /**
  * @author Omar Imam
  * @version %I% %G%
- * @FUTURE_EHANCEMENT In the future the application can be expanded to have different departments able to login and
- *     access the parts and products that apply to them.
- * @FUTURE_ENHANCEMENT There can also be an ordering system integrated to order new parts when the stock gets close
- *     to the minimum.
- * @FUTURE_ENHANCEMENT Transactions when parts and products are bought and sold can also be integrated into their
- *     own database.
- * @FUTURE_ENHANCEMENT If they are exchanging parts for parts or products for products with another company, instead
- *     of buying and selling, that functionality can be added in as well.
  */
 
 public class Inventory extends Application {
 
-/**
+/*
  * Fields
  */
-public static ObservableList<Part>    allParts    = FXCollections.observableArrayList( );
-public static ObservableList<Product> allProducts = FXCollections.observableArrayList( );
-public static int                     selectedPartId;
-public static int                     selectedPartIndex;
-public static Part                    selectedPart;
-public static Product                 selectedProduct;
-public static int                     selectedProductId;
-public static int                     selectedProductIndex;
-
-
 /**
- *
- * JAVADOCS ARE LOCATED AT OmarImamSoftware1PerformanceAssessment/Javadocs
- *
+ * A list of every {@link com.inventory.Part} in the {@link com.inventory.Inventory}
  */
+public static ObservableList<Part>    allParts    = FXCollections.observableArrayList( );
+/**
+ * A list of every {@link com.inventory.Product} in the {@link com.inventory.Inventory}
+ */
+public static ObservableList<Product> allProducts = FXCollections.observableArrayList( );
+/**
+ * Holds a {@link com.inventory.Part} anytime one is selected within the UI
+ */
+public static Part                    selectedPart;
+
+/**
+ * The index of the selected {@link com.inventory.Part} within its <code>ObservableList</code>
+ */
+public static int     selectedPartIndex;
+/**
+ * The <code>id</code> number of the selected {@link com.inventory.Part}
+ */
+public static int     selectedPartId;
+/**
+ * Holds a {@link com.inventory.Product} anytime one is selected within the UI
+ */
+public static Product selectedProduct;
+/**
+ * The index of the selected {@link com.inventory.Product} within its <code>ObservableList</code>
+ */
+public static int     selectedProductIndex;
+/**
+ * The <code>id</code> number of the selected {@link com.inventory.Product}
+ */
+public static int     selectedProductId;
 
 
 /**
- * @function main launches the JavaFX application
+ * Launches the JavaFX application. <br><br> Javadocs are located at: OmarImamSoftware1PerformanceAssessment/Javadocs
+ * <br><br> FUTURE EHANCEMENT In the future the application can be expanded to have different departments able to login
+ * and access the parts and products that apply to them. <br><br> FUTURE ENHANCEMENT There can also be an ordering
+ * system integrated to order new parts when the stock gets close to the minimum. <br><br> FUTURE ENHANCEMENT
+ * Transactions when parts and products are bought and sold can also be integrated into their own database. <br><br>
+ * FUTURE ENHANCEMENT If they are exchanging parts for parts or products for products with another company, instead of
+ * buying and selling, that functionality can be added in as well.
  */
 public static void main( String args[] ) {
     launch( args );
 }
 
 /**
- * @function addPart(Part newPart) Add a new part to the ObservableList<Part >object
- * @param newPart the new Part object that is to be added to the ObservableList<Part> object
+ * Adds a new part to the {@link #allParts ObservableList&lt;Part&gt;allParts} object
+ *
+ * @param newPart the new {@link com.inventory.Part} object that is to be added to the <code>ObservableList&lt;Part&gt;
+ *                </code>
+ *                object
  */
 public void addPart( Part newPart ) {
     allParts.add( newPart );
 }
 
 /**
- * @function addProduct(Product newProduct) Add a new product to the ObservableList<Product> object
- * @param newProduct the new Part object that is to added to the ObservableList<Product> object
+ * Adds a new product to the {@link #allProducts ObservableList&lt;Product&gt;allProducts} object
+ *
+ * @param newProduct the new {@link com.inventory.Product} object that is to added to the <code>ObservableList&lt;
+ *                   Product&gt;
+ *                   </code> object
  */
 public void addProduct( Product newProduct ) {
     allProducts.add( newProduct );
@@ -70,9 +92,10 @@ public void addProduct( Product newProduct ) {
 
 
 /**
- * @function lookupPart(int partId) Searches for a part, identified by the Id number of the part
- * @param partId the inventory identification number of the part
- * @return the part in the allParts Observable list that matches the partId
+ * Searches for a {@link com.inventory.Part}, identified by the <code>id</code> number of the {@link com.inventory.Part}
+ *
+ * @param partId the inventory identification number of the {@link com.inventory.Part}
+ * @return the {@link com.inventory.Part} in the {@link #allParts} Observable list that matches the partId
  */
 public Part lookupPart( int partId ) {
     Part foundPart = null;
@@ -87,9 +110,11 @@ public Part lookupPart( int partId ) {
 }
 
 /**
- * @function lookupProduct(int productId) Searches for a product identified by the id number of the product
- * @param productId the inventory identification number of the product
- * @return the product that matches the productId
+ * Searches for a {@link com.inventory.Product}, identified by the <code>id</code> number of the
+ * {@link com.inventory.Product}
+ *
+ * @param productId the inventory identification number of the {@link com.inventory.Product}
+ * @return the {@link com.inventory.Product} that matches the <code>productId</code>
  */
 public Product lookupProduct( int productId ) {
     Product foundProduct = null;
@@ -104,10 +129,10 @@ public Product lookupProduct( int productId ) {
 }
 
 /**
- * @param partName the name of the part that is being searched for
- * @return the part that matches the partName
+ * Searches for a {@link com.inventory.Part}, identified by by the <code>name</code> of the {@link com.inventory.Part}
  *
- * @function lookupPart(String partName) Searches for a part, identified by by the Name of the part
+ * @param partName the name of the {@link com.inventory.Part} that is being searched for
+ * @return the {@link com.inventory.Part} that matches the <code>partName</code>
  */
 public ObservableList<Part> lookupPart( String partName ) {
     Part                 foundPart  = null;
@@ -136,10 +161,11 @@ public ObservableList<Part> lookupPart( String partName ) {
 }
 
 /**
- * @param productName the name of the product that is being searched for
- * @return the product that matches the productName
+ * Searches for a {@link com.inventory.Product}, identified by by the <code>name</code> of the
+ * {@link com.inventory.Product}
  *
- * @function lookupProduct(String productName) Searches for a product, identified by by the Name of the product
+ * @param productName the name of the {@link com.inventory.Product} that is being searched for
+ * @return the {@link com.inventory.Product} that matches the <code>productName</code>
  */
 public ObservableList<Product> lookupProduct( String productName ) {
     Product                 foundProduct  = null;
@@ -161,9 +187,10 @@ public ObservableList<Product> lookupProduct( String productName ) {
 }
 
 /**
- * @function updatePart(int index, Part newPart) updates an entry at a specified index with a new entry
- * @param index location in the list of the part to be updated
- * @param newPart the entry that will be used to replace the old one
+ * Updates a {@link com.inventory.Part} at a specified index with a new {@link com.inventory.Part}
+ *
+ * @param index location in the list of the {@link com.inventory.Part} to be updated
+ * @param newPart the {@link com.inventory.Part} that will be used to replace the old one
  */
 public void updatePart( int index, Part newPart ) {
     // Find the part at the selected index and update the entry with newPart
@@ -171,9 +198,10 @@ public void updatePart( int index, Part newPart ) {
 }
 
 /**
- * @function updateProduct(int index, Product newProduct) updates an entry at a specified index with a new entry
- * @param index location of the  product to be updated
- * @param newProduct the entry that will be used to replace the old one
+ * Updates a {@link com.inventory.Product} at a specified index with a {@link com.inventory.Product}
+ *
+ * @param index location of the  {@link com.inventory.Product} to be updated
+ * @param newProduct the {@link com.inventory.Product} that will be used to replace the old one
  */
 public void updateProduct( int index, Product newProduct ) {
     // Find the  product at the selected index and update the entry with new product
@@ -181,9 +209,10 @@ public void updateProduct( int index, Product newProduct ) {
 }
 
 /**
- * @function deletePart(Part selectedPart) deletes the selected part from the inventory
- * @param selectedPart the part to be deleted
- * @return deleteCompleted a boolean value that confirms deletion
+ * Deletes the selected {@link com.inventory.Part} from the {@link com.inventory.Inventory}
+ *
+ * @param selectedPart the {@link com.inventory.Part} to be deleted
+ * @return <code>deleteCompleted</code> a boolean value that confirms deletion
  */
 public boolean deletePart( Part selectedPart ) {
     // Remove the selected part
@@ -198,10 +227,11 @@ public boolean deletePart( Part selectedPart ) {
 }
 
 /**
- * @param selectedProduct the part to be deleted
- * @return deleteCompleted a boolean value that confirms deletion
+ * Deletes the selected {@link com.inventory.Product} from the {@link com.inventory.Inventory}
  *
- * @function deleteProduct(Product selectedProduct) deletes the selected part from the inventory
+ * @param selectedProduct the {@link com.inventory.Product} to be deleted
+ * @return <code>deleteCompleted</code> a boolean value that confirms deletion
+ *
  */
 public boolean deleteProduct( Product selectedProduct ) {
     // Remove the selected product
@@ -216,25 +246,28 @@ public boolean deleteProduct( Product selectedProduct ) {
 }
 
 /**
- * @function getAllParts() returns a sorted list of all parts in the inventory
- * @return a SortedList<Part> object
+ * Returns a sorted list of every {@link com.inventory.Part} in the {@link com.inventory.Inventory}
+ *
+ * @return a <code>SortedList&lt;Part&gt;</code> object
  */
 public ObservableList<Part> getAllParts( ) {
     return allParts.sorted( );
 }
 
 /**
- * @function getAllProducts() returns a sorted list of all products in the inventory
- * @return a SortedList<Product> object
+ * Returns a sorted list of all {@link com.inventory.Product} in the {@link com.inventory.Inventory}
+ *
+ * @return a <code>SortedList&lt;Product&gt;</code> object
  */
 public ObservableList<Product> getAllProducts( ) {
     return allProducts.sorted( );
 }
 
 /**
- * @function start(Stage Stage) creates the loader and the scene and the stage
+ * Creates the loader, the {@link javafx.scene.Scene} and the {@link javafx.stage.Stage}
+ *
  * @param stage the window where the scene and the components of the scene are loaded and displayed
- * @throws Exception if the
+ * @throws Exception if the fxml file is not found, an exception is thrown
  */
 
 @Override
