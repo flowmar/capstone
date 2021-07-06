@@ -22,57 +22,101 @@ import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
 
-/**
+/*
  * Fields
  */
 
+/**
+ * a button that cancels the form and closes the window
+ */
 @FXML
 private Button addProductCancelButton;
 
+/**
+ * a button that saves the {@link com.inventory.Product} information to the {@link com.inventory.Inventory}
+ */
 @FXML
 private Button addProductSaveButton;
 
+/**
+ * a {@link javafx.scene.control.Label} that is used to display error messages
+ */
 @FXML
 private Label addProductErrorLabel;
 
+/**
+ * a {@link javafx.scene.control.Label} that is used to display error messages relating to saving a {@link
+ * com.inventory.Product}
+ */
 @FXML
 private Label addProductSaveErrorLabel;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product id
+ */
 @FXML
 private TextField addProductIdTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product name
+ */
 @FXML
 private TextField addProductNameTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product price
+ */
 @FXML
 private TextField addProductPriceTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product stock
+ */
 @FXML
 private TextField addProductStockTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product max
+ */
 @FXML
 private TextField addProductMaxTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product min
+ */
 @FXML
 private TextField addProductMinTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the filtering the {@link #addProductTableView}
+ */
 @FXML
 private TextField addProductFilterField;
 
+/**
+ * the {@link javafx.scene.control.TableView} that is used to display each {@link com.inventory.Part} in the
+ * {@link com.inventory.Inventory}
+ */
 @FXML
 private TableView<Part> addProductTableView;
 
+/**
+ * the {@link javafx.scene.control.TableView} that is used to display each associated {@link com.inventory.Part}
+*/
 @FXML
 private TableView<Part> associatedPartTableView;
 
+/**
+ * a list used to hold the products associated parts
+ */
 @FXML
 // Create an ObservableList Object to hold the Associated Parts
-ObservableList<Part> associatedPartsList = FXCollections.observableArrayList( );
+    ObservableList<Part> associatedPartsList = FXCollections.observableArrayList( );
 
 /**
- * @return the random ID number
+ * Creates a random ID number for the new product
  *
- * @function Creates a random ID number for the new product
+ * @return the random ID number
  */
 public int getRandomNumber( ) {
   Random randomNumbers = new Random( );
@@ -80,7 +124,7 @@ public int getRandomNumber( ) {
 }
 
 /**
- * @function This function associates a part with a product
+ * Associates a {@link com.inventory.Part} with {@link com.inventory.Product}
  * @param actionEvent fired when the add button is clicked
  */
 public void addProductAddButtonListener( ActionEvent actionEvent ) {
@@ -95,7 +139,7 @@ public void addProductAddButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- *@function This function removes a part-product association
+ * Removes a part-product association
  * @param actionEvent fired when the remove associated part button is clicked
  */
 public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
@@ -114,7 +158,7 @@ public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- *@function This function saves a product to the inventory
+ * Saves a {@link com.inventory.Product}to the {@link com.inventory.Inventory}
  * @param actionEvent fired when the save button is clicked
  */
 public void addProductSaveListener( ActionEvent actionEvent ) {
@@ -161,7 +205,7 @@ public void addProductSaveListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Cancels the add product form and closes out the window
+ * Cancels the add product form and closes out the window
  * @param actionEvent fires when the cancel button is clicked
  */
 public void addProductCancelButtonListener( ActionEvent actionEvent ) {
@@ -170,9 +214,10 @@ public void addProductCancelButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Create the TableViews, Filter TextFields, and set a TextFormatter on each TextField for input
+ * Create the TableViews, Filter TextFields, and set a TextFormatter on each TextField for input
  * validation
- * @RUNTIME-ERROR I had trouble making the data show up on the TableViews. I incorrectly named the PropertyValues and
+ * <br><br>
+ * RUNTIME ERROR I had trouble making the data show up on the TableViews. I incorrectly named the PropertyValues and
  * the Object Types for the TableColumns. I had to ensure that the PropertyValues matched up with the TableColumn names
  * and that the TableColumn Object types matched the Parts and Products
  */
@@ -333,9 +378,10 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
 }
 
 /**
+ * Called when "Enter" is pressed when searching for a part in the parts table.&nbsp;It selects the matching
+ * part.
+ *
  * @param actionEvent fired when the user presses "Enter"
- * @function is called when "Enter" is pressed when searching for a part in the parts table. It selects the matching
- *     part
  */
 public void addProductsSearchFieldListener( ActionEvent actionEvent ) {
   addProductTableView.getSelectionModel( ).clearSelection( );

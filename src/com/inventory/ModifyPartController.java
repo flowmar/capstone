@@ -16,54 +16,94 @@ import java.util.ResourceBundle;
 
 public class ModifyPartController implements Initializable {
 
-/**
+/*
  * Fields
  */
 
+/**
+ * a RadioButton that allows you to select the type of {@link com.inventory.Part}
+ */
 @FXML
 private RadioButton modifyPartInHouseRadio;
 
+/**
+ * a RadioButton that allows you to select the type of {@link com.inventory.Part}
+ */
 @FXML
 private RadioButton modifyPartOutsourcedRadio;
 
+/**
+ * saves the {@link com.inventory.Part} to the {@link com.inventory.Inventory}
+ */
 @FXML
 private Button modifyPartSaveButton;
 
+/**
+ * cancels the form and closes the window
+ */
 @FXML
 private Button modifyPartCancelButton;
 
+/**
+ * the label for the last field in the {@link com.inventory.Part} form
+ */
 @FXML
 private Label modifyPartExtraLabel;
 
+/**
+ * the {@link javafx.scene.control.Label} that is used to display error messages
+ */
 @FXML
 private Label modifyPartSaveErrorLabel;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the id of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartIdTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the name of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartNameTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the price of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartPriceTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the stock of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartStockTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the max of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartMaxTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the min of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartMinTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} for the extra of the {@link com.inventory.Part}
+ */
 @FXML
 private TextField modifyPartExtraTextField;
 
 /**
+ * Saves the information in the TextFields to the inventory.&nbsp;It also includes input validation for the
+ *  Stock, Min, and Max fields.&nbsp;It also checks to see which RadioButton is selected at the top of the form, and
+ *  adjusts the last TextField accordingly.
+ *
  * @param actionEvent fired when the save button is clicked
- * @function Saves the information in the TextFields to the inventory. It also includes input validation for the
- *     Stock, Min, and Max fields. It also checks to see which RadioButton is selected at the top of the form, and
- *     adjusts the last TextField accordingly.
  */
 public void modifyPartSaveListener( ActionEvent actionEvent ) {
   // Replace the information for the selected part with the information in the text fields
@@ -122,10 +162,11 @@ public void modifyPartSaveListener( ActionEvent actionEvent ) {
 }
 
 /**
+ * Changes the Label of the last TextField depending on the radio button that is selected.&nbsp;It also adds a
+ *  TextFormatter to the TextField for input validation, changing between Integers-only and Letters-Only to fit
+ *  the field
+ *
  * @param actionEvent fired when a radio button is selected
- * @function Changes the Label of the last TextField depending on the radio button that is selected. It also adds a
- *     TextFormatter to the TextField for input validation, changing between Integers-only and Letters-Only to fit the
- *     field
  */
 public void modifyPartRadioListener( ActionEvent actionEvent ) {
   // Set the text of the form based upon which radio button is selected
@@ -138,9 +179,11 @@ public void modifyPartRadioListener( ActionEvent actionEvent ) {
 }
 
 /**
+ * Closes the window if the cancel button is clicked
+ *
  * @param actionEvent fired when the cancel button is clicked
- * @function Closes the window if the cancel button is clicked
- * @RUNTIME-ERROR Forgot to cast the Button as a stage before using stage.close();
+ * <br><br>
+ * RUNTIME ERROR Forgot to cast the Button as a stage before using stage.close();
  */
 public void modifyPartCancelButtonListener( ActionEvent actionEvent ) {
   // Close the window if the cancel button is clicked
@@ -150,7 +193,7 @@ public void modifyPartCancelButtonListener( ActionEvent actionEvent ) {
 
 
 /**
- * @function Initializes the new scene by placing the selected part data into the UI. It also sets a TextFormatter
+ * Initializes the new scene by placing the selected part data into the UI.&nbsp;It also sets a TextFormatter
  *     to each TextField for input validation.
  */
 @Override

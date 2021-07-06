@@ -18,6 +18,8 @@ private int machineId;
 /**
  * Constructor
  *
+ * @param id        the identification number of the part
+ * @param name      the name of the part
  * @param price     the cost of the item
  * @param stock     the quantity in stock
  * @param min       the minimum number on hand

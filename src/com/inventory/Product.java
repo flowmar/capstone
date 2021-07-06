@@ -45,12 +45,14 @@ private int                  max;
 /**
  * Constructor
  *
- * @param id    the numerical identification number of the item
-     * @param price the cost of the item
-     * @param stock the quantity in stock
-     * @param min   the minimum number on hand
-     * @param max   the maximum number on hand
-     */
+ * @param id              the numerical identification number of the item
+ * @param name            the name of the product
+ * @param price           the cost of the item
+ * @param stock           the quantity in stock
+ * @param min             the minimum number on hand
+ * @param max             the maximum number on hand
+ * @param associatedParts the parts associated with the product
+ */
     public Product( int id, String name, double price, int stock, int min, int max,
                     ObservableList<Part> associatedParts ) {
         this.id              = id;

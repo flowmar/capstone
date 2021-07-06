@@ -19,6 +19,7 @@ private String companyName;
      * Constructor
      *
      * @param id          the id number of the item
+     * @param name        the name of the part
      * @param price       the cost of the item
      * @param stock       the quantity in stock
      * @param min         the minimum number on hand

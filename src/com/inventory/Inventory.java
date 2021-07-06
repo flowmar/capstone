@@ -57,12 +57,17 @@ public static int     selectedProductId;
 
 /**
  * Launches the JavaFX application. <br><br> Javadocs are located at: OmarImamSoftware1PerformanceAssessment/Javadocs
- * <br><br> FUTURE EHANCEMENT In the future the application can be expanded to have different departments able to login
- * and access the parts and products that apply to them. <br><br> FUTURE ENHANCEMENT There can also be an ordering
- * system integrated to order new parts when the stock gets close to the minimum. <br><br> FUTURE ENHANCEMENT
- * Transactions when parts and products are bought and sold can also be integrated into their own database. <br><br>
- * FUTURE ENHANCEMENT If they are exchanging parts for parts or products for products with another company, instead of
- * buying and selling, that functionality can be added in as well.
+ * <br><br>
+ *
+ * @param args[] arguments passed into the main function of the application
+ *               <br><br>
+ *               FUTURE EHANCEMENT In the future the application can be expanded to have different departments able to
+ *               login and access the parts and products that apply to them. <br><br> FUTURE ENHANCEMENT There can also
+ *               be an ordering system integrated to order new parts when the stock gets close to the minimum. <br><br>
+ *               FUTURE ENHANCEMENT Transactions when parts and products are bought and sold can also be integrated into
+ *               their own database. <br><br> FUTURE ENHANCEMENT If they are exchanging parts for parts or products for
+ *               products with another company, instead of buying and selling, that functionality can be added in as
+ *               well.
  */
 public static void main( String args[] ) {
     launch( args );

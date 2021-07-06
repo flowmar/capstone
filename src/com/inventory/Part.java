@@ -7,13 +7,51 @@ package com.inventory;
  * @author Omar Imam
  */
 public abstract class Part {
-private int    id;
-private String name;
-private double price;
-private int    stock;
-private int    min;
-private int    max;
 
+/*
+ * Fields
+ */
+
+/**
+ * The identification number of the part
+ */
+private int id;
+
+/**
+ * The name of the part
+ */
+private String name;
+
+/**
+ * The price of the part
+ */
+private double price;
+
+/**
+ * The quantity of the part on hand
+ */
+private int stock;
+
+/**
+ * The required minimum quantity of the part on hand
+ */
+private int min;
+
+/**
+ * The required maximum quantity of the part on hand
+ */
+private int max;
+
+/**
+ * Constructor
+ *
+ * @param id    identification number of the part
+ * @param name  name of the part
+ * @param price price of the part
+ * @param stock quantity on hand of the part
+ * @param min   the required minimum quantity of the part on hand
+ * @param max   the maximum quantity of the part allowed on hand
+ */
 public Part( int id, String name, double price, int stock, int min, int max ) {
   this.id    = id;
   this.name  = name;

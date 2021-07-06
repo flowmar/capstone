@@ -21,55 +21,101 @@ import java.util.ResourceBundle;
 
 public class ModifyProductController implements Initializable {
 
-/**
+/*
  * Fields
+ */
+
+/**
+ * saves the {@link com.inventory.Product} to the {@link com.inventory.Inventory}
  */
 @FXML
 private Button modifyProductSaveButton;
 
+/**
+ * Cancels the form and closes the window
+ */
 @FXML
 private Button modifyProductCancelButton;
 
+/**
+ * the {@link javafx.scene.control.Label} that is used to display error messages
+ */
 @FXML
 private Label modifyProductErrorLabel;
 
+/**
+ * the {@link javafx.scene.control.Label} that is used to display error messages related to saving
+ */
 @FXML
 private Label modifyProductSaveErrorLabel;
 
+/**
+ * a {@link javafx.scene.control.TableView} that displays each {@link com.inventory.Part} in the {@link
+ * com.inventory.Inventory}
+ */
 @FXML
 private TableView<Part> modifyProductPartsTableView;
 
+/**
+ * a {@link javafx.scene.control.TableView} that displays each {@link com.inventory.Part} associated with the current
+ * {@link com.inventory.Product}
+ */
 @FXML
 private TableView<Part> modifyProductAssociatedPartsTableView;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product id
+ */
 @FXML
 private TextField modifyProductIdTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product name
+ */
 @FXML
 private TextField modifyProductNameTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product stock
+ */
 @FXML
 private TextField modifyProductStockTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product price
+ */
 @FXML
 private TextField modifyProductPriceTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product max
+ */
 @FXML
 private TextField modifyProductMaxTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the product min
+ */
 @FXML
 private TextField modifyProductMinTextField;
 
+/**
+ * the {@link javafx.scene.control.TextField} that is used for the filtering the {@link #modifyProductPartsTableView}
+ */
 @FXML
 private TextField modifyProductSearchField;
 
+/**
+ * a list that holds each {@link com.inventory.Part} associated with the product
+ */
 @FXML
 ObservableList<Part> associatedPartsList = FXCollections.observableArrayList( );
 
 /**
+ * Associates the selected part in the top TableView with the Product on the left.&nbsp;The Part will be copied
+ * into the bottom TableView to show the association
+ *
  * @param actionEvent fires when the Add button is clicked
- * @function Associates the selected part in the top TableView with the Product on the left. The Part will be copied
- *     into the bottom TableView to show the association
  */
 public void addAssociatedPartButtonListener( ActionEvent actionEvent ) {
   modifyProductSaveErrorLabel.setText("");
@@ -84,9 +130,10 @@ public void addAssociatedPartButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
+ * Removes the selected part in the bottom TableView's association with the product on the left hand side.&nbsp;The
+ * part will be removed from the bottom TableView
+ *
  * @param actionEvent fired when the Remove button is clicked
- * @function Removes the selected part in the bottom TableView's association with the product on the left hand side.
- *     The part will be removed from the bottom TableView
  */
 public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
   // Get the selected part from the bottom table view
@@ -104,8 +151,9 @@ public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Creates a new Product using the information from the TextFields. It also includes input
+ * Creates a new Product using the information from the TextFields.&nbsp;It also includes input
  * validation for the Stock, Min and Max fields.
+ *
  * @param actionEvent fired when the Save button is clicked
  */
 public void modifyProductSaveButtonListener( ActionEvent actionEvent ) {
@@ -154,8 +202,9 @@ public void modifyProductSaveButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
+ * Cancels the form and closes out the window
+ *
  * @param actionEvent fires when the cancel button is clicked
- * @function Cancels the form and closes out the window
  */
 public void modifyProductCancelButtonListener( ActionEvent actionEvent ) {
   Stage stage = ( Stage ) modifyProductCancelButton.getScene( ).getWindow( );
@@ -163,9 +212,9 @@ public void modifyProductCancelButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * @function Initializes the new scene by placing the selected product data into the UI, creating TableColumns for
+ * Initializes the new scene by placing the selected product data into the UI, creating TableColumns for
  *     the TableViews, associating the data with the columns, and adding a filtering function to the TextField in the
- *     upper right corner. It also sets TextFormatters on the TextFields for input validation.
+ *     upper right corner.&nbsp;It also sets TextFormatters on the TextFields for input validation.
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
@@ -336,9 +385,10 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
 }
 
 /**
+ * Called when "Enter" is pressed when searching for a part in the parts table.&nbsp;It selects the matching
+ *    part
+ *
  * @param actionEvent fired when the user presses "Enter"
- * @function is called when "Enter" is pressed when searching for a part in the parts table. It selects the matching
- *     part
  */
 public void modifyProductsSearchFieldListener( ActionEvent actionEvent ) {
   modifyProductPartsTableView.getSelectionModel( ).clearSelection( );

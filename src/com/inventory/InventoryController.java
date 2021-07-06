@@ -86,15 +86,15 @@ private Label partsErrorLabel;
 private Label productsErrorLabel;
 
 /**
- * Initializes each the scene including:
+ * Initializes the scene including:
  * <ul>
  * <li>{@link javafx.scene.control.TableColumn},</li>
- * <li>{@link Inventory.allParts} <code>ObservableList</code>,</li>
- * <li>{@link Inventory.allProducts} <code>ObservableList</code>,</li>
+ * <li>The <code>allParts</code> <code>ObservableList</code>,</li>
+ * <li>The <code>allProducts</code> <code>ObservableList</code>,</li>
  * <li>{@link #filterFieldParts},</li>
  * <li>{@link #filterFieldProducts}</li>
  * </ul>
- *
+ * <p>
  * in addition to associating the data with the columns
  */
 @Override
