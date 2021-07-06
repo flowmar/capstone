@@ -43,6 +43,5 @@ public int getMachineId( ) {
   return this.machineId;
 }
 
-
 }
 

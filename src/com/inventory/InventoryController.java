@@ -2,6 +2,8 @@ package com.inventory;
 
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
 
 /**
  * @author Omar Imam
+ * @version %I% %G%
  */
 
 
@@ -32,26 +34,6 @@ public class InventoryController implements Initializable {
 /**
  * Fields
  */
-
-@FXML
-private MenuBar         mainWindow;
-@FXML
-private Label           mainFormTitle;
-@FXML
-private Pane            partsPane;
-@FXML
-private ButtonBar       partsButtonBar;
-@FXML
-private Button          partsAddButton;
-@FXML
-private Button          partsModifyButton;
-@FXML
-private Button          partsDeleteButton;
-
-@FXML
-private TextField       partsSearchField;
-@FXML
-private TextField       productsSearchField;
 @FXML
 public  Random          randomNumbers  = new Random( );
 @FXML
@@ -60,33 +42,8 @@ public  TableView<Part> partsTableView = new TableView<>( );
 @FXML
 public TableView<Product> productsTableView = new TableView<>( );
 
-
-// Parts List
-@FXML
-ObservableList<Part> allParts;
-
-// Products List
-@FXML
-ObservableList<Product> allProducts;
-
-
-@FXML
-private Pane productsPane;
-
 @FXML
 public Stage stage = new Stage( );
-
-@FXML
-private ButtonBar productsButtonBar;
-
-@FXML
-private Button productsAddButton;
-
-@FXML
-private Button productsModifyButton;
-
-@FXML
-private Button productsDeleteButton;
 
 @FXML
 private TextField filterFieldParts;
@@ -103,6 +60,10 @@ private Label partsErrorLabel;
 @FXML
 private Label productsErrorLabel;
 
+/**
+ * @function Initializes the TableColumns, the allParts and allProducts ObservableLists, associates the data with
+ *     the columns, and initializes the filter TextFields.
+ */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
   // Initialize the columns
@@ -120,12 +81,11 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
       productsStockColumn );
   
   // Define the data in an observable list
-  Inventory.allParts = FXCollections.observableArrayList(
-      new InHouse( 505, "Paint", 30.25, 8, 5, 10, 5024 ),
-      new InHouse( 1025, "Screwdrivers", 15.00, 8, 3, 18, 6996 ),
-      new Outsourced( 88, "Trash Can", 30.25, 6, 3, 10, "The Company" ),
-      new Outsourced( 79, "Wrench", 15.00, 17, 3, 18, "Acme" )
-  );
+  Inventory.allParts.add( new InHouse( 505, "Paint", 30.25, 8, 5, 10, 5024 ) );
+  Inventory.allParts.add( new InHouse( 1025, "Screwdrivers", 15.00, 8, 3, 18, 6996 ) );
+  Inventory.allParts.add( new Outsourced( 88, "Trash Can", 30.25, 6, 3, 10, "The Company" ) );
+  Inventory.allParts.add( new Outsourced( 89, "Wrench", 15.00, 17, 3, 18, "Acme" ) );
+  
   
   ObservableList<Part> associatedPartsSample = FXCollections.observableArrayList(
       new InHouse( 652, "Screws", 14.00, 50, 10, 60, 40656 )
@@ -153,6 +113,9 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   partsTableView.setItems( Inventory.allParts );
   productsTableView.setItems( Inventory.allProducts );
   
+  partsIdColumn.setCellValueFactory( cellData -> new SimpleIntegerProperty( cellData.getValue( ).getId( ) ).asObject( ) );
+  partsNameColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue( ).getName( ) ) );
+  
   // Wrap the Observable list in a FilteredList
   FilteredList<Part> filteredData = new FilteredList<>( Inventory.allParts, t -> true );
   
@@ -160,32 +123,29 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   filterFieldParts.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
     
     filteredData.setPredicate( part -> {
+//      partsErrorLabel.setText("123");
       
       if ( newValue == null || newValue.isEmpty( ) ) {
+//        partsErrorLabel.setText( "345" );
+        return true;
+      }
+      
+      // Compare each part with the filter text
+      String lowerCaseFilter = newValue.toLowerCase( );
+      
+      if ( part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) ) {
+//        partsErrorLabel.setText("LettersMatched");
+        return true;
+      }
+      else if ( Integer.toString( ( part.getId( ) ) ).contains( lowerCaseFilter ) ) {
         partsErrorLabel.setText( "" );
         return true;
       }
-      
-      // Compare first name and last name of every part with filter text
-      String lowerCaseFilter = newValue.toLowerCase( );
-      
-      if ( part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( part.getId( ) ) ).contains( lowerCaseFilter ) ) {
-        partsErrorLabel.setText( "Error: No matching part found.1" );
-        return true;
+      else if ( !part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) && !Integer.toString( ( part.getId( ) ) ).contains( lowerCaseFilter ) ) {
+        partsErrorLabel.setStyle( "-fx-text-fill: #ff0000;" );
+//        partsErrorLabel.setText( "Error: No Matching Part Found!" );
       }
-//      else if ( part.getName( ).toLowerCase( ).contains( lowerCaseFilter ) || Integer.toString( ( part.getId( ) ) )
-//      .contains( lowerCaseFilter ) ) {
-//        partsErrorLabel.setText("Error: No matching part found.2");
-//        return true;
-//      }
-//      else if ( String.valueOf( part.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
-//        partsErrorLabel.setText("Error: No matching part found.3");
-//        return true;
-//      }
-      else {
-        partsErrorLabel.setText( "4" );
-        return false;
-      }
+      return false;
     } );
   } );
   
@@ -203,29 +163,25 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   filterFieldProducts.textProperty( ).addListener( ( observable, oldValue, newValue ) -> {
     
     filteredProductData.setPredicate( product -> {
-  
+      // If filter is empty, show all Products
       if ( newValue == null || newValue.isEmpty( ) ) {
+//        productsErrorLabel.setText( "123" );
+        return true;
+      }
+      
+      // Compare each part with the filter text
+      String lowerCaseFilter = newValue.toLowerCase( );
+      
+      if ( product.getName( ).toLowerCase( ).contains( lowerCaseFilter ) ) {
         productsErrorLabel.setText( "" );
         return true;
       }
-  
-      // Compare first name and last name of every product with filter text.
-      String lowerCaseFilter = newValue.toLowerCase( );
-  
-      if ( product.getName( ).toLowerCase( ).contains( lowerCaseFilter ) ) {
-        productsErrorLabel.setText( "1" );
-        return true;
-      }
       else if ( Integer.toString( ( product.getId( ) ) ).contains( lowerCaseFilter ) ) {
-        productsErrorLabel.setText( "2" );
+        productsErrorLabel.setText( "" );
         return true;
       }
-//      else if ( String.valueOf( product.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
-//        productsErrorLabel.setText("3");
-//        return true;
-//      }
       else {
-        productsErrorLabel.setText( "4" );
+//        productsErrorLabel.setText( "Error: No Matching Product Found!" );
         return false;
       }
     } );
@@ -239,9 +195,8 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
 }
 
 /**
- * This function creates a random number for the randomly generated product IDs. The absolute value is used so that
+ * @function Creates a random number for the randomly generated product IDs. The absolute value is used so that
  * there are no negative id numbers.
- *
  * @return The random id number
  */
 public int getRandomNumber( ) {
@@ -250,35 +205,38 @@ public int getRandomNumber( ) {
 }
 
 /**
- * This function opens the Add Part menu
- *
+ * @function Opens the Add Part menu
  * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
- * @throws Exception if the file is not found
+ * @throws Exception if the fxml file is not found
  */
 
 public void partsAddButtonListener( ActionEvent actionEvent ) throws Exception {
+  Parent parent = null;
   // Clear the error message
   partsErrorLabel.setText( "" );
   // Load the FXML file
-  Parent parent = FXMLLoader.load( getClass( ).getResource( "addPart.fxml" ) );
-  Stage  stage  = new Stage( );
+  try {
+    parent = FXMLLoader.load( getClass( ).getResource( "addPart.fxml" ) );
+  }
+  catch ( Exception e ) {
+    e.printStackTrace( );
+  }
+  Stage stage = new Stage( );
   
   // Build the scene graph
-  Scene scene1 = new Scene( parent );
+  Scene scene = new Scene( parent );
   
   // Display our window, using the scene graph.
   stage.setTitle( "Add Part" );
-  stage.setScene( scene1 );
+  stage.setScene( scene );
   stage.show( );
 }
 
 /**
- * This function opens the Modify Part menu
- *
+ * @function Opens the Modify Part menu
  * @param actionEvent the event that fires when the "Add" Button is clicked on the main form
- * @throws Exception if the file is not found
+ * @throws Exception if the fxml file is not found
  */
-
 public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
 
 //  sendData(actionEvent);
@@ -287,35 +245,44 @@ public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exceptio
   
   // Get the currently selected part
   Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
-  System.out.println( selectedPart );
-  int selectedPartId = selectedPart.getId( );
-  System.out.println( selectedPartId );
   
-  // Place the ID of the selected part and the index into variables
-  Inventory.selectedPart      = selectedPart;
-  Inventory.selectedPartId    = selectedPartId;
-  Inventory.selectedPartIndex = partsTableView.getItems( ).indexOf( selectedPart );
-  
-  // Load the FXML file
-  Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyPart.fxml" ) );
-  
-  // Create a new Stage
-  Stage stage = new Stage( );
-  
-  // Build the scene graph
-  Scene scene = new Scene( parent );
-  
-  // Display our window, using the scene graph.
-  stage.setTitle( "Modify Part" );
-  stage.setScene( scene );
-  stage.show( );
-  
+  // Display an error if no part is selected.
+  if ( selectedPart == null ) {
+    partsErrorLabel.setText( "Error: Please selected a part to modify!" );
+  }
+  else {
+    int selectedPartId = selectedPart.getId( );
+    
+    // Place the ID of the selected part and the index into variables
+    Inventory.selectedPart      = selectedPart;
+    Inventory.selectedPartId    = selectedPartId;
+    Inventory.selectedPartIndex = partsTableView.getItems( ).indexOf( selectedPart );
+    
+    Parent parent = null;
+    // Load the FXML file
+    try {
+      parent = FXMLLoader.load( getClass( ).getResource( "modifyPart.fxml" ) );
+    }
+    catch ( Exception e ) {
+      e.printStackTrace( );
+    }
+    
+    // Create a new Stage
+    Stage stage = new Stage( );
+    
+    // Build the scene graph
+    Scene scene = new Scene( parent );
+    
+    // Display our window, using the scene graph.
+    stage.setTitle( "Modify Part" );
+    stage.setScene( scene );
+    stage.show( );
+  }
 }
 
 
 /**
- * This function deletes the selected entry from the parts TableView
- *
+ * @function Deletes the selected entry from the parts TableView
  * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
  */
 public void partsDeleteButtonListener( ActionEvent actionEvent ) {
@@ -334,13 +301,14 @@ public void partsDeleteButtonListener( ActionEvent actionEvent ) {
 }
 
 /**
- * This function opens the Add Product Menu
+ * @function Opens the Add Product Menu
  * @param actionEvent is fired when the Add Product button is clicked
  * @throws Exception is thrown if the fxml file is not found
  */
 public void productsAddButtonListener( ActionEvent actionEvent ) throws Exception {
   // Clear the error message
   productsErrorLabel.setText( "" );
+  productsErrorLabel.setStyle( "-fx-text-fill: #ff0000;");
   // Load the FXML file
   Parent parent = FXMLLoader.load( getClass( ).getResource( "addProduct.fxml" ) );
   
@@ -356,43 +324,52 @@ public void productsAddButtonListener( ActionEvent actionEvent ) throws Exceptio
 }
 
 /**
- * This function opens the Modify Product Menu
+ * @function Opens the Modify Product Menu. It also passes the selectedProduct to the main Inventory
+ * class.
  * @param actionEvent is fired when the Modify Product button is clicked
  * @throws Exception is thrown if the fxml file is not found
+ *
+ * @RUNTIME-ERROR I was having trouble figuring out how to get the selectedProduct over to the modifyProduct
+ * controller. I ended up having to declare the ObservableLists as static variables in the Inventory class so that
+ * I could access them anywhere in the application.
  */
 public void productsModifyButtonListener( ActionEvent actionEvent ) throws Exception {
   // Clear the error message
   productsErrorLabel.setText( "" );
+  productsErrorLabel.setStyle( "-fx-text-fill: #ff0000;" );
   
   // Get the currently selected part
   Product selectedProduct = productsTableView.getSelectionModel( ).getSelectedItem( );
-  System.out.println( selectedProduct );
-  int selectedProductId = selectedProduct.getId( );
-  System.out.println( selectedProductId );
   
-  // Place the ID of the selected part and the index into variables
-  Inventory.selectedProduct      = selectedProduct;
-  Inventory.selectedProductId    = selectedProductId;
-  Inventory.selectedProductIndex = productsTableView.getItems( ).indexOf( selectedProduct );
-  
-  // Load the FXML file
-  Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyProduct.fxml" ) );
-  
-  Stage stage = new Stage( );
-  
-  // Build the scene graph
-  Scene scene = new Scene( parent );
-  
-  // Display our window, using the scene graph.
-  stage.setTitle( "Modify Product" );
-  stage.setScene( scene );
-  stage.show( );
-  
+  // Display an error if there is no product selected.
+  if ( selectedProduct == null ) {
+    productsErrorLabel.setText( "Error: Please select a product to modify! " );
+  }
+  else {
+    int selectedProductId = selectedProduct.getId( );
+    
+    // Place the ID of the selected part and the index into variables
+    Inventory.selectedProduct      = selectedProduct;
+    Inventory.selectedProductId    = selectedProductId;
+    Inventory.selectedProductIndex = productsTableView.getItems( ).indexOf( selectedProduct );
+    
+    // Load the FXML file
+    Parent parent = FXMLLoader.load( getClass( ).getResource( "modifyProduct.fxml" ) );
+    
+    Stage stage = new Stage( );
+    
+    // Build the scene graph
+    Scene scene = new Scene( parent );
+    
+    // Display our window, using the scene graph.
+    stage.setTitle( "Modify Product" );
+    stage.setScene( scene );
+    stage.show( );
+  }
 }
 
 /**
- * This function deletes a product from the products table
- *
+ * @function Deletes a product from the products table
  * @param actionEvent is fired when the delete product button is clicked
  */
 public void productsDeleteButtonListener( ActionEvent actionEvent ) {
@@ -401,11 +378,13 @@ public void productsDeleteButtonListener( ActionEvent actionEvent ) {
   // Prevent deletion if a product has an associated part
   if ( selectedProduct.getAllAssociatedParts( ).size( ) != 0 ) {
     // Present the error message if there is an associated part.
+    productsErrorLabel.setStyle( "-fx-text-fill: #ff0000;" );
     productsErrorLabel.setText( "Error: Cannot delete a part which has an associated part." );
   }
   else {
     // Present error message if Products list is empty
     if ( Inventory.allProducts.size( ) == 0 ) {
+      productsErrorLabel.setStyle( "-fx-text-fill: #ff0000;" );
       productsErrorLabel.setText( "Error: Cannot Delete, the products list is empty!" );
     }
     else {
@@ -417,30 +396,43 @@ public void productsDeleteButtonListener( ActionEvent actionEvent ) {
   }
 }
 
+/**
+ * @function Closes the window and exits the program
+ * @param actionEvent fires when the "Exit" button is clicked
+ */
 public void exitButtonListener( ActionEvent actionEvent ) {
   // Exit the application
   Platform.exit( );
 }
 
 /**
- * This function is called when "Enter" is pressed when searching for a part in the parts table. It selects the matching
- * part
- *
+ * @function is called when "Enter" is pressed when searching for a part in the parts
+ * table. It selects the matching part
  * @param actionEvent fired when the user presses "Enter"
+ *
+ * @RUNTIME-ERROR I originally had the Error message-setting code in the initialize() function, and struggled with
+ * getting the error message to show up at the right time. I ended up having to move it to a separate function.
  */
 public void partsSearchFieldListener( ActionEvent actionEvent ) {
   partsTableView.getSelectionModel( ).clearSelection( );
   partsTableView.getSelectionModel( ).selectFirst( );
+  Part selected = partsTableView.getSelectionModel( ).getSelectedItem( );
+  if ( selected == null ) {
+    partsErrorLabel.setText( "Error: Part not found" );
+  }
 }
 
 /**
- * This function is called when "Enter" is pressed when searching for a product in the product table. It selects the
- * matching product
- *
+ * @function is called when "Enter" is pressed when searching for a product in the product
+ * table. It selects the matching product
  * @param actionEvent fired when the user presses "Enter"
  */
 public void productsSearchFieldListener( ActionEvent actionEvent ) {
   productsTableView.getSelectionModel( ).clearSelection( );
-  productsTableView.getSelectionModel( ).selectFirst();
+  productsTableView.getSelectionModel( ).selectFirst( );
+  Product selected = productsTableView.getSelectionModel( ).getSelectedItem( );
+  if ( selected == null ) {
+    productsErrorLabel.setText( "Error: Product not found!" );
+  }
 }
 }

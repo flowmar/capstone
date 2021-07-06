@@ -1,21 +1,35 @@
 package com.inventory;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+
+/**
+ * @author Omar Imam
+ * @version %I% %G%
+ * @FUTURE_EHANCEMENT In the future the application can be expanded to have different departments able to login and
+ *     access the parts and products that apply to them.
+ * @FUTURE_ENHANCEMENT There can also be an ordering system integrated to order new parts when the stock gets close
+ *     to the minimum.
+ * @FUTURE_ENHANCEMENT Transactions when parts and products are bought and sold can also be integrated into their
+ *     own database.
+ * @FUTURE_ENHANCEMENT If they are exchanging parts for parts or products for products with another company, instead
+ *     of buying and selling, that functionality can be added in as well.
+ */
 
 public class Inventory extends Application {
 
 /**
  * Fields
  */
-public static ObservableList<Part>    allParts;
-public static ObservableList<Product> allProducts;
+public static ObservableList<Part>    allParts    = FXCollections.observableArrayList( );
+public static ObservableList<Product> allProducts = FXCollections.observableArrayList( );
 public static int                     selectedPartId;
 public static int                     selectedPartIndex;
 public static Part                    selectedPart;
@@ -25,123 +39,161 @@ public static int                     selectedProductIndex;
 
 
 /**
- * @param newPart the new Part object that is to be added to the ObservableList<Part> object
+ *
+ * JAVADOCS ARE LOCATED AT OmarImamSoftware1PerformanceAssessment/Javadocs
+ *
+ */
+
+
+/**
+ * @function main launches the JavaFX application
+ */
+public static void main( String args[] ) {
+    launch( args );
+}
+
+/**
  * @function addPart(Part newPart) Add a new part to the ObservableList<Part >object
+ * @param newPart the new Part object that is to be added to the ObservableList<Part> object
  */
 public void addPart( Part newPart ) {
     allParts.add( newPart );
 }
 
 /**
- * @param newProduct the new Part object that is to added to the ObservableList<Product> object
  * @function addProduct(Product newProduct) Add a new product to the ObservableList<Product> object
+ * @param newProduct the new Part object that is to added to the ObservableList<Product> object
  */
 public void addProduct( Product newProduct ) {
     allProducts.add( newProduct );
 }
-    
-    
-    /**
-     * @param partId the catalog number of the part
-     * @return the part that matches the partId
-     *
-     * @function lookupPart(int partId) Searches for a part, identified by
-     */
-    public Part lookupPart( int partId ) {
-//            Part searchedPart = allParts.get(partId);
-//            System.out.println("Searching...");
-//
-//            if (!foundPart) {
-//
-//                return foundPart;
-//            }
-//            System.out.println("Found matching part: foundPart");
-//            return foundPart
-        // TODO: Search for index of partId, then use the index to return the actual part
-        return allParts.get( partId );
-    }
-    
-    /**
-     * @param productId the catalog number of the product
-     * @return the product that matches the productId
-     *
-     * @function lookupProduct(int productId) Searches for a product identified by
-     */
-    public Product lookupProduct( int productId ) {
-        return allProducts.get( productId );
-    }
+
 
 /**
- * @param partName the catalog number of the part
- * @return the part that matches the partName
- *
- * @function lookupPart(String partName) Searches for a part, identified by
+ * @function lookupPart(int partId) Searches for a part, identified by the Id number of the part
+ * @param partId the inventory identification number of the part
+ * @return the part in the allParts Observable list that matches the partId
  */
-//      public static Part lookupPart( String partName ) {
-//            Part searchedPart = allParts.get(partId);
-////            System.out.println("Searching...");
-////            if (!foundPart) {
-////                return foundPart;
-////            }
-////            System.out.println("Found matching part: foundPart");
-////            return foundPart
-//        // TODO: Search for index of partName, then use the index to return the actual part
-//        SortedList<Part> sortedList = allParts.sorted( );
-////        return sortedList;
-////          return sortedList.get(0);
-//          return searchedPart;
-//    }
-
-/**
- * @param productName the catalog number of the part
- * @return the part that matches the productName
- *
- * @function lookupPart(String productName) Searches for a part, identified by
- */
-public Product lookupProduct( String productName ) {
-//            Part searchedPart = allParts.get(partId);
-//            System.out.println("Searching...");
-//
-//            if (!foundPart) {
-//
-//                return foundPart;
-//            }
-//            System.out.println("Found matching part: foundPart");
-//            return foundPart
-    // TODO: Search for index of productName, then use the index to return the actual part
-    SortedList<Product> sortedList = allProducts.sorted( );
-        return sortedList.get( 1 );
+public Part lookupPart( int partId ) {
+    Part foundPart = null;
+    // Iterate through the allParts ObservableList
+    // If the partId matches, return the part
+    for ( int i = 0; i < allParts.size( ); i++ ) {
+        if ( allParts.get( i ).getId( ) == partId ) {
+            foundPart = allParts.get( i );
+        }
     }
-    
-    /**
-     * @param index   location of the part to be updated
-     * @param newPart the entry that will be used to replace the old one
-     * @function updatePart(int index, Part newPart) updates an entry at a specified index with a new entry
-     */
-    public void updatePart( int index, Part newPart ) {
-        // Find the part at the selected index and update the entry with newPart
-    }
-
-/**
- * @param index      location of the  product to be updated
- * @param newProduct the entry that will be used to replace the old one
- * @function updateProduct(int index, Product newProduct) updates an entry at a specified index with a new
- *         entry
- */
-public void updateProduct( int index, Product newProduct ) {
-    // Find the  product at the selected index and update the entry with new product
-    int indexThing = 1;
+    return foundPart;
 }
 
 /**
+ * @function lookupProduct(int productId) Searches for a product identified by the id number of the product
+ * @param productId the inventory identification number of the product
+ * @return the product that matches the productId
+ */
+public Product lookupProduct( int productId ) {
+    Product foundProduct = null;
+    // Iterate through the allProducts ObservableList
+    // If the productId matches, return the product
+    for ( int j = 0; j < allProducts.size( ); j++ ) {
+        if ( allProducts.get( j ).getId( ) == productId ) {
+            foundProduct = allProducts.get( j );
+        }
+    }
+    return foundProduct;
+}
+
+/**
+ * @param partName the name of the part that is being searched for
+ * @return the part that matches the partName
+ *
+ * @function lookupPart(String partName) Searches for a part, identified by by the Name of the part
+ */
+public ObservableList<Part> lookupPart( String partName ) {
+    Part                 foundPart  = null;
+    ObservableList<Part> foundParts = FXCollections.observableArrayList( );
+    
+    // Iterate through the allParts ObservableList
+    // If the partName matches, return the part
+    for ( int k = 0; k < allParts.size( ); k++ ) {
+        if ( allParts.get( k ).getName( ).equals( partName ) ) {
+            foundPart = allParts.get( k );
+        }
+    }
+    
+    if ( foundPart instanceof InHouse ) {
+        foundParts.add( new InHouse( foundPart.getId( ), foundPart.getName( ), foundPart.getPrice( ),
+            foundPart.getStock( ),
+            foundPart.getMin( ), foundPart.getMax( ), ( ( InHouse ) foundPart ).getMachineId( ) ) );
+    }
+    else {
+        foundParts.add( new Outsourced( foundPart.getId( ), foundPart.getName( ), foundPart.getPrice( ),
+            foundPart.getStock( ),
+            foundPart.getMin( ), foundPart.getMax( ), ( ( Outsourced ) foundPart ).getCompanyName( ) ) );
+    }
+    
+    return foundParts;
+}
+
+/**
+ * @param productName the name of the product that is being searched for
+ * @return the product that matches the productName
+ *
+ * @function lookupProduct(String productName) Searches for a product, identified by by the Name of the product
+ */
+public ObservableList<Product> lookupProduct( String productName ) {
+    Product                 foundProduct  = null;
+    ObservableList<Product> foundProducts = FXCollections.observableArrayList( );
+    
+    // Iterate through the allParts ObservableList
+    // If the partName matches, return the part
+    for ( int l = 0; l < allProducts.size( ); l++ ) {
+        if ( allProducts.get( l ).getName( ).equals( productName ) ) {
+            foundProduct = allProducts.get( l );
+        }
+    }
+    
+    foundProducts.add( new Product( foundProduct.getId( ), foundProduct.getName( ), foundProduct.getPrice( ),
+        foundProduct.getStock( ), foundProduct.getMin( ), foundProduct.getMax( ),
+        foundProduct.getAllAssociatedParts( ) ) );
+    
+    return foundProducts;
+}
+
+/**
+ * @function updatePart(int index, Part newPart) updates an entry at a specified index with a new entry
+ * @param index location in the list of the part to be updated
+ * @param newPart the entry that will be used to replace the old one
+ */
+public void updatePart( int index, Part newPart ) {
+    // Find the part at the selected index and update the entry with newPart
+    allParts.set(index, newPart );
+}
+
+/**
+ * @function updateProduct(int index, Product newProduct) updates an entry at a specified index with a new entry
+ * @param index location of the  product to be updated
+ * @param newProduct the entry that will be used to replace the old one
+ */
+public void updateProduct( int index, Product newProduct ) {
+    // Find the  product at the selected index and update the entry with new product
+    allProducts.set(index, newProduct );
+}
+
+/**
+ * @function deletePart(Part selectedPart) deletes the selected part from the inventory
  * @param selectedPart the part to be deleted
  * @return deleteCompleted a boolean value that confirms deletion
- *
- * @function deletePart(Part selectedPart) deletes a part from the inventory
  */
 public boolean deletePart( Part selectedPart ) {
-    boolean deleteCompleted = false;
-    // Find the part that is passed into the function, delete it and then change deleteCompleted to true
+    // Remove the selected part
+    try {
+        allParts.remove( selectedPart );
+    }
+    // Catch and print any errors
+    catch ( Exception e ) {
+        System.out.println( e.getMessage( ) );
+    }
     return true;
 }
 
@@ -149,67 +201,68 @@ public boolean deletePart( Part selectedPart ) {
  * @param selectedProduct the part to be deleted
  * @return deleteCompleted a boolean value that confirms deletion
  *
- * @function deleteProduct(Product selectedProduct) deletes a part from the inventory
+ * @function deleteProduct(Product selectedProduct) deletes the selected part from the inventory
  */
-public boolean deletePart( Product selectedProduct ) {
-    boolean deleteCompleted = false;
-    // Find the part that is passed into the function, delete it and then change deleteCompleted to true
+public boolean deleteProduct( Product selectedProduct ) {
+    // Remove the selected product
+    try {
+        allProducts.remove( selectedProduct );
+    }
+    // Catch and print any errors
+    catch ( Exception e ) {
+        System.out.println( e.getMessage( ) );
+    }
     return true;
 }
 
 /**
- * @return a SortedList<Part> object
- *
  * @function getAllParts() returns a sorted list of all parts in the inventory
+ * @return a SortedList<Part> object
  */
 public ObservableList<Part> getAllParts( ) {
-    ObservableList<Part> returnedInventory = allParts;
     return allParts.sorted( );
 }
 
 /**
- * @return a SortedList<Product> object
- *
  * @function getAllProducts() returns a sorted list of all products in the inventory
+ * @return a SortedList<Product> object
  */
 public ObservableList<Product> getAllProducts( ) {
-    ObservableList<Product> returnedInventory = allProducts;
     return allProducts.sorted( );
 }
 
 /**
- * @function start(Stage Stage) creates the loader and the scene and
- * @param stage
- * @throws Exception
+ * @function start(Stage Stage) creates the loader and the scene and the stage
+ * @param stage the window where the scene and the components of the scene are loaded and displayed
+ * @throws Exception if the
  */
 
-    @Override
-    public void start( Stage stage ) throws Exception {
-    
+@Override
+public void start( Stage stage ) throws Exception {
+    Parent parent = null;
     // Load the FXML file
-        FXMLLoader loader = new FXMLLoader( );
-//
-        Parent parent = FXMLLoader.load( getClass( ).getResource( "mainScene.fxml" ) );
-//        // Build the scene graph
-        Scene scene = new Scene( parent );
-//
-//    // Create the controller
-        InventoryController controller = new InventoryController( );
-        loader.setController( controller );
+    FXMLLoader loader = new FXMLLoader( );
     
-        // Create variables for the nodes
-        Node partsTableNode    = parent.lookup( "#partsTableView" );
-        Node productsTableNode = parent.lookup( "#productsTableView" );
-    
-    
-        // Display our window, using the scene graph.
-        stage.setTitle( "Inventory System" );
-        stage.setScene( scene );
-        stage.show( );
+    // Create a new parent object and load the fxml document
+    try {
+        parent = FXMLLoader.load( getClass( ).getResource( "mainScene.fxml" ) );
     }
+    catch ( IOException e ) {
+        e.printStackTrace( );
+    }
+    
+    // Build the scene graph
+    Scene scene = new Scene( parent );
+    
+    // Create the controller
+    InventoryController controller = new InventoryController( );
+    loader.setController( controller );
+    
+    // Display our window, using the scene graph.
+    stage.setTitle( "Inventory System" );
+    stage.setScene( scene );
+    stage.show( );
+}
 
 
-public static void main( String args[] ) {
-        launch( args );
-    }
 }

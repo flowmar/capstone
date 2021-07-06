@@ -154,7 +154,8 @@
                                  prefWidth="550.0"/>
                       <TableView fx:id="addProductTableView" layoutX="773.0" layoutY="62.0" prefHeight="200.0"
                                  prefWidth="550.0"/>
-                      <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0"/>
+                      <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0"
+                                 onAction="#addProductsSearchFieldListener"/>
                       <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0"
                              prefWidth="335.0" textFill="#f54b4b">
                           <font>

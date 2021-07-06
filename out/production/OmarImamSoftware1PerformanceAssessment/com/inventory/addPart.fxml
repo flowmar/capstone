@@ -162,11 +162,11 @@
                           </font>
                       </Button>
                       <TextField fx:id="addPartMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Label fx:id="addPartErrorLabel" layoutX="103.0" layoutY="119.0" prefHeight="43.0" prefWidth="492.0" textFill="#ff1c1c">
-                           <font>
+                      <Label fx:id="addPartErrorLabel" layoutX="103.0" layoutY="119.0" prefHeight="43.0" prefWidth="492.0" textFill="#ff1c1c">
+                          <font>
                               <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
+                          </font>
+                      </Label>
                   </children>
                 </AnchorPane>
               </children>

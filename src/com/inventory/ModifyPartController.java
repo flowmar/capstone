@@ -3,14 +3,16 @@ package com.inventory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+/**
+ * @author Omar Imam
+ * @version %I% %G%
+ */
 
 public class ModifyPartController implements Initializable {
 
@@ -58,9 +60,10 @@ private TextField modifyPartMinTextField;
 private TextField modifyPartExtraTextField;
 
 /**
- * This function saves the information in the TextFields to the inventory
- *
  * @param actionEvent fired when the save button is clicked
+ * @function Saves the information in the TextFields to the inventory. It also includes input validation for the
+ *     Stock, Min, and Max fields. It also checks to see which RadioButton is selected at the top of the form, and
+ *     adjusts the last TextField accordingly.
  */
 public void modifyPartSaveListener( ActionEvent actionEvent ) {
   // Replace the information for the selected part with the information in the text fields
@@ -119,23 +122,25 @@ public void modifyPartSaveListener( ActionEvent actionEvent ) {
 }
 
 /**
- * This function changes the Label of the last TextField depending on the radio button that is selected
  * @param actionEvent fired when a radio button is selected
+ * @function Changes the Label of the last TextField depending on the radio button that is selected. It also adds a
+ *     TextFormatter to the TextField for input validation, changing between Integers-only and Letters-Only to fit the
+ *     field
  */
 public void modifyPartRadioListener( ActionEvent actionEvent ) {
   // Set the text of the form based upon which radio button is selected
   if ( modifyPartInHouseRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Machine ID" );
   }
-  else {
+  else if ( !modifyPartInHouseRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Company Name" );
   }
 }
 
 /**
- * This function closes the window if the cancel button is clicked
- *
  * @param actionEvent fired when the cancel button is clicked
+ * @function Closes the window if the cancel button is clicked
+ * @RUNTIME-ERROR Forgot to cast the Button as a stage before using stage.close();
  */
 public void modifyPartCancelButtonListener( ActionEvent actionEvent ) {
   // Close the window if the cancel button is clicked
@@ -145,7 +150,8 @@ public void modifyPartCancelButtonListener( ActionEvent actionEvent ) {
 
 
 /**
- * This function initializes the new scene by placing the selected part data into the UI
+ * @function Initializes the new scene by placing the selected part data into the UI. It also sets a TextFormatter
+ *     to each TextField for input validation.
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
@@ -169,6 +175,131 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
     modifyPartExtraLabel.setText( "Company Name" );
     modifyPartExtraTextField.setText( ( ( Outsourced ) Inventory.selectedPart ).getCompanyName( ) );
   }
-}
 
+
+// Set TextFormatters on each TextField to apply input validation
+// Display an error message if incorrect characters are typed
+  modifyPartStockTextField.setTextFormatter( new TextFormatter<>( change -> {
+    if ( change.getText( ).matches( "\\d+" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else if ( change.getText( ).equals( "" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else {
+      change.setText( "" );
+      modifyPartSaveErrorLabel.setText( "Integers only!" );
+      return change;
+    }
+  } ) );
+  
+  modifyPartMaxTextField.setTextFormatter( new TextFormatter<>( change -> {
+    if ( change.getText( ).matches( "\\d+" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else if ( change.getText( ).equals( "" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else {
+      change.setText( "" );
+      modifyPartSaveErrorLabel.setText( "Integers only!" );
+      return change;
+    }
+  } ) );
+  
+  modifyPartMinTextField.setTextFormatter( new TextFormatter<>( change -> {
+    if ( change.getText( ).matches( "\\d+" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else if ( change.getText( ).equals( "" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else {
+      change.setText( "" );
+      modifyPartSaveErrorLabel.setText( "Integers only!" );
+      return change;
+    }
+  } ) );
+  
+  modifyPartNameTextField.setTextFormatter( new TextFormatter<>( change -> {
+    if ( change.getText( ).matches( "[a-zA-Z]+" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else if ( change.getText( ).equals( "" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else {
+      change.setText( "" );
+      modifyPartSaveErrorLabel.setText( "Letters only!" );
+      return change;
+    }
+  } ) );
+  
+  modifyPartPriceTextField.setTextFormatter( new TextFormatter<>( change -> {
+    if ( change.getText( ).matches( "\\d+" ) || change.getText( ).matches( "\\." ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else if ( change.getText( ).equals( "" ) ) {
+      modifyPartSaveErrorLabel.setText( "" );
+      return change;
+    }
+    else {
+      change.setText( "" );
+      modifyPartSaveErrorLabel.setText( "Prices don't contain letters!!" );
+      return change;
+    }
+  } ) );
+  
+  if ( modifyPartInHouseRadio.isSelected( ) ) {
+    modifyPartExtraTextField.setText( "" );
+    modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
+    {
+      if ( change.getText( ).matches( "\\d+" ) ) {
+        modifyPartSaveErrorLabel.setText( "" );
+        return change;
+      }
+      else if ( change.getText( ).equals( "" ) ) {
+        change.setText( "" );
+        return change;
+      }
+      else {
+        change.setText( "" );
+        modifyPartSaveErrorLabel.setText( "Integers Only!" );
+        return change;
+      }
+    } ) );
+  }
+  else if ( modifyPartOutsourcedRadio.isSelected( ) ) {
+    modifyPartExtraTextField.setText( "" );
+    {
+      modifyPartExtraLabel.setText( "Company Name" );
+      modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
+      {
+        if ( change.getText( ).matches( "[a-zA-Z]" ) ) {
+          modifyPartSaveErrorLabel.setText( "" );
+          return change;
+        }
+        else if ( change.getText( ).equals( "" ) ) {
+          change.setText( "" );
+          return change;
+        }
+        else {
+          change.setText( "" );
+          modifyPartSaveErrorLabel.setText( "Letters Only!" );
+          return change;
+        }
+      } ) );
+      
+    }
+  }
+}
 }

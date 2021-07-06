@@ -126,7 +126,8 @@
                                    prefHeight="200.0" prefWidth="550.0"/>
                         <TableView fx:id="modifyProductPartsTableView" layoutX="773.0" layoutY="51.0" prefHeight="200.0"
                                    prefWidth="550.0"/>
-                        <TextField fx:id="modifyProductSearchField" layoutX="1164.0" layoutY="18.0"/>
+                        <TextField fx:id="modifyProductSearchField" layoutX="1164.0" layoutY="18.0"
+                                   onAction="#modifyProductsSearchFieldListener"/>
                         <Label fx:id="modifyProductErrorLabel" layoutX="773.0" layoutY="15.0" prefHeight="25.0"
                                prefWidth="376.0" textFill="#f23737">
                             <font>
