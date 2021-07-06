@@ -31,11 +31,10 @@ import java.util.ResourceBundle;
 
 public class InventoryController implements Initializable {
 
-/**
+/*
  * Fields
  */
-@FXML
-public  Random          randomNumbers  = new Random( );
+
 @FXML
 public  TableView<Part> partsTableView = new TableView<>( );
 

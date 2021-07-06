@@ -1,136 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventory.ModifyProductController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.inventory.ModifyProductController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
                 <VBox prefHeight="676.0" prefWidth="1403.0" style="-fx-border-radius: 50%;">
                     <children>
-                        <MenuBar fx:id="mainWindow" prefHeight="25.0" prefWidth="640.0" style="-fx-border-radius: 2%;" VBox.vgrow="NEVER">
+                        <MenuBar fx:id="mainWindow" prefHeight="25.0" prefWidth="640.0" style="-fx-border-radius: 2%;"
+                                 VBox.vgrow="NEVER">
                             <menus>
                                 <Menu mnemonicParsing="false" text="File">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="New" />
-                                        <MenuItem mnemonicParsing="false" text="Open…" />
-                                        <Menu mnemonicParsing="false" text="Open Recent" />
-                                        <SeparatorMenuItem mnemonicParsing="false" />
-                                        <MenuItem mnemonicParsing="false" text="Close" />
-                                        <MenuItem mnemonicParsing="false" text="Save" />
-                                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                                        <MenuItem mnemonicParsing="false" text="Revert" />
-                                        <SeparatorMenuItem mnemonicParsing="false" />
-                                        <MenuItem mnemonicParsing="false" text="Preferences…" />
-                                        <SeparatorMenuItem mnemonicParsing="false" />
-                                        <MenuItem mnemonicParsing="false" text="Quit" />
+                                        <MenuItem mnemonicParsing="false" text="New"/>
+                                        <MenuItem mnemonicParsing="false" text="Open…"/>
+                                        <Menu mnemonicParsing="false" text="Open Recent"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Close"/>
+                                        <MenuItem mnemonicParsing="false" text="Save"/>
+                                        <MenuItem mnemonicParsing="false" text="Save As…"/>
+                                        <MenuItem mnemonicParsing="false" text="Revert"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Preferences…"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Quit"/>
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Edit">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Undo" />
-                                        <MenuItem mnemonicParsing="false" text="Redo" />
-                                        <SeparatorMenuItem mnemonicParsing="false" />
-                                        <MenuItem mnemonicParsing="false" text="Cut" />
-                                        <MenuItem mnemonicParsing="false" text="Copy" />
-                                        <MenuItem mnemonicParsing="false" text="Paste" />
-                                        <MenuItem mnemonicParsing="false" text="Delete" />
-                                        <SeparatorMenuItem mnemonicParsing="false" />
-                                        <MenuItem mnemonicParsing="false" text="Select All" />
-                                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                                        <MenuItem mnemonicParsing="false" text="Undo"/>
+                                        <MenuItem mnemonicParsing="false" text="Redo"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Cut"/>
+                                        <MenuItem mnemonicParsing="false" text="Copy"/>
+                                        <MenuItem mnemonicParsing="false" text="Paste"/>
+                                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem mnemonicParsing="false" text="Select All"/>
+                                        <MenuItem mnemonicParsing="false" text="Unselect All"/>
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Help">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                                        <MenuItem mnemonicParsing="false" text="About MyHelloApp"/>
                                     </items>
                                 </Menu>
                             </menus>
                 </MenuBar>
                 <AnchorPane id="mainForm" maxHeight="-1.0" maxWidth="-1.0" prefHeight="642.0" prefWidth="662.0" style="-fx-background-color: #0d2c54; -fx-border-radius: 2%;" VBox.vgrow="ALWAYS">
                     <children>
-                        <Label fx:id="mainFormTitle" layoutX="45.0" layoutY="18.0" style="-fx-border-color: #FFFFEA; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-insets: 4px; -fx-label-padding: 9px; -fx-border-radius: 2%;" styleClass="title-border" text="Modify Product" textFill="#ffffea">
+                        <Label fx:id="mainFormTitle" layoutX="45.0" layoutY="18.0"
+                               style="-fx-border-color: #FFFFEA; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-insets: 4px; -fx-label-padding: 9px; -fx-border-radius: 2%;"
+                               styleClass="title-border" text="Modify Product" textFill="#ffffea">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Label>
                         <Label layoutX="108.0" layoutY="189.0" text="ID" textFill="#ffffea">
                             <font>
-                                <Font size="22.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="modifyProductIdTextField" disable="true" layoutX="238.0" layoutY="192.0" />
+                        <TextField fx:id="modifyProductIdTextField" disable="true" layoutX="238.0" layoutY="192.0"/>
                         <Label layoutX="108.0" layoutY="236.0" text="Name" textFill="#ffffea">
                             <font>
-                                <Font size="22.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                         <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
                             <font>
-                                <Font size="22.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                       <Label layoutX="110.0" layoutY="326.0" text="Price" textFill="#ffffea">
                           <font>
-                              <Font size="22.0" />
+                              <Font size="22.0"/>
                           </font>
                       </Label>
                         <Label layoutX="110.0" layoutY="368.0" text="Max" textFill="#ffffea">
                             <font>
-                                <Font size="22.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                         <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
                             <font>
-                                <Font size="22.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="modifyProductNameTextField" layoutX="238.0" layoutY="239.0" />
-                        <TextField fx:id="modifyProductStockTextField" layoutX="238.0" layoutY="285.0" />
-                        <TextField fx:id="modifyProductPriceTextField" layoutX="238.0" layoutY="329.0" />
-                        <TextField fx:id="modifyProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="modifyProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false" onAction="#modifyProductSaveButtonListener" text="Save">
+                        <TextField fx:id="modifyProductNameTextField" layoutX="238.0" layoutY="239.0"/>
+                        <TextField fx:id="modifyProductStockTextField" layoutX="238.0" layoutY="285.0"/>
+                        <TextField fx:id="modifyProductPriceTextField" layoutX="238.0" layoutY="329.0"/>
+                        <TextField fx:id="modifyProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0"
+                                   prefWidth="155.0"/>
+                        <Button fx:id="modifyProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false"
+                                onAction="#modifyProductSaveButtonListener" text="Save">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Button>
-                        <Button fx:id="modifyProductCancelButton" layoutX="1244.0" layoutY="595.0" mnemonicParsing="false" onAction="#modifyProductCancelButtonListener" text="Cancel">
+                        <Button fx:id="modifyProductCancelButton" layoutX="1244.0" layoutY="595.0"
+                                mnemonicParsing="false" onAction="#modifyProductCancelButtonListener" text="Cancel">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Button>
-                        <TextField fx:id="modifyProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0" prefWidth="155.0" />
-                        <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0" mnemonicParsing="false" onAction="#removeAssociatedPartButtonListener" text="Remove Associated Part">
+                        <TextField fx:id="modifyProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0"
+                                   prefWidth="155.0"/>
+                        <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0"
+                                mnemonicParsing="false" onAction="#removeAssociatedPartButtonListener"
+                                text="Remove Associated Part">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Button>
-                        <Button fx:id="addAssociatedPartButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false" onAction="#addAssociatedPartButtonListener" text="Add">
+                        <Button fx:id="addAssociatedPartButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false"
+                                onAction="#addAssociatedPartButtonListener" text="Add">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Button>
-                        <TableView fx:id="modifyProductAssociatedPartsTableView" layoutX="773.0" layoutY="341.0" prefHeight="200.0" prefWidth="550.0" />
-                        <TableView fx:id="modifyProductPartsTableView" layoutX="773.0" layoutY="51.0" prefHeight="200.0" prefWidth="550.0" />
-                        <TextField fx:id="modifyProductSearchField" layoutX="1164.0" layoutY="18.0" onAction="#modifyProductsSearchFieldListener" />
-                        <Label fx:id="modifyProductErrorLabel" layoutX="773.0" layoutY="15.0" prefHeight="25.0" prefWidth="376.0" textFill="#f23737">
+                        <TableView fx:id="modifyProductAssociatedPartsTableView" layoutX="773.0" layoutY="341.0"
+                                   prefHeight="200.0" prefWidth="550.0"/>
+                        <TableView fx:id="modifyProductPartsTableView" layoutX="773.0" layoutY="51.0" prefHeight="200.0"
+                                   prefWidth="550.0"/>
+                        <TextField fx:id="modifyProductSearchField" layoutX="1164.0" layoutY="18.0"
+                                   onAction="#modifyProductsSearchFieldListener"/>
+                        <Label fx:id="modifyProductErrorLabel" layoutX="773.0" layoutY="15.0" prefHeight="25.0"
+                               prefWidth="376.0" textFill="#f23737">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="System Bold" size="16.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="modifyProductSaveErrorLabel" layoutX="108.0" layoutY="429.0" prefHeight="25.0" prefWidth="588.0" textFill="#f23737">
+                        <Label fx:id="modifyProductSaveErrorLabel" layoutX="108.0" layoutY="429.0" prefHeight="25.0"
+                               prefWidth="588.0" textFill="#f23737">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="System Bold" size="16.0"/>
                             </font>
                         </Label>
                     </children>
