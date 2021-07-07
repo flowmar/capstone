@@ -172,12 +172,51 @@ public void modifyPartRadioListener( ActionEvent actionEvent ) {
   // Set the text of the form based upon which radio button is selected
   if ( modifyPartInHouseRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Machine ID" );
+  
+    modifyPartExtraTextField.setText( "" );
+    modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
+    {
+      if ( change.getText( ).matches( "\\d+" ) ) {
+        modifyPartSaveErrorLabel.setText( "" );
+        return change;
+      }
+      else if ( change.getText( ).equals( "" ) ) {
+        change.setText( "" );
+        return change;
+      }
+      else {
+        change.setText( "" );
+        modifyPartSaveErrorLabel.setText( "Integers Only!" );
+        return change;
+      }
+    } ) );
+  
   }
-  else if ( !modifyPartInHouseRadio.isSelected( ) ) {
+  else if ( modifyPartOutsourcedRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Company Name" );
+  
+    modifyPartExtraTextField.setText( "" );
+    {
+      modifyPartExtraLabel.setText( "Company Name" );
+      modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
+      {
+        if ( change.getText( ).matches( "[a-zA-Z]" ) ) {
+          modifyPartSaveErrorLabel.setText( "" );
+          return change;
+        }
+        else if ( change.getText( ).equals( "" ) ) {
+          change.setText( "" );
+          return change;
+        }
+        else {
+          change.setText( "" );
+          modifyPartSaveErrorLabel.setText( "Letters Only!" );
+          return change;
+        }
+      } ) );
+    }
   }
 }
-
 /**
  * Closes the window if the cancel button is clicked
  *
