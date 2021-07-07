@@ -173,7 +173,7 @@ public void modifyPartRadioListener( ActionEvent actionEvent ) {
   if ( modifyPartInHouseRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Machine ID" );
   
-    modifyPartExtraTextField.setText( "" );
+//    modifyPartExtraTextField.setText( "" );
     modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
     {
       if ( change.getText( ).matches( "\\d+" ) ) {
@@ -194,8 +194,8 @@ public void modifyPartRadioListener( ActionEvent actionEvent ) {
   }
   else if ( modifyPartOutsourcedRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Company Name" );
-  
-    modifyPartExtraTextField.setText( "" );
+
+//    modifyPartExtraTextField.setText( "" );
     {
       modifyPartExtraLabel.setText( "Company Name" );
       modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
@@ -248,12 +248,18 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   // If the selected part is an instance of InHouse, set the text to the machine Id and select the radio button
   if ( Inventory.selectedPart instanceof InHouse ) {
     modifyPartInHouseRadio.setSelected( true );
+    System.out.println( Inventory.selectedPart );
+    System.out.println( Inventory.selectedPart instanceof InHouse );
+    System.out.println( ( ( InHouse ) Inventory.selectedPart ).getMachineId( ) );
     modifyPartExtraLabel.setText( "Machine ID" );
-    modifyPartExtraTextField.setText( Integer.toString( ( ( InHouse ) Inventory.selectedPart ).getMachineId( ) ) );
+    modifyPartExtraTextField.setText( String.valueOf( ( ( InHouse ) Inventory.selectedPart ).getMachineId( ) ) );
   }
   // Otherwise, set it to the Company Name
-  else {
+  else if ( Inventory.selectedPart instanceof Outsourced ) {
     modifyPartOutsourcedRadio.setSelected( true );
+    System.out.println( Inventory.selectedPart );
+    System.out.println( Inventory.selectedPart instanceof Outsourced );
+    System.out.println( ( ( Outsourced ) Inventory.selectedPart ).getCompanyName( ) );
     modifyPartExtraLabel.setText( "Company Name" );
     modifyPartExtraTextField.setText( ( ( Outsourced ) Inventory.selectedPart ).getCompanyName( ) );
   }
@@ -342,7 +348,6 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   } ) );
   
   if ( modifyPartInHouseRadio.isSelected( ) ) {
-    modifyPartExtraTextField.setText( "" );
     modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
     {
       if ( change.getText( ).matches( "\\d+" ) ) {
@@ -361,7 +366,6 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
     } ) );
   }
   else if ( modifyPartOutsourcedRadio.isSelected( ) ) {
-    modifyPartExtraTextField.setText( "" );
     {
       modifyPartExtraLabel.setText( "Company Name" );
       modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
