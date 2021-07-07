@@ -324,17 +324,34 @@ public void partsModifyButtonListener( ActionEvent actionEvent ) throws Exceptio
  * @param actionEvent the event that fires when the "Delete" Button is clicked on the main form
  */
 public void partsDeleteButtonListener( ActionEvent actionEvent ) {
+  // Clear any error messages
+  partsErrorLabel.setText( "" );
   // Present error message if Parts list is empty
   if ( Inventory.allParts.size( ) == 0 ) {
     partsErrorLabel.setText( "Error: Cannot Delete, the parts list is empty!" );
   }
   else {
-    // Find out which part is selected in the table
-    Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
-    // Delete the part
-    Inventory.allParts.remove( selectedPart );
-    partsErrorLabel.setText( "Part Deleted!" );
-    partsErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+    // Create a dialog box that confirms the deletion
+    Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
+    
+    alert.setContentText( "Are you sure you want to delete this part?" );
+    
+    alert.showAndWait( ).ifPresent( response ->
+    {
+      if ( response == ButtonType.OK ) {
+        // If Yes, delete the part
+        // Find out which part is selected in the table
+        Part selectedPart = partsTableView.getSelectionModel( ).getSelectedItem( );
+        // Delete the part
+        Inventory.allParts.remove( selectedPart );
+        partsErrorLabel.setText( "Part Deleted!" );
+        partsErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+      }
+      else if ( response == ButtonType.CANCEL ) {
+        // If No, close out the window
+        System.out.println( "Deletion cancelled" );
+      }
+    } );
   }
 }
 
@@ -411,6 +428,8 @@ public void productsModifyButtonListener( ActionEvent actionEvent ) throws Excep
  * @param actionEvent is fired when the delete product button is clicked
  */
 public void productsDeleteButtonListener( ActionEvent actionEvent ) {
+  // Clear any error messages
+  productsErrorLabel.setText( "" );
   // Check if the selected Product has any parts associated with it
   Product selectedProduct = productsTableView.getSelectionModel( ).getSelectedItem( );
   // Prevent deletion if a product has an associated part
@@ -426,10 +445,34 @@ public void productsDeleteButtonListener( ActionEvent actionEvent ) {
       productsErrorLabel.setText( "Error: Cannot Delete, the products list is empty!" );
     }
     else {
-      // Delete the product
-      Inventory.allProducts.remove( selectedProduct );
-      productsErrorLabel.setText( "Product Deleted!" );
-      productsErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+      partsErrorLabel.setText( "" );
+      // Present error message if Parts list is empty
+      if ( Inventory.allParts.size( ) == 0 ) {
+        partsErrorLabel.setText( "Error: Cannot Delete, the parts list is empty!" );
+      }
+      else {
+        // Create a dialog box that confirms the deletion
+        Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
+        
+        alert.setContentText( "Are you sure you want to delete this product?" );
+        
+        alert.showAndWait( ).ifPresent( response ->
+        {
+          if ( response == ButtonType.OK ) {
+            // If Yes, delete the part
+            // Delete the product
+            Inventory.allProducts.remove( selectedProduct );
+            productsErrorLabel.setText( "Product Deleted!" );
+            productsErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+          }
+          else if ( response == ButtonType.CANCEL ) {
+            // If No, close out the window
+            System.out.println( "Deletion cancelled" );
+          }
+        } );
+      }
+      
+      
     }
   }
 }

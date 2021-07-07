@@ -150,10 +150,24 @@ public void removeAssociatedPartButtonListener( ActionEvent actionEvent ) {
     addProductErrorLabel.setText( "Error: No part selected." );
   }
   else {
-    // Remove the selected part from the associated parts list
-    associatedPartsList.remove( selectedPart );
-    addProductSaveErrorLabel.setText( "Part association removed!" );
-    addProductSaveErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+    // Create a dialog box that confirms the deletion
+    Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
+    
+    alert.setContentText( "Are you sure you want to remove this part association?" );
+    
+    alert.showAndWait( ).ifPresent( response ->
+    {
+      if ( response == ButtonType.OK ) {
+        // Remove the selected part from the associated parts list
+        associatedPartsList.remove( selectedPart );
+        addProductSaveErrorLabel.setText( "Part association removed!" );
+        addProductSaveErrorLabel.setStyle( "-fx-text-fill: #00ff00;" );
+      }
+      else if ( response == ButtonType.CANCEL ) {
+        // If no, close out the window
+        System.out.println( "Association removal cancelled" );
+      }
+    } );
   }
 }
 

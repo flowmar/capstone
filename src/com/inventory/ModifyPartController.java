@@ -173,7 +173,7 @@ public void modifyPartRadioListener( ActionEvent actionEvent ) {
   if ( modifyPartInHouseRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Machine ID" );
   
-//    modifyPartExtraTextField.setText( "" );
+    modifyPartExtraTextField.setText( "" );
     modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
     {
       if ( change.getText( ).matches( "\\d+" ) ) {
@@ -194,8 +194,8 @@ public void modifyPartRadioListener( ActionEvent actionEvent ) {
   }
   else if ( modifyPartOutsourcedRadio.isSelected( ) ) {
     modifyPartExtraLabel.setText( "Company Name" );
-
-//    modifyPartExtraTextField.setText( "" );
+  
+    modifyPartExtraTextField.setText( "" );
     {
       modifyPartExtraLabel.setText( "Company Name" );
       modifyPartExtraTextField.setTextFormatter( new TextFormatter<>( change ->
