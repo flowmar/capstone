@@ -201,10 +201,10 @@ public void modifyProductSaveButtonListener( ActionEvent actionEvent ) {
     passCheck = false;
   }
   else {
-    passCheck = true;
+    modifyProductSaveErrorLabel.setText( "" );
   }
   
-  if ( passCheck == true ) {
+  if ( passCheck ) {
     try {
       Connection conn = DatabaseConnection.getConnection();
       

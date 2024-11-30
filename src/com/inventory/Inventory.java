@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Inventory extends Application {
 
@@ -28,7 +29,8 @@ public class Inventory extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/inventory/inventoryScene.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(
+		            "/com/inventory/inventoryScene.fxml")));
             Scene scene = new Scene(root);
             primaryStage.setTitle("Inventory Management System");
             primaryStage.setScene(scene);

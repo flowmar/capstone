@@ -133,10 +133,10 @@ public void modifyPartSaveListener( ActionEvent actionEvent ) {
     passCheck = false;
   }
   else {
-    passCheck = true;
+    modifyPartSaveErrorLabel.setText( "" );
   }
   
-  if ( passCheck == true ) {
+  if ( passCheck ) {
     try {
       // Prepare the SQL update statement
       String sql = "UPDATE parts SET name = ?, price = ?, stock = ?, min = ?, max = ?, type = ?, machine_id = ?, company_name = ? WHERE id = ?";

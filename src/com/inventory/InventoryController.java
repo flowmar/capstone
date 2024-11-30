@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -223,9 +224,9 @@ public class InventoryController implements Initializable {
     }
 
     public void partsAddButtonListener(ActionEvent actionEvent) throws Exception {
-        Parent parent = null;
+        Parent parent;
         partsErrorLabel.setText("");
-        parent = FXMLLoader.load(getClass().getResource("addPart.fxml"));
+        parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addPart.fxml")));
         Stage stage = new Stage();
         Scene scene = new Scene(parent);
         stage.setTitle("Add Part");
@@ -243,7 +244,7 @@ public class InventoryController implements Initializable {
             Inventory.selectedPart = selectedPart;
             Inventory.selectedPartId = selectedPartId;
             Inventory.selectedPartIndex = partsTableView.getItems().indexOf(selectedPart);
-            Parent parent = FXMLLoader.load(getClass().getResource("modifyPart.fxml"));
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("modifyPart.fxml")));
             Stage stage = new Stage();
             Scene scene = new Scene(parent);
             stage.setTitle("Modify Part");
@@ -266,10 +267,12 @@ public class InventoryController implements Initializable {
             // Check if part is associated with any products
             try {
                 String checkSql = "SELECT COUNT(*) FROM product_parts WHERE part_id = ?";
-                PreparedStatement checkStmt = DatabaseConnection.getConnection().prepareStatement(checkSql);
-                checkStmt.setInt(1, selectedPart.getId());
-                ResultSet rs = checkStmt.executeQuery();
-                rs.next();
+	            ResultSet rs;
+	            try ( PreparedStatement checkStmt = DatabaseConnection.getConnection().prepareStatement(checkSql) ) {
+		            checkStmt.setInt(1, selectedPart.getId());
+		            rs = checkStmt.executeQuery();
+	            }
+	            rs.next();
                 int count = rs.getInt(1);
                 
                 if (count > 0) {
@@ -290,11 +293,13 @@ public class InventoryController implements Initializable {
                     try {
                         // Delete from database
                         String sql = "DELETE FROM parts WHERE id = ?";
-                        PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(sql);
-                        stmt.setInt(1, selectedPart.getId());
-                        int rowsAffected = stmt.executeUpdate();
-                        
-                        if (rowsAffected > 0) {
+	                    int rowsAffected;
+	                    try ( PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(sql) ) {
+		                    stmt.setInt(1, selectedPart.getId());
+		                    rowsAffected = stmt.executeUpdate();
+	                    }
+	                    
+	                    if (rowsAffected > 0) {
                             // If database delete successful, remove from UI list
                             Inventory.allParts.remove(selectedPart);
                             partsErrorLabel.setText("Part Deleted!");
@@ -319,7 +324,7 @@ public class InventoryController implements Initializable {
     public void productsAddButtonListener(ActionEvent actionEvent) throws Exception {
         productsErrorLabel.setText("");
         productsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-        Parent parent = FXMLLoader.load(getClass().getResource("addProduct.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addProduct.fxml")));
         Stage stage = new Stage();
         Scene scene = new Scene(parent);
         stage.setTitle("Add Product");
@@ -338,7 +343,7 @@ public class InventoryController implements Initializable {
             Inventory.selectedProduct = selectedProduct;
             Inventory.selectedProductId = selectedProductId;
             Inventory.selectedProductIndex = productsTableView.getItems().indexOf(selectedProduct);
-            Parent parent = FXMLLoader.load(getClass().getResource("modifyProduct.fxml"));
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("modifyProduct.fxml")));
             Stage stage = new Stage();
             Scene scene = new Scene(parent);
             stage.setTitle("Modify Product");
@@ -359,10 +364,12 @@ public class InventoryController implements Initializable {
         try {
             // Check if product has associated parts
             String checkSql = "SELECT COUNT(*) FROM product_parts WHERE product_id = ?";
-            PreparedStatement checkStmt = DatabaseConnection.getConnection().prepareStatement(checkSql);
-            checkStmt.setInt(1, selectedProduct.getId());
-            ResultSet rs = checkStmt.executeQuery();
-            rs.next();
+	        ResultSet rs;
+	        try ( PreparedStatement checkStmt = DatabaseConnection.getConnection().prepareStatement(checkSql) ) {
+		        checkStmt.setInt(1, selectedProduct.getId());
+		        rs = checkStmt.executeQuery();
+	        }
+	        rs.next();
             int count = rs.getInt(1);
             
             if (count > 0) {
@@ -378,11 +385,13 @@ public class InventoryController implements Initializable {
                     try {
                         // Delete the product from database
                         String sql = "DELETE FROM products WHERE id = ?";
-                        PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(sql);
-                        stmt.setInt(1, selectedProduct.getId());
-                        int rowsAffected = stmt.executeUpdate();
-                        
-                        if (rowsAffected > 0) {
+	                    int rowsAffected;
+	                    try ( PreparedStatement stmt = DatabaseConnection.getConnection().prepareStatement(sql) ) {
+		                    stmt.setInt(1, selectedProduct.getId());
+		                    rowsAffected = stmt.executeUpdate();
+	                    }
+	                    
+	                    if (rowsAffected > 0) {
                             // If database delete successful, remove from UI
                             Inventory.allProducts.remove(selectedProduct);
                             productsErrorLabel.setText("Product Deleted!");

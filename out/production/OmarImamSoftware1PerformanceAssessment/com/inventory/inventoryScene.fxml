@@ -59,15 +59,27 @@
                               prefHeight="47.0" prefWidth="261.0" style="-fx-border-radius: 2px;">
                        <buttons>
                            <Button fx:id="partsAddButton" mnemonicParsing="false" onAction="#partsAddButtonListener"
-                                   style="-fx-background-color: #27B611; -fx-border-color: black; -fx-border-radius: 3%;"
+                                   style="-fx-background-color: #27B611; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                                   onMouseEntered="#onButtonHover"
+                                   onMouseExited="#onButtonExit"
+                                   onMousePressed="#onButtonPress"
+                                   onMouseReleased="#onButtonRelease"
                                    text="Add"/>
                            <Button fx:id="partsModifyButton" layoutX="277.0" layoutY="23.0" mnemonicParsing="false"
                                    onAction="#partsModifyButtonListener"
-                                   style="-fx-background-color: #CF700C#CF700C; -fx-border-color: black; -fx-border-radius: 3%;"
+                                   style="-fx-background-color: #0d2c54; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                                   onMouseEntered="#onButtonHover"
+                                   onMouseExited="#onButtonExit"
+                                   onMousePressed="#onButtonPress"
+                                   onMouseReleased="#onButtonRelease"
                                    text="Modify"/>
                            <Button fx:id="partsDeleteButton" layoutX="197.0" layoutY="23.0" mnemonicParsing="false"
                                    onAction="#partsDeleteButtonListener"
-                                   style="-fx-border-color: black; -fx-border-radius: 2%; -fx-background-color: red;"
+                                   style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                                   onMouseEntered="#onButtonHover"
+                                   onMouseExited="#onButtonExit"
+                                   onMousePressed="#onButtonPress"
+                                   onMouseReleased="#onButtonRelease"
                                    text="Delete"/>
                        </buttons>
                    </ButtonBar>
@@ -79,7 +91,12 @@
                    </Label>
                    <TableView id="Parts Table" fx:id="partsTableView" layoutX="51.0" layoutY="51.0" prefHeight="352.0"
                               prefWidth="659.0" style="-fx-border-color: #000000;"/>
-                   <TextField fx:id="filterFieldParts" layoutX="555.0" layoutY="20.0"
+                   <Label fx:id="partsSearchLabel" layoutX="426.0" layoutY="25.0" text="Search for Part Name:" textFill="#ffffea">
+                       <font>
+                           <Font name="System Bold" size="14.0"/>
+                       </font>
+                   </Label>
+                   <TextField fx:id="filterFieldParts" layoutX="559.0" layoutY="22.0"
                               onAction="#partsSearchFieldListener"
                               onInputMethodTextChanged="#partsSearchFieldListener"/>
                    <Label fx:id="partsErrorLabel" layoutX="51.0" layoutY="438.0" prefHeight="32.0" prefWidth="413.0"
@@ -99,15 +116,27 @@
                       <buttons>
                           <Button fx:id="productsAddButton" mnemonicParsing="false"
                                   onAction="#productsAddButtonListener"
-                                  style="-fx-background-color: #27B611 #27B611; -fx-border-radius: 2%; -fx-border-color: black;"
+                                  style="-fx-background-color: #27B611; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                                  onMouseEntered="#onButtonHover"
+                                  onMouseExited="#onButtonExit"
+                                  onMousePressed="#onButtonPress"
+                                  onMouseReleased="#onButtonRelease"
                                   text="Add"/>
                           <Button fx:id="productsModifyButton" layoutX="277.0" layoutY="23.0" mnemonicParsing="false"
                                   onAction="#productsModifyButtonListener"
-                                  style="-fx-background-color: #CF700C#CF700C #CF700C#CF700C; -fx-border-color: black; -fx-border-radius: 2%;"
+                                  style="-fx-background-color: #0d2c54; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                                  onMouseEntered="#onButtonHover"
+                                  onMouseExited="#onButtonExit"
+                                  onMousePressed="#onButtonPress"
+                                  onMouseReleased="#onButtonRelease"
                                   text="Modify"/>
                           <Button fx:id="productsDeleteButton" layoutX="197.0" layoutY="23.0" mnemonicParsing="false"
                                   onAction="#productsDeleteButtonListener"
-                                  style="-fx-background-color: red; -fx-border-color: black; -fx-border-radius: 2%;"
+                                  style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                                  onMouseEntered="#onButtonHover"
+                                  onMouseExited="#onButtonExit"
+                                  onMousePressed="#onButtonPress"
+                                  onMouseReleased="#onButtonRelease"
                                   text="Delete"/>
                       </buttons>
                   </ButtonBar>
@@ -119,9 +148,12 @@
                   </Label>
                   <TableView id="Products Table" fx:id="productsTableView" layoutX="43.0" layoutY="55.0"
                              prefHeight="352.0" prefWidth="671.0" style="-fx-border-color: #000000;"/>
-                  <TextField fx:id="filterFieldProducts" layoutX="559.0" layoutY="22.0"
-                             onAction="#productsSearchFieldListener"
-                             onInputMethodTextChanged="#productsSearchFieldListener"/>
+                  <HBox spacing="10" alignment="CENTER_LEFT" layoutX="373.0" layoutY="22.0">
+                     <Label text="Search for Product Name:" textFill="#ffffea" style="-fx-font-size: 14px;"/>
+                     <TextField fx:id="filterFieldProducts" prefHeight="25.0" prefWidth="200.0"
+                                onAction="#productsSearchFieldListener"
+                                onInputMethodTextChanged="#productsSearchFieldListener"/>
+                  </HBox>
                   <Label fx:id="productsErrorLabel" layoutX="43.0" layoutY="438.0" prefHeight="32.0" prefWidth="413.0"
                          textFill="RED">
                       <font>
@@ -131,7 +163,12 @@
               </children>
             </Pane>
           <Button id="Exit Button" fx:id="mainFormExitButton" layoutX="717.0" layoutY="630.0" mnemonicParsing="false"
-                  onAction="#exitButtonListener" prefHeight="47.0" prefWidth="156.0" style="-fx-border-color: #ffffea;"
+                  onAction="#exitButtonListener" prefHeight="47.0" prefWidth="156.0" 
+                  style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"
+                  onMouseEntered="#onButtonHover"
+                  onMouseExited="#onButtonExit"
+                  onMousePressed="#onButtonPress"
+                  onMouseReleased="#onButtonRelease"
                   text="Exit">
               <font>
                   <Font size="22.0"/>

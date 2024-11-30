@@ -206,10 +206,10 @@ public void addProductSaveListener( ActionEvent actionEvent ) {
     passCheck = false;
   }
   else {
-    passCheck = true;
+    addProductSaveErrorLabel.setText( "" );
   }
   
-  if ( passCheck == true ) {
+  if ( passCheck ) {
     try {
       Connection conn = DatabaseConnection.getConnection();
       
