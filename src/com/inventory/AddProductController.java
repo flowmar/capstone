@@ -9,9 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -206,15 +210,52 @@ public void addProductSaveListener( ActionEvent actionEvent ) {
   }
   
   if ( passCheck == true ) {
-    Inventory.allProducts.add( new Product( randomId, newProductName, newProductPrice, newProductStock,
-        newProductMin,
-        newProductMax, associatedPartsList ) );
-    
-    Stage stage = ( Stage ) addProductSaveButton.getScene( ).getWindow( );
-    stage.close( );
-  }
-  else {
-    System.out.print( "Didn't Pass." );
+    try {
+      Connection conn = DatabaseConnection.getConnection();
+      
+      // First insert the product
+      String productSql = "INSERT INTO products (id, name, price, stock, min, max) VALUES (?, ?, ?, ?, ?, ?)";
+      PreparedStatement productStmt = conn.prepareStatement(productSql);
+      productStmt.setInt(1, randomId);
+      productStmt.setString(2, newProductName);
+      productStmt.setDouble(3, newProductPrice);
+      productStmt.setInt(4, newProductStock);
+      productStmt.setInt(5, newProductMin);
+      productStmt.setInt(6, newProductMax);
+      
+      int productRowsAffected = productStmt.executeUpdate();
+      
+      if (productRowsAffected > 0) {
+        // If product was added successfully, add the associated parts
+        String associationSql = "INSERT INTO product_parts (product_id, part_id) VALUES (?, ?)";
+        PreparedStatement associationStmt = conn.prepareStatement(associationSql);
+        
+        // Add each associated part
+        for (Part part : associatedPartsList) {
+          associationStmt.setInt(1, randomId);
+          associationStmt.setInt(2, part.getId());
+          associationStmt.executeUpdate();
+        }
+        
+        // If everything was successful, update the UI
+        Product newProduct = new Product(randomId, newProductName, newProductPrice, newProductStock,
+            newProductMin, newProductMax, associatedPartsList);
+        Inventory.allProducts.add(newProduct);
+        
+        Stage stage = (Stage) addProductSaveButton.getScene().getWindow();
+        stage.close();
+      } else {
+        addProductSaveErrorLabel.setText("Error: Failed to save product to database!");
+        addProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
+      }
+    } catch ( SQLException e) {
+      System.out.println("Error saving product to database:");
+      e.printStackTrace();
+      addProductSaveErrorLabel.setText("Error: " + e.getMessage());
+      addProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
+    }
+  } else {
+    System.out.print("Didn't Pass.");
   }
 }
 
@@ -389,6 +430,22 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
     }
   } ) );
   
+  // Add button hover and click animation with consistent styling
+  addProductSaveButton.setStyle(addProductSaveButton.getStyle() + 
+      "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);");
+  addProductCancelButton.setStyle(addProductCancelButton.getStyle() + 
+      "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);");
+  
+  // Add button hover and click animation
+  addProductSaveButton.setOnMouseEntered(event -> onButtonHover(event));
+  addProductSaveButton.setOnMouseExited(event -> onButtonExit(event));
+  addProductSaveButton.setOnMousePressed(event -> onButtonPress(event));
+  addProductSaveButton.setOnMouseReleased(event -> onButtonRelease(event));
+
+  addProductCancelButton.setOnMouseEntered(event -> onButtonHover(event));
+  addProductCancelButton.setOnMouseExited(event -> onButtonExit(event));
+  addProductCancelButton.setOnMousePressed(event -> onButtonPress(event));
+  addProductCancelButton.setOnMouseReleased(event -> onButtonRelease(event));
 }
 
 /**
@@ -406,6 +463,43 @@ public void addProductsSearchFieldListener( ActionEvent actionEvent ) {
   }
 }
 
-
+@FXML
+private void onButtonHover(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle() + 
+      "-fx-background-color: derive(" + getButtonColor(sourceButton) + ", 10%); " +
+      "-fx-cursor: hand;");
 }
 
+@FXML
+private void onButtonExit(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle().replaceAll("-fx-background-color: derive\\([^;]+\\);", ""));
+}
+
+@FXML
+private void onButtonPress(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle() + 
+      "-fx-translate-y: 2px; " +
+      "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);");
+}
+
+@FXML
+private void onButtonRelease(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle()
+      .replaceAll("-fx-translate-y: 2px;", "")
+      .replaceAll("-fx-effect: dropshadow\\(three-pass-box, rgba\\(0,0,0,0.2\\), 3, 0, 0, 1\\);", 
+          "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"));
+}
+
+private String getButtonColor(Button button) {
+  if (button == addProductSaveButton) {
+    return "#27B611";
+  } else if (button == addProductCancelButton) {
+    return "#ff0000";
+  }
+  return "#000000";
+}
+}

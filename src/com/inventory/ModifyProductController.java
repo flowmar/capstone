@@ -9,9 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -201,17 +205,60 @@ public void modifyProductSaveButtonListener( ActionEvent actionEvent ) {
   }
   
   if ( passCheck == true ) {
-    // Save the modified product
-    Inventory.allProducts.set( Inventory.selectedProductIndex, new Product( randomId, modifyProductName,
-        modifyProductPrice,
-        modifyProductStock, modifyProductMin, modifyProductMax, associatedPartsList ) );
-    
-    // Close the window
-    Stage stage = ( Stage ) modifyProductSaveButton.getScene( ).getWindow( );
-    stage.close( );
-  }
-  else {
-    System.out.println( "Didn't Pass" );
+    try {
+      Connection conn = DatabaseConnection.getConnection();
+      
+      // First update the product
+      String productSql = "UPDATE products SET name = ?, price = ?, stock = ?, min = ?, max = ? WHERE id = ?";
+      PreparedStatement productStmt = conn.prepareStatement(productSql);
+      productStmt.setString(1, modifyProductName);
+      productStmt.setDouble(2, modifyProductPrice);
+      productStmt.setInt(3, modifyProductStock);
+      productStmt.setInt(4, modifyProductMin);
+      productStmt.setInt(5, modifyProductMax);
+      productStmt.setInt(6, randomId);
+      
+      int productRowsAffected = productStmt.executeUpdate();
+      
+      if (productRowsAffected > 0) {
+        // If product was updated successfully, update the associated parts
+        
+        // First, delete all existing associations
+        String deleteAssocSql = "DELETE FROM product_parts WHERE product_id = ?";
+        PreparedStatement deleteAssocStmt = conn.prepareStatement(deleteAssocSql);
+        deleteAssocStmt.setInt(1, randomId);
+        deleteAssocStmt.executeUpdate();
+        
+        // Then add all current associations
+        String associationSql = "INSERT INTO product_parts (product_id, part_id) VALUES (?, ?)";
+        PreparedStatement associationStmt = conn.prepareStatement(associationSql);
+        
+        for (Part part : associatedPartsList) {
+          associationStmt.setInt(1, randomId);
+          associationStmt.setInt(2, part.getId());
+          associationStmt.executeUpdate();
+        }
+        
+        // If everything was successful, update the UI
+        Product modifiedProduct = new Product(randomId, modifyProductName, modifyProductPrice,
+            modifyProductStock, modifyProductMin, modifyProductMax, associatedPartsList);
+        Inventory.allProducts.set(Inventory.selectedProductIndex, modifiedProduct);
+        
+        // Close the window
+        Stage stage = (Stage) modifyProductSaveButton.getScene().getWindow();
+        stage.close();
+      } else {
+        modifyProductSaveErrorLabel.setText("Error: Product not found in database!");
+        modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
+      }
+    } catch (SQLException e) {
+      System.out.println("Error updating product in database:");
+      e.printStackTrace();
+      modifyProductSaveErrorLabel.setText("Error: " + e.getMessage());
+      modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
+    }
+  } else {
+    System.out.println("Didn't Pass");
   }
 }
 
@@ -232,15 +279,35 @@ public void modifyProductCancelButtonListener( ActionEvent actionEvent ) {
  */
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
+  // Add button hover and click animation with consistent styling
+  modifyProductSaveButton.setStyle(modifyProductSaveButton.getStyle() + 
+      "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);");
+  modifyProductCancelButton.setStyle(modifyProductCancelButton.getStyle() + 
+      "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);");
+
+  // Add button hover and click animation
+  modifyProductSaveButton.setOnMouseEntered(event -> onButtonHover(event));
+  modifyProductSaveButton.setOnMouseExited(event -> onButtonExit(event));
+  modifyProductSaveButton.setOnMousePressed(event -> onButtonPress(event));
+  modifyProductSaveButton.setOnMouseReleased(event -> onButtonRelease(event));
+
+  modifyProductCancelButton.setOnMouseEntered(event -> onButtonHover(event));
+  modifyProductCancelButton.setOnMouseExited(event -> onButtonExit(event));
+  modifyProductCancelButton.setOnMousePressed(event -> onButtonPress(event));
+  modifyProductCancelButton.setOnMouseReleased(event -> onButtonRelease(event));
+
   // Fill the TextFields with the information from the selected product
-  modifyProductIdTextField.setText( Integer.toString( Inventory.selectedProduct.getId( ) ) );
-  modifyProductNameTextField.setText( Inventory.selectedProduct.getName( ) );
-  modifyProductStockTextField.setText( Integer.toString( Inventory.selectedProduct.getStock( ) ) );
-  modifyProductPriceTextField.setText( Double.toString( Inventory.selectedProduct.getPrice( ) ) );
-  modifyProductMaxTextField.setText( Integer.toString( Inventory.selectedProduct.getMax( ) ) );
-  modifyProductMinTextField.setText( Integer.toString( Inventory.selectedProduct.getMin( ) ) );
-  associatedPartsList.setAll( Inventory.selectedProduct.getAllAssociatedParts( ) );
-  modifyProductAssociatedPartsTableView.setItems( associatedPartsList );
+  Product selectedProduct = Inventory.selectedProduct;
+  modifyProductIdTextField.setText(Integer.toString(selectedProduct.getId()));
+  modifyProductNameTextField.setText(selectedProduct.getName());
+  modifyProductStockTextField.setText(Integer.toString(selectedProduct.getStock()));
+  modifyProductPriceTextField.setText(Double.toString(selectedProduct.getPrice()));
+  modifyProductMaxTextField.setText(Integer.toString(selectedProduct.getMax()));
+  modifyProductMinTextField.setText(Integer.toString(selectedProduct.getMin()));
+  
+  // Set the associated parts
+  associatedPartsList.setAll(selectedProduct.getAllAssociatedParts());
+  modifyProductAssociatedPartsTableView.setItems(associatedPartsList);
   
   // Create the table columns
   TableColumn<Part, Integer> partsIdColumn    = new TableColumn<>( "id" );
@@ -297,12 +364,12 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
         modifyProductErrorLabel.setText( "" );
         return true;
       }
-//      else if ( String.valueOf( product.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
-//        productsErrorLabel.setText("3");
-//        return true;
-//      }
+  //      else if ( String.valueOf( product.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
+  //        productsErrorLabel.setText("3");
+  //        return true;
+  //      }
       else {
-//                modifyProductErrorLabel.setText( "4" );
+  //                modifyProductErrorLabel.setText( "4" );
         return false;
       }
     } );
@@ -395,7 +462,6 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
       return change;
     }
   } ) );
-  
 }
 
 /**
@@ -413,5 +479,43 @@ public void modifyProductsSearchFieldListener( ActionEvent actionEvent ) {
   }
 }
 
+@FXML
+private void onButtonHover(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle() + 
+      "-fx-background-color: derive(" + getButtonColor(sourceButton) + ", 10%); " +
+      "-fx-cursor: hand;");
+}
 
+@FXML
+private void onButtonExit(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle().replaceAll("-fx-background-color: derive\\([^;]+\\);", ""));
+}
+
+@FXML
+private void onButtonPress(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle() + 
+      "-fx-translate-y: 2px; " +
+      "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);");
+}
+
+@FXML
+private void onButtonRelease(MouseEvent event) {
+  Button sourceButton = (Button) event.getSource();
+  sourceButton.setStyle(sourceButton.getStyle()
+      .replaceAll("-fx-translate-y: 2px;", "")
+      .replaceAll("-fx-effect: dropshadow\\(three-pass-box, rgba\\(0,0,0,0.2\\), 3, 0, 0, 1\\);", 
+          "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);"));
+}
+
+private String getButtonColor(Button button) {
+  if (button == modifyProductSaveButton) {
+    return "#27B611";
+  } else if (button == modifyProductCancelButton) {
+    return "#ff0000";
+  }
+  return "#000000";
+}
 }
