@@ -3,6 +3,7 @@ package com.inventory;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,8 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,39 +89,99 @@ public class InventoryController implements Initializable {
         TableColumn<Product, Integer> productsStockColumn = new TableColumn<>("Stock");
         productsTableView.getColumns().addAll(productsIdColumn, productsNameColumn, productsPriceColumn, productsStockColumn);
 
-        // Associate the data with the columns
-        partsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        partsNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("Name"));
-        partsStockColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("Stock"));
-        partsPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("Price"));
+        // Load data from database
+        loadDataFromDatabase();
 
-        productsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        productsNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
-        productsStockColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("Stock"));
-        productsPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("Price"));
+        // Setup table selection listeners
+        setupTableSelectionListeners();
 
-        // Add the data to the table
-        partsTableView.setItems(Inventory.allParts);
-        productsTableView.setItems(Inventory.allProducts);
+        // Setup button listeners
+        setupButtonListeners();
 
-        partsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
-        partsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        // Setup search/filter
+        setupSearchAndFilter();
+    }
 
-        // Set up filtering for parts
-        FilteredList<Part> filteredData = new FilteredList<>(Inventory.allParts, t -> true);
-        setupPartsFilter(filteredData);
-        SortedList<Part> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(partsTableView.comparatorProperty());
-        partsTableView.setItems(sortedData);
+    private void loadDataFromDatabase() {
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            
+            // Parts loading
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM parts")) {
+                ResultSet rs = stmt.executeQuery();
+                ObservableList<Part> partsList = FXCollections.observableArrayList();
+                while (rs.next()) {
+                    // Create an InHouse part with default machineId 0
+                    Part part = new InHouse(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock"),
+                        rs.getInt("min"),
+                        rs.getInt("max"),
+                        0  // Default machine ID
+                    );
+                    partsList.add(part);
+                }
+                partsTableView.setItems(partsList);
+            }
 
-        // Set up filtering for products
-        FilteredList<Product> filteredProductData = new FilteredList<>(Inventory.allProducts, t -> true);
-        setupProductsFilter(filteredProductData);
-        SortedList<Product> sortedProductData = new SortedList<>(filteredProductData);
-        sortedProductData.comparatorProperty().bind(productsTableView.comparatorProperty());
-        productsTableView.setItems(sortedProductData);
+            // Products loading
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM products")) {
+                ResultSet rs = stmt.executeQuery();
+                ObservableList<Product> productsList = FXCollections.observableArrayList();
+                while (rs.next()) {
+                    Product product = new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock"),
+                        rs.getInt("min"),
+                        rs.getInt("max"),
+                        FXCollections.observableArrayList()  // Empty list of associated parts
+                    );
+                    productsList.add(product);
+                }
+                productsTableView.setItems(productsList);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Show error to user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Error Loading Data");
+            alert.setContentText("Could not load data from the database. Please check your connection.");
+            alert.showAndWait();
+        } finally {
+            // Always release the connection back to the pool
+            if (conn != null) {
+                DatabaseConnection.releaseConnection(conn);
+            }
+        }
+    }
 
-        // Add button hover and click animation
+    private void setupTableSelectionListeners() {
+        partsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                partsErrorLabel.setText("");
+            }
+        });
+
+        productsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                productsErrorLabel.setText("");
+            }
+        });
+    }
+
+    private void setupButtonListeners() {
+        mainFormExitButton.setOnAction(event -> exitButtonListener(event));
+        mainFormExitButton.setOnMouseEntered(this::onButtonHover);
+        mainFormExitButton.setOnMouseExited(this::onButtonExit);
+        mainFormExitButton.setOnMousePressed(this::onButtonPress);
+        mainFormExitButton.setOnMouseReleased(this::onButtonRelease);
+
         partsAddButton.setOnMouseEntered(event -> onButtonHover(event));
         partsAddButton.setOnMouseExited(event -> onButtonExit(event));
         partsAddButton.setOnMousePressed(event -> onButtonPress(event));
@@ -148,74 +211,75 @@ public class InventoryController implements Initializable {
         productsDeleteButton.setOnMouseExited(event -> onButtonExit(event));
         productsDeleteButton.setOnMousePressed(event -> onButtonPress(event));
         productsDeleteButton.setOnMouseReleased(event -> onButtonRelease(event));
-
-        mainFormExitButton.setOnMouseEntered(event -> onButtonHover(event));
-        mainFormExitButton.setOnMouseExited(event -> onButtonExit(event));
-        mainFormExitButton.setOnMousePressed(event -> onButtonPress(event));
-        mainFormExitButton.setOnMouseReleased(event -> onButtonRelease(event));
     }
 
-    private void loadDataFromDatabase() {
-        // This method is now deprecated since data loading is handled in LoginController
-        System.out.println("Data loading is now handled during login");
-    }
+    private void setupSearchAndFilter() {
+        // Associate the data with the columns
+        TableColumn<Part, Integer> partsIdColumn = (TableColumn<Part, Integer>) partsTableView.getColumns().get(0);
+        TableColumn<Part, String> partsNameColumn = (TableColumn<Part, String>) partsTableView.getColumns().get(1);
+        TableColumn<Part, Double> partsPriceColumn = (TableColumn<Part, Double>) partsTableView.getColumns().get(2);
+        TableColumn<Part, Integer> partsStockColumn = (TableColumn<Part, Integer>) partsTableView.getColumns().get(3);
 
-    private void loadPartsFromDatabase() {
-        // This method is now deprecated since data loading is handled in LoginController
-        System.out.println("Parts loading is now handled during login");
-    }
+        partsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        partsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        partsPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        partsStockColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
 
-    private void loadProductsFromDatabase() {
-        // This method is now deprecated since data loading is handled in LoginController
-        System.out.println("Products loading is now handled during login");
-    }
+        TableColumn<Product, Integer> productsIdColumn = (TableColumn<Product, Integer>) productsTableView.getColumns().get(0);
+        TableColumn<Product, String> productsNameColumn = (TableColumn<Product, String>) productsTableView.getColumns().get(1);
+        TableColumn<Product, Double> productsPriceColumn = (TableColumn<Product, Double>) productsTableView.getColumns().get(2);
+        TableColumn<Product, Integer> productsStockColumn = (TableColumn<Product, Integer>) productsTableView.getColumns().get(3);
 
-    private void setupPartsFilter(FilteredList<Part> filteredData) {
+        productsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        productsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        productsPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        productsStockColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
+
+        // Set up filtering for parts
+        FilteredList<Part> filteredData = new FilteredList<>(partsTableView.getItems(), t -> true);
         filterFieldParts.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(part -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-
+                
                 String lowerCaseFilter = newValue.toLowerCase();
-
+                
                 if (part.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    partsErrorLabel.setText("");
                     return true;
-                } else if (Integer.toString(part.getId()).contains(lowerCaseFilter)) {
-                    partsErrorLabel.setText("");
+                } else if (String.valueOf(part.getId()).contains(lowerCaseFilter)) {
                     return true;
-                } else {
-                    partsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-                    partsErrorLabel.setText("Error: No Matching Part Found!");
                 }
+                
                 return false;
             });
         });
-    }
+        SortedList<Part> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(partsTableView.comparatorProperty());
+        partsTableView.setItems(sortedData);
 
-    private void setupProductsFilter(FilteredList<Product> filteredProductData) {
+        // Set up filtering for products
+        FilteredList<Product> filteredProductData = new FilteredList<>(productsTableView.getItems(), t -> true);
         filterFieldProducts.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredProductData.setPredicate(product -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-
+                
                 String lowerCaseFilter = newValue.toLowerCase();
-
+                
                 if (product.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    productsErrorLabel.setText("");
                     return true;
-                } else if (Integer.toString(product.getId()).contains(lowerCaseFilter)) {
-                    productsErrorLabel.setText("");
+                } else if (String.valueOf(product.getId()).contains(lowerCaseFilter)) {
                     return true;
-                } else {
-                    productsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-                    productsErrorLabel.setText("Error: No Matching Product Found!");
                 }
+                
                 return false;
             });
         });
+        SortedList<Product> sortedProductData = new SortedList<>(filteredProductData);
+        sortedProductData.comparatorProperty().bind(productsTableView.comparatorProperty());
+        productsTableView.setItems(sortedProductData);
     }
 
     public int getRandomNumber() {
@@ -480,5 +544,11 @@ public class InventoryController implements Initializable {
             return "#ff0000";
         }
         return "#000000";
+    }
+
+    @FXML
+    private void generateInventoryReport() {
+        InventoryReportGenerator reportGenerator = new InventoryReportGenerator();
+        reportGenerator.generateInventorySummaryReport();
     }
 }

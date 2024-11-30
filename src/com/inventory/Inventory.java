@@ -182,7 +182,7 @@ public class Inventory extends Application {
 
     @Override
     public void stop() {
-        DatabaseConnection.closeConnection();
+        DatabaseConnection.closeAllConnections();
     }
 
     public static void main(String[] args) {

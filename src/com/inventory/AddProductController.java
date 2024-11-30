@@ -215,17 +215,19 @@ public void addProductSaveListener( ActionEvent actionEvent ) {
       
       // First insert the product
       String productSql = "INSERT INTO products (id, name, price, stock, min, max) VALUES (?, ?, ?, ?, ?, ?)";
-      PreparedStatement productStmt = conn.prepareStatement(productSql);
-      productStmt.setInt(1, randomId);
-      productStmt.setString(2, newProductName);
-      productStmt.setDouble(3, newProductPrice);
-      productStmt.setInt(4, newProductStock);
-      productStmt.setInt(5, newProductMin);
-      productStmt.setInt(6, newProductMax);
-      
-      int productRowsAffected = productStmt.executeUpdate();
-      
-      if (productRowsAffected > 0) {
+	    int productRowsAffected;
+	    try ( PreparedStatement productStmt = conn.prepareStatement(productSql) ) {
+		    productStmt.setInt(1, randomId);
+		    productStmt.setString(2, newProductName);
+		    productStmt.setDouble(3, newProductPrice);
+		    productStmt.setInt(4, newProductStock);
+		    productStmt.setInt(5, newProductMin);
+		    productStmt.setInt(6, newProductMax);
+		    
+		    productRowsAffected = productStmt.executeUpdate();
+	    }
+	    
+	    if (productRowsAffected > 0) {
         // If product was added successfully, add the associated parts
         String associationSql = "INSERT INTO product_parts (product_id, part_id) VALUES (?, ?)";
         PreparedStatement associationStmt = conn.prepareStatement(associationSql);

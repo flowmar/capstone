@@ -8,34 +8,34 @@ public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/inventory";
     private static final String USER = "flowmar";
     private static final String PASSWORD = "passing321";
-    private static Connection connection = null;
 
-    public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("Database connected successfully");
-            } catch (ClassNotFoundException e) {
-                System.out.println("MySQL JDBC Driver not found.");
-                e.printStackTrace();
-            } catch (SQLException e) {
-                System.out.println("Connection to database failed!");
-                e.printStackTrace();
-            }
+    static {
+        try {
+            // Load the MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("MySQL JDBC Driver registered successfully");
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL JDBC Driver not found");
+            e.printStackTrace();
+            throw new RuntimeException("MySQL JDBC Driver not found", e);
         }
-        return connection;
     }
 
-    public static void closeConnection() {
-        if (connection != null) {
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
+    public static void releaseConnection(Connection conn) {
+        if (conn != null) {
             try {
-                connection.close();
-                System.out.println("Database connection closed");
+                conn.close();
             } catch (SQLException e) {
-                System.out.println("Error closing database connection");
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void closeAllConnections() {
+        // No-op method for compatibility
     }
 }
