@@ -1,0 +1,335 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": false,
+    "cutClient": false,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.inventory.Part",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_2020599460 { 
+   	label=inventory
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   AddProductController1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AddProductController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   addProductCancelButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductFilterField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductIdTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductMaxTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductMinTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductPriceTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductSaveButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductSaveErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductStockTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   associatedPartTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   associatedPartsList: ObservableList&lt;Part&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addProductAddButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProductCancelButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProductSaveListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProductsSearchFieldListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- getButtonColor(button: Button): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRandomNumber(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize(url: URL, resourceBundle: ResourceBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonExit(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonHover(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonPress(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonRelease(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeAssociatedPartButtonListener(actionEvent: ActionEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+InHouse1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)InHouse</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   machineId: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ InHouse(id: int, name: String, price: double, stock: int, min: int, max: int, machineId: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMachineId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMachineId(machineId: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+InventoryController1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)InventoryController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   filterFieldParts: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   filterFieldProducts: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   mainFormExitButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   partsAddButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   partsDeleteButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   partsErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   partsModifyButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   partsTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   productsAddButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   productsDeleteButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   productsErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   productsModifyButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   productsTableView: TableView&lt;Product&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stage: Stage [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ exitButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- generateInventoryReport()</TD></TR>
+<TR><TD ALIGN="LEFT" >- getButtonColor(button: Button): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRandomNumber(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize(url: URL, resourceBundle: ResourceBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadDataFromDatabase()</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadPartsFromDatabase()</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadProductsFromDatabase()</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonExit(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonHover(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonPress(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonRelease(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ partsAddButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ partsDeleteButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ partsModifyButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ partsSearchFieldListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ productsAddButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ productsDeleteButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ productsModifyButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ productsSearchFieldListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- setupPartsFilter(filteredData: FilteredList&lt;Part&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >- setupProductsFilter(filteredProductData: FilteredList&lt;Product&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ModifyProductController1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ModifyProductController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   associatedPartsList: ObservableList&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductAssociatedPartsTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductCancelButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductIdTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductMaxTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductMinTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductPartsTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductPriceTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductSaveButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductSaveErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductSearchField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifyProductStockTextField: TextField [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addAssociatedPartButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- getButtonColor(button: Button): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize(url: URL, resourceBundle: ResourceBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ modifyProductCancelButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ modifyProductSaveButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ modifyProductsSearchFieldListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonExit(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonHover(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonPress(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonRelease(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeAssociatedPartButtonListener(actionEvent: ActionEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Outsourced1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Outsourced</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   companyName: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Outsourced(id: int, name: String, price: double, stock: int, min: int, max: int, companyName: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getCompanyName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCompanyName(companyName: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Part1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Part</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   max: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   min: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stock: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Part(id: int, name: String, price: double, stock: int, min: int, max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMax(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMin(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStock(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMax(max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMin(min: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStock(stock: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Product1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Product</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   associatedParts: ObservableList&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   max: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   min: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stock: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Product(id: int, name: String, price: double, stock: int, min: int, max: int, associatedParts: ObservableList&lt;Part&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addAssociatedPart(part: Part)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteAssociatedPart(selectedAssociatedPart: Part): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAllAssociatedParts(): ObservableList&lt;Part&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMax(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMin(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStock(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >- setId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMax(max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMin(min: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStock(stock: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+AddProductController1691664687 -> Part1691664687[label="addProductTableView
+[0..1]"];
+AddProductController1691664687 -> Part1691664687[label="associatedPartTableView
+[0..1]"];
+AddProductController1691664687 -> Part1691664687[label="associatedPartsList
+[0..1]"];
+InventoryController1691664687 -> Part1691664687[label="partsTableView
+[0..1]"];
+ModifyProductController1691664687 -> Part1691664687[label="associatedPartsList
+[0..1]"];
+ModifyProductController1691664687 -> Part1691664687[label="modifyProductAssociatedPartsTableView
+[0..1]"];
+ModifyProductController1691664687 -> Part1691664687[label="modifyProductPartsTableView
+[0..1]"];
+Part1691664687 -> InHouse1691664687[arrowhead=none, arrowtail=empty, dir=both];
+Part1691664687 -> Outsourced1691664687[arrowhead=none, arrowtail=empty, dir=both];
+Product1691664687 -> Part1691664687[label="associatedParts
+[0..1]"];
+    
+}
+@enduml

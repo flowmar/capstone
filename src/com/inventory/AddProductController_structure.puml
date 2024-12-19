@@ -1,0 +1,223 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": false,
+    "cutClient": false,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.inventory.AddProductController",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_2020599460 { 
+   	label=inventory
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   AddProductController1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AddProductController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   addProductCancelButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductFilterField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductIdTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductMaxTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductMinTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductPriceTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductSaveButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductSaveErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductStockTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addProductTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   associatedPartTableView: TableView&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   associatedPartsList: ObservableList&lt;Part&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addProductAddButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProductCancelButtonListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProductSaveListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProductsSearchFieldListener(actionEvent: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- getButtonColor(button: Button): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRandomNumber(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize(url: URL, resourceBundle: ResourceBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonExit(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonHover(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonPress(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onButtonRelease(event: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeAssociatedPartButtonListener(actionEvent: ActionEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DatabaseConnection1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DatabaseConnection</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ closeConnection()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getConnection(): Connection</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Part1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Part</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   max: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   min: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stock: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Part(id: int, name: String, price: double, stock: int, min: int, max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMax(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMin(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStock(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMax(max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMin(min: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStock(stock: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Product1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Product</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   associatedParts: ObservableList&lt;Part&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   max: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   min: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stock: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Product(id: int, name: String, price: double, stock: int, min: int, max: int, associatedParts: ObservableList&lt;Part&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addAssociatedPart(part: Part)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteAssociatedPart(selectedAssociatedPart: Part): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAllAssociatedParts(): ObservableList&lt;Part&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMax(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMin(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStock(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >- setId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMax(max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMin(min: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStock(stock: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+AddProductController1691664687 -> DatabaseConnection1691664687[label="addProductSaveListener() -> getConnection()"];
+AddProductController1691664687 -> Part1691664687[label="addProductTableView
+[0..1]"];
+AddProductController1691664687 -> Part1691664687[label="associatedPartTableView
+[0..1]"];
+AddProductController1691664687 -> Part1691664687[label="associatedPartsList
+[0..1]"];
+AddProductController1691664687 -> Product1691664687[label="addProductSaveListener() -> Product()"];
+Product1691664687 -> Part1691664687[label="associatedParts
+[0..1]"];
+    
+}
+@enduml

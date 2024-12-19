@@ -1,0 +1,15 @@
+com/inventory/DatabaseConnection.class
+com/inventory/LoginController.class
+com/inventory/InventoryReportGenerator.class
+com/inventory/InventoryReportGenerator$ReportRow.class
+com/inventory/InHouse.class
+com/inventory/Outsourced.class
+com/inventory/Product.class
+com/inventory/Inventory.class
+com/inventory/Part.class
+com/inventory/AddPartController.class
+com/inventory/AddProductController.class
+com/inventory/ModifyProductController.class
+com/inventory/Main.class
+com/inventory/InventoryController.class
+com/inventory/ModifyPartController.class

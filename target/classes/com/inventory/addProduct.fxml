@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+--><?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?><VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0"
+                                    xmlns="http://javafx.com/javafx/16"
+                                    fx:controller="com.inventory.AddProductController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox prefHeight="676.0" prefWidth="1403.0" style="-fx-border-radius: 50%;">
+              <children>
+                <MenuBar fx:id="mainWindow" prefHeight="25.0" prefWidth="640.0" style="-fx-border-radius: 2%;"
+						 VBox.vgrow="NEVER">
+                  <menus>
+                    <Menu mnemonicParsing="false" text="File">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="New"/>
+                        <MenuItem mnemonicParsing="false" text="Open…"/>
+                        <Menu mnemonicParsing="false" text="Open Recent"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" text="Save"/>
+                        <MenuItem mnemonicParsing="false" text="Save As…"/>
+                        <MenuItem mnemonicParsing="false" text="Revert"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Preferences…"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Quit"/>
+                      </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Edit">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="Undo"/>
+                        <MenuItem mnemonicParsing="false" text="Redo"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Cut"/>
+                        <MenuItem mnemonicParsing="false" text="Copy"/>
+                        <MenuItem mnemonicParsing="false" text="Paste"/>
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Select All"/>
+                        <MenuItem mnemonicParsing="false" text="Unselect All"/>
+                      </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Help">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp"/>
+                      </items>
+                    </Menu>
+                  </menus>
+                </MenuBar>
+                <AnchorPane id="mainForm" maxHeight="-1.0" maxWidth="-1.0" prefHeight="642.0" prefWidth="662.0"
+							style="-fx-background-color: #0d2c54; -fx-border-radius: 2%;" VBox.vgrow="ALWAYS">
+                  <children>
+                        <Label fx:id="mainFormTitle" layoutX="45.0" layoutY="18.0"
+							   style="-fx-border-color: #FFFFEA; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-insets: 4px; -fx-label-padding: 9px; -fx-border-radius: 2%;"
+							   styleClass="title-border" text="Add Product" textFill="#ffffea">
+                           <font>
+                              <Font name="System Bold" size="24.0"/>
+                           </font>
+                        </Label>
+                        <TextArea fx:id="addProductInstructionsTextArea" layoutX="45.0" layoutY="90.0" prefHeight="50.0"
+								  prefWidth="600.0"
+								  text="Use the search box and the table on the top right to search for parts. Select a part and click the 'Add' button to associate the selected part with the current Product. Associated parts are displayed in the bottom table."
+								  editable="false" wrapText="true"
+								  style="-fx-background-color: #1E4C8C; -fx-text-fill: white; -fx-control-inner-background: #1E4C8C; -fx-font-size: 12px; -fx-padding: 5px;"/>
+                        <Label layoutX="108.0" layoutY="160.0" text="ID" textFill="#ffffea">
+                            <font>
+                                <Font size="22.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="addProductIdTextField" disable="true" layoutX="238.0" layoutY="160.0"/>
+                        <Label layoutX="108.0" layoutY="236.0" text="Name" textFill="#ffffea">
+                           <font>
+                              <Font size="22.0"/>
+                           </font>
+                        </Label>
+                      <Label layoutX="108.0" layoutY="282.0" text="Stock" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                        <Label layoutX="110.0" layoutY="326.0" text="Price" textFill="#ffffea">
+                           <font>
+                              <Font size="22.0"/>
+                           </font>
+                        </Label>
+                      <Label layoutX="110.0" layoutY="368.0" text="Max" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <Label layoutX="428.0" layoutY="368.0" text="Min" textFill="#ffffea">
+                          <font>
+                              <Font size="22.0"/>
+                          </font>
+                      </Label>
+                      <TextField fx:id="addProductNameTextField" layoutX="238.0" layoutY="239.0"/>
+                      <TextField fx:id="addProductStockTextField" layoutX="238.0" layoutY="285.0"/>
+                      <TextField fx:id="addProductPriceTextField" layoutX="238.0" layoutY="329.0"/>
+                      <TextField fx:id="addProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0"
+								 prefWidth="155.0"/>
+                      <Button fx:id="addProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false"
+							  onAction="#addProductSaveListener" text="Save">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
+                      <Button fx:id="addProductCancelButton" layoutX="1244.0" layoutY="595.0" mnemonicParsing="false"
+							  onAction="#addProductCancelButtonListener" text="Cancel">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
+                      <TextField fx:id="addProductMinTextField" layoutX="488.0" layoutY="371.0" prefHeight="23.0"
+								 prefWidth="155.0"/>
+                      <Button fx:id="removeAssociatedPartButton" layoutX="1127.0" layoutY="553.0"
+							  mnemonicParsing="false" onAction="#removeAssociatedPartButtonListener"
+							  text="Remove Associated Part">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
+                      <Button fx:id="addProductAddButton" layoutX="1263.0" layoutY="272.0" mnemonicParsing="false"
+							  onAction="#addProductAddButtonListener" text="Add">
+                          <font>
+                              <Font size="16.0"/>
+                          </font>
+                      </Button>
+                      <TableView fx:id="associatedPartTableView" layoutX="773.0" layoutY="329.0" prefHeight="200.0"
+								 prefWidth="550.0"/>
+                      <TableView fx:id="addProductTableView" layoutX="773.0" layoutY="62.0" prefHeight="200.0"
+								 prefWidth="550.0"/>
+                      <Label fx:id="addProductPartsSearchLabel" layoutX="1020.0" layoutY="23.0" text="Search for Parts:"
+							 textFill="WHITE" style="-fx-font-weight: bold;"/>
+                      <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0"
+								 onAction="#addProductsSearchFieldListener"/>
+                      <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0"
+							 prefWidth="335.0" textFill="#f54b4b">
+                          <font>
+                              <Font name="System Bold" size="16.0"/>
+                          </font>
+                      </Label>
+                      <Label fx:id="addProductSaveErrorLabel" layoutX="110.0" layoutY="429.0" prefHeight="23.0"
+							 prefWidth="539.0" textFill="#f54b4b">
+                          <font>
+                              <Font name="System Bold" size="16.0"/>
+                          </font>
+                      </Label>
+                  </children>
+                </AnchorPane>
+              </children>
+            </VBox>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
