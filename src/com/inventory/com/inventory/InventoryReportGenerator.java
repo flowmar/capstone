@@ -47,9 +47,7 @@ public class InventoryReportGenerator {
 			                      "ROUND(MIN(price), 2) as min_price, " +
 			                      "ROUND(MAX(price), 2) as max_price, " +
 			                      "ROUND(SUM(stock * price), 2) as total_inventory_value, " +
-			                      "SUM(CASE WHEN stock < min THEN 1 ELSE 0 END) as low_stock_products, " +
-			                      "SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) as out_of_stock_products, " +
-			                      "SUM(CASE WHEN stock > max THEN 1 ELSE 0 END) as over_stock_products " +
+			                      "SUM(CASE WHEN stock <= (min + 3) THEN 1 ELSE 0 END) as low_stock_products " +
 			                      "FROM products";
 			
 			String partsQuery = "SELECT " +
@@ -58,7 +56,7 @@ public class InventoryReportGenerator {
 			                    "ROUND(AVG(price), 2) as avg_part_price, " +
 			                    "ROUND(MIN(price), 2) as min_part_price, " +
 			                    "ROUND(MAX(price), 2) as max_part_price, " +
-			                    "SUM(CASE WHEN stock < min THEN 1 ELSE 0 END) as low_stock_parts, " +
+			                    "SUM(CASE WHEN stock <= (min + 3) THEN 1 ELSE 0 END) as low_stock_parts, " +
 			                    "COUNT(CASE WHEN type = 'InHouse' THEN 1 END) as inhouse_parts, " +
 			                    "COUNT(CASE WHEN type = 'Outsourced' THEN 1 END) as outsourced_parts " +
 			                    "FROM parts";
@@ -131,11 +129,7 @@ public class InventoryReportGenerator {
 						new ReportRow("Total Inventory Value",
 						              currencyFormat.format(productRs.getDouble("total_inventory_value"))),
 						new ReportRow("Low Stock Products",
-						              numberFormat.format(productRs.getInt("low_stock_products"))),
-						new ReportRow("Out of Stock Products",
-						              numberFormat.format(productRs.getInt("out_of_stock_products"))),
-						new ReportRow("Over-Stocked Products",
-						              numberFormat.format(productRs.getInt("over_stock_products")))
+						              numberFormat.format(productRs.getInt("low_stock_products")))
 				);
 				
 				productTable.setItems(productData);

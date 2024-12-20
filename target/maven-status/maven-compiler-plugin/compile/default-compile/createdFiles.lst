@@ -9,6 +9,7 @@ com/inventory/Inventory.class
 com/inventory/Part.class
 com/inventory/AddPartController.class
 com/inventory/AddProductController.class
+com/inventory/LoginController$1.class
 com/inventory/ModifyProductController.class
 com/inventory/Main.class
 com/inventory/InventoryController.class

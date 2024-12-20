@@ -1,5 +1,7 @@
 package com.inventory;
 
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -116,7 +119,6 @@ public class ModifyPartController implements Initializable {
 		double modifyPartPrice = Double.parseDouble(modifyPartPriceTextField.getText());
 		int modifyPartMax = Integer.parseInt(modifyPartMaxTextField.getText());
 		int modifyPartMin = Integer.parseInt(modifyPartMinTextField.getText());
-		int randomId = Integer.parseInt(modifyPartIdTextField.getText());
 		
 		boolean passCheck = true;
 		
@@ -153,23 +155,33 @@ public class ModifyPartController implements Initializable {
 					stmt.setString(6, "InHouse");
 					stmt.setInt(7, modifyPartExtra);
 					stmt.setNull(8, java.sql.Types.VARCHAR);
-					stmt.setInt(9, randomId);
+					stmt.setInt(9, com.inventory.Inventory.getSelectedPartId());
 					
 					// Update database first
 					int rowsAffected = stmt.executeUpdate();
 					if ( rowsAffected > 0 ) {
-						// If database update successful, update UI
-						com.inventory.Inventory.allParts.set(com.inventory.Inventory.selectedPartIndex,
-						                                     new com.inventory.InHouse(randomId,
-						                                                               modifyPartName,
-						                                                               modifyPartPrice,
-						                                                               modifyPartStock,
-						                                                               modifyPartMin,
-						                                                               modifyPartMax,
-						                                                               modifyPartExtra));
-						// Close the window
-						Stage stage = (Stage) modifyPartSaveButton.getScene().getWindow();
-						stage.close();
+						// If database update successful, create new part
+						com.inventory.Part newPart = new com.inventory.InHouse(
+								com.inventory.Inventory.getSelectedPartId(),
+								modifyPartName,
+								modifyPartPrice,
+								modifyPartStock,
+								modifyPartMin,
+								modifyPartMax,
+								modifyPartExtra);
+						
+						// Update UI on JavaFX thread
+						javafx.application.Platform.runLater(() -> {
+							// Update the list safely
+							if (com.inventory.Inventory.getSelectedPartIndex() >= 0 && 
+									com.inventory.Inventory.getSelectedPartIndex() < com.inventory.Inventory.getAllParts().size()) {
+								com.inventory.Inventory.getAllParts().set(com.inventory.Inventory.getSelectedPartIndex(), newPart);
+							}
+							
+							// Close the window
+							Stage stage = (Stage) modifyPartSaveButton.getScene().getWindow();
+							stage.close();
+						});
 					} else {
 						modifyPartSaveErrorLabel.setText("Error: Part not found in database!");
 					}
@@ -178,23 +190,33 @@ public class ModifyPartController implements Initializable {
 					stmt.setString(6, "Outsourced");
 					stmt.setNull(7, java.sql.Types.INTEGER);
 					stmt.setString(8, modifyPartExtra);
-					stmt.setInt(9, randomId);
+					stmt.setInt(9, com.inventory.Inventory.getSelectedPartId());
 					
 					// Update database first
 					int rowsAffected = stmt.executeUpdate();
 					if ( rowsAffected > 0 ) {
-						// If database update successful, update UI
-						com.inventory.Inventory.allParts.set(com.inventory.Inventory.selectedPartIndex,
-						                                     new com.inventory.Outsourced(randomId,
-						                                                                  modifyPartName,
-						                                                                  modifyPartPrice,
-						                                                                  modifyPartStock,
-						                                                                  modifyPartMin,
-						                                                                  modifyPartMax,
-						                                                                  modifyPartExtra));
-						// Close the window
-						Stage stage = (Stage) modifyPartSaveButton.getScene().getWindow();
-						stage.close();
+						// If database update successful, create new part
+						com.inventory.Part newPart = new com.inventory.Outsourced(
+								com.inventory.Inventory.getSelectedPartId(),
+								modifyPartName,
+								modifyPartPrice,
+								modifyPartStock,
+								modifyPartMin,
+								modifyPartMax,
+								modifyPartExtra);
+						
+						// Update UI on JavaFX thread
+						javafx.application.Platform.runLater(() -> {
+							// Update the list safely
+							if (com.inventory.Inventory.getSelectedPartIndex() >= 0 && 
+									com.inventory.Inventory.getSelectedPartIndex() < com.inventory.Inventory.getAllParts().size()) {
+								com.inventory.Inventory.getAllParts().set(com.inventory.Inventory.getSelectedPartIndex(), newPart);
+							}
+							
+							// Close the window
+							Stage stage = (Stage) modifyPartSaveButton.getScene().getWindow();
+							stage.close();
+						});
 					} else {
 						modifyPartSaveErrorLabel.setText("Error: Part not found in database!");
 					}
@@ -283,13 +305,15 @@ public class ModifyPartController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		// Set the ID TextField to the selected part id
-		modifyPartIdTextField.setText(Integer.toString(com.inventory.Inventory.selectedPartId));
+		modifyPartIdTextField.setText(Integer.toString(com.inventory.Inventory.getSelectedPartId()));
+		
 		// Place the data from the selected part into the text field
-		modifyPartNameTextField.setText(com.inventory.Inventory.selectedPart.getName());
-		modifyPartStockTextField.setText(Integer.toString(com.inventory.Inventory.selectedPart.getStock()));
-		modifyPartPriceTextField.setText(Double.toString(com.inventory.Inventory.selectedPart.getPrice()));
-		modifyPartMaxTextField.setText(Integer.toString(com.inventory.Inventory.selectedPart.getMax()));
-		modifyPartMinTextField.setText(Integer.toString(com.inventory.Inventory.selectedPart.getMin()));
+		com.inventory.Part selectedPart = com.inventory.Inventory.getSelectedPart();
+		modifyPartNameTextField.setText(selectedPart.getName());
+		modifyPartStockTextField.setText(Integer.toString(selectedPart.getStock()));
+		modifyPartPriceTextField.setText(Double.toString(selectedPart.getPrice()));
+		modifyPartMaxTextField.setText(Integer.toString(selectedPart.getMax()));
+		modifyPartMinTextField.setText(Integer.toString(selectedPart.getMin()));
 		
 		// Add button hover and click animation with consistent styling
 		modifyPartSaveButton.setStyle(modifyPartSaveButton.getStyle() +
@@ -310,45 +334,33 @@ public class ModifyPartController implements Initializable {
 		
 		// Set TextFormatters on each TextField to apply input validation
 		// Set the text of the form based upon which radio button is selected
-		if ( com.inventory.Inventory.selectedPart instanceof com.inventory.InHouse ) {
+		if (selectedPart instanceof com.inventory.InHouse) {
 			modifyPartInHouseRadio.setSelected(true);
 			modifyPartExtraLabel.setText("Machine ID");
-			modifyPartExtraTextField.setText(String.valueOf(((com.inventory.InHouse) com.inventory.Inventory.selectedPart).getMachineId()));
+			modifyPartExtraTextField.setText(String.valueOf(((com.inventory.InHouse) selectedPart).getMachineId()));
 			
 			// Set TextFormatter for Machine ID (Integers only)
 			modifyPartExtraTextField.setTextFormatter(new TextFormatter<>(change -> {
-				if ( change.getText().matches("\\d+") ) {
-					modifyPartSaveErrorLabel.setText("");
-					return change;
-				} else if ( change.getText().equals("") ) {
-					modifyPartSaveErrorLabel.setText("");
-					return change;
-				} else {
-					change.setText("");
-					modifyPartSaveErrorLabel.setText("Integers only!");
+				String newText = change.getControlNewText();
+				if (newText.matches("\\d*")) {
 					return change;
 				}
+				return null;
 			}));
 		}
 		// Otherwise, set it to the Company Name
-		else if ( com.inventory.Inventory.selectedPart instanceof com.inventory.Outsourced ) {
+		else if (selectedPart instanceof com.inventory.Outsourced) {
 			modifyPartOutsourcedRadio.setSelected(true);
 			modifyPartExtraLabel.setText("Company Name");
-			modifyPartExtraTextField.setText(((com.inventory.Outsourced) com.inventory.Inventory.selectedPart).getCompanyName());
+			modifyPartExtraTextField.setText(((com.inventory.Outsourced) selectedPart).getCompanyName());
 			
 			// Set TextFormatter for Company Name
 			modifyPartExtraTextField.setTextFormatter(new TextFormatter<>(change -> {
-				if ( change.getText().matches("^[a-zA-Z0-9 _-]+$") ) {
-					modifyPartSaveErrorLabel.setText("");
-					return change;
-				} else if ( change.getText().equals("") ) {
-					modifyPartSaveErrorLabel.setText("");
-					return change;
-				} else {
-					change.setText("");
-					modifyPartSaveErrorLabel.setText("Letters, numbers, spaces, hyphens, and underscores only!");
+				String newText = change.getControlNewText();
+				if (newText.matches("[a-zA-Z0-9\\s]*")) {
 					return change;
 				}
+				return null;
 			}));
 		}
 		
@@ -464,5 +476,104 @@ public class ModifyPartController implements Initializable {
 			return "#ff0000";
 		}
 		return "#000000";
+	}
+	
+	public void handleSave() {
+		String sql = "UPDATE parts SET name = ?, price = ?, stock = ?, min = ?, max = ?, type = ?, machine_id = ?, company_name = ? WHERE id = ?";
+		try ( Connection conn = com.inventory.DatabaseConnection.getConnection();
+		      PreparedStatement stmt = conn.prepareStatement(sql) ) {
+			
+			String modifyPartName = modifyPartNameTextField.getText();
+			int modifyPartStock = Integer.parseInt(modifyPartStockTextField.getText());
+			double modifyPartPrice = Double.parseDouble(modifyPartPriceTextField.getText());
+			int modifyPartMax = Integer.parseInt(modifyPartMaxTextField.getText());
+			int modifyPartMin = Integer.parseInt(modifyPartMinTextField.getText());
+			
+			stmt.setString(1, modifyPartName);
+			stmt.setDouble(2, modifyPartPrice);
+			stmt.setInt(3, modifyPartStock);
+			stmt.setInt(4, modifyPartMin);
+			stmt.setInt(5, modifyPartMax);
+			
+			// Depending on which radio button is selected, update as InHouse or Outsourced part
+			if ( modifyPartInHouseRadio.isSelected() ) {
+				int modifyPartExtra = Integer.parseInt(modifyPartExtraTextField.getText());
+				stmt.setString(6, "InHouse");
+				stmt.setInt(7, modifyPartExtra);
+				stmt.setNull(8, java.sql.Types.VARCHAR);
+				stmt.setInt(9, com.inventory.Inventory.getSelectedPartId());
+				
+				// Update database first
+				int rowsAffected = stmt.executeUpdate();
+				if ( rowsAffected > 0 ) {
+					// If database update successful, create new part
+					com.inventory.Part newPart = new com.inventory.InHouse(
+							com.inventory.Inventory.getSelectedPartId(),
+							modifyPartName,
+							modifyPartPrice,
+							modifyPartStock,
+							modifyPartMin,
+							modifyPartMax,
+							modifyPartExtra);
+					
+					// Update UI on JavaFX thread
+					javafx.application.Platform.runLater(() -> {
+						// Update the list safely
+						javafx.collections.ObservableList<com.inventory.Part> parts = com.inventory.Inventory.getAllParts();
+						int index = com.inventory.Inventory.getSelectedPartIndex();
+						if (index >= 0 && index < parts.size()) {
+							parts.set(index, newPart);
+						}
+						
+						// Close the window
+						Stage stage = (Stage) modifyPartSaveButton.getScene().getWindow();
+						stage.close();
+					});
+				} else {
+					modifyPartSaveErrorLabel.setText("Error: Part not found in database!");
+				}
+			} else {
+				String modifyPartExtra = modifyPartExtraTextField.getText();
+				stmt.setString(6, "Outsourced");
+				stmt.setNull(7, java.sql.Types.INTEGER);
+				stmt.setString(8, modifyPartExtra);
+				stmt.setInt(9, com.inventory.Inventory.getSelectedPartId());
+				
+				// Update database first
+				int rowsAffected = stmt.executeUpdate();
+				if ( rowsAffected > 0 ) {
+					// If database update successful, create new part
+					com.inventory.Part newPart = new com.inventory.Outsourced(
+							com.inventory.Inventory.getSelectedPartId(),
+							modifyPartName,
+							modifyPartPrice,
+							modifyPartStock,
+							modifyPartMin,
+							modifyPartMax,
+							modifyPartExtra);
+					
+					// Update UI on JavaFX thread
+					javafx.application.Platform.runLater(() -> {
+						// Update the list safely
+						javafx.collections.ObservableList<com.inventory.Part> parts = com.inventory.Inventory.getAllParts();
+						int index = com.inventory.Inventory.getSelectedPartIndex();
+						if (index >= 0 && index < parts.size()) {
+							parts.set(index, newPart);
+						}
+						
+						// Close the window
+						Stage stage = (Stage) modifyPartSaveButton.getScene().getWindow();
+						stage.close();
+					});
+				} else {
+					modifyPartSaveErrorLabel.setText("Error: Part not found in database!");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			modifyPartSaveErrorLabel.setText("Error updating database: " + e.getMessage());
+		} catch (NumberFormatException e) {
+			modifyPartSaveErrorLabel.setText("Please enter valid numbers!");
+		}
 	}
 }

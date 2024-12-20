@@ -4,85 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9a393b3-5e0b-41eb-85ae-cbee3e391bfd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/inventoryScene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/javafx.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/project-template.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OmarImamSoftware1PerformanceAssessment.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx-swt.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx-swt.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.base.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.base.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.controls.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.controls.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.fxml.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.fxml.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.graphics.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.graphics.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.media.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.media.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.swing.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.swing.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx.web.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.web.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libdecora_sse.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libdecora_sse.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libfxplugins.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libfxplugins.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libglass.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libglass.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libglib-lite.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libglib-lite.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libgstreamer-lite.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libgstreamer-lite.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libjavafx_font.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libjavafx_font.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libjavafx_iio.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libjavafx_iio.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libjfxmedia.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libjfxmedia.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libjfxmedia_avf.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libjfxmedia_avf.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libprism_common.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libprism_common.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libprism_es2.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libprism_es2.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libprism_sw.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libprism_sw.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/AddPartController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/AddProductController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/DatabaseConnection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/InHouse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/Inventory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/InventoryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/ModifyPartController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/ModifyProductController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/Outsourced.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/Part.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OmarImamSoftware1PerformanceAssessment/com/inventory/Product.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/AddPartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddPartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/AddProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/InHouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InHouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/InventoryReportGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/ModifyPartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/ModifyProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/Outsourced.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Outsourced.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/Part.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Part.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/addPart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/addPart.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/addProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/addProduct.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/inventoryScene.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/loginScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/loginScene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/modifyPart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyPart.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/modifyProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyProduct.fxml" afterDir="false" />
+    <list default="true" id="e9a393b3-5e0b-41eb-85ae-cbee3e391bfd" name="Changes" comment="Added new features including password protection, reporting and database connection.">
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddPartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddPartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/addProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/addProduct.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/inventoryScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/inventoryScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/loginScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/loginScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/AddPartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/AddPartController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/AddProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/AddProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/DatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/DatabaseConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Inventory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator$ReportRow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator$ReportRow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/ModifyPartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/ModifyPartController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/ModifyProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/ModifyProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/addProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/addProduct.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/inventoryScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/inventoryScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/loginScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/loginScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/inventory-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.inventory.InventorySystemTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.inventory.InventorySystemTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/inventory/InventorySystemTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +89,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -223,10 +184,25 @@
       <workItem from="1733941113295" duration="2122000" />
       <workItem from="1733943356767" duration="15429000" />
       <workItem from="1734610232735" duration="5173000" />
+      <workItem from="1734643708728" duration="7995000" />
+      <workItem from="1734662995211" duration="702000" />
     </task>
+    <task id="LOCAL-00001" summary="Added new features including password protection, reporting and database connection.">
+      <option name="closed" value="true" />
+      <created>1734652078158</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734652078158</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added new features including password protection, reporting and database connection." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new features including password protection, reporting and database connection." />
   </component>
 </project>

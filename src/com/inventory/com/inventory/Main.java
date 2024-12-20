@@ -21,7 +21,7 @@ public class Main extends Application {
 		initializeDatabaseConnection();
 		
 		// Load login scene
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inventory/inventoryScene.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inventory/loginScene.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("Inventory Management System - Login");

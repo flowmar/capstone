@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("unchecked")
 public class InventoryController implements Initializable {
 	
 	@FXML
@@ -67,21 +69,23 @@ public class InventoryController implements Initializable {
 	@FXML
 	private Button productsDeleteButton;
 	
+	@FXML
+	private TextField partSearchField;
+	
+	@FXML
+	private TextField productSearchField;
+	
+	@FXML
+	private Label partSearchErrorLabel;
+	
+	@FXML
+	private Label productSearchErrorLabel;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		// Initialize the columns
-		TableColumn<com.inventory.Part, Integer> partsIdColumn = new TableColumn<>("id");
-		TableColumn<com.inventory.Part, String> partsNameColumn = new TableColumn<>("Name");
-		TableColumn<com.inventory.Part, Double> partsPriceColumn = new TableColumn<>("Price");
-		TableColumn<com.inventory.Part, Integer> partsStockColumn = new TableColumn<>("Stock");
-		partsTableView.getColumns().addAll(partsIdColumn, partsNameColumn, partsPriceColumn, partsStockColumn);
-		
-		TableColumn<com.inventory.Product, Integer> productsIdColumn = new TableColumn<>("id");
-		TableColumn<com.inventory.Product, String> productsNameColumn = new TableColumn<>("Name");
-		TableColumn<com.inventory.Product, Double> productsPriceColumn = new TableColumn<>("Price");
-		TableColumn<com.inventory.Product, Integer> productsStockColumn = new TableColumn<>("Stock");
-		productsTableView.getColumns()
-		                 .addAll(productsIdColumn, productsNameColumn, productsPriceColumn, productsStockColumn);
+		// Initialize the columns with proper cell value factories
+		setupPartsTable();
+		setupProductsTable();
 		
 		// Load data from database
 		loadDataFromDatabase();
@@ -92,8 +96,41 @@ public class InventoryController implements Initializable {
 		// Setup button listeners
 		setupButtonListeners();
 		
-		// Setup search/filter
-		setupSearchAndFilter();
+		// Set up search functionality
+		filterFieldParts.setOnKeyReleased(event -> handlePartSearch());
+		filterFieldProducts.setOnKeyReleased(event -> handleProductSearch());
+	}
+	
+	private void setupPartsTable() {
+		TableColumn<com.inventory.Part, Integer> partsIdColumn = new TableColumn<>("id");
+		partsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+		
+		TableColumn<com.inventory.Part, String> partsNameColumn = new TableColumn<>("Name");
+		partsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+		
+		TableColumn<com.inventory.Part, Double> partsPriceColumn = new TableColumn<>("Price");
+		partsPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+		
+		TableColumn<com.inventory.Part, Integer> partsStockColumn = new TableColumn<>("Stock");
+		partsStockColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
+		
+		partsTableView.getColumns().addAll(partsIdColumn, partsNameColumn, partsPriceColumn, partsStockColumn);
+	}
+	
+	private void setupProductsTable() {
+		TableColumn<com.inventory.Product, Integer> productsIdColumn = new TableColumn<>("id");
+		productsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+		
+		TableColumn<com.inventory.Product, String> productsNameColumn = new TableColumn<>("Name");
+		productsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+		
+		TableColumn<com.inventory.Product, Double> productsPriceColumn = new TableColumn<>("Price");
+		productsPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+		
+		TableColumn<com.inventory.Product, Integer> productsStockColumn = new TableColumn<>("Stock");
+		productsStockColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
+		
+		productsTableView.getColumns().addAll(productsIdColumn, productsNameColumn, productsPriceColumn, productsStockColumn);
 	}
 	
 	private void loadDataFromDatabase() {
@@ -104,27 +141,42 @@ public class InventoryController implements Initializable {
 			// Parts loading
 			try ( PreparedStatement stmt = conn.prepareStatement("SELECT * FROM parts") ) {
 				ResultSet rs = stmt.executeQuery();
-				ObservableList<com.inventory.Part> partsList = FXCollections.observableArrayList();
+				// Clear existing parts
+				com.inventory.Inventory.getAllParts().clear();
 				while ( rs.next() ) {
-					// Create an InHouse part with default machineId 0
-					com.inventory.Part part = new com.inventory.InHouse(
-							rs.getInt("id"),
-							rs.getString("name"),
-							rs.getDouble("price"),
-							rs.getInt("stock"),
-							rs.getInt("min"),
-							rs.getInt("max"),
-							0  // Default machine ID
-					);
-					partsList.add(part);
+					com.inventory.Part part;
+					if (rs.getString("type").equals("InHouse")) {
+						part = new com.inventory.InHouse(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getDouble("price"),
+								rs.getInt("stock"),
+								rs.getInt("min"),
+								rs.getInt("max"),
+								rs.getInt("machine_id")
+						);
+					} else {
+						part = new com.inventory.Outsourced(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getDouble("price"),
+								rs.getInt("stock"),
+								rs.getInt("min"),
+								rs.getInt("max"),
+								rs.getString("company_name")
+						);
+					}
+					com.inventory.Inventory.getAllParts().add(part);
 				}
-				partsTableView.setItems(partsList);
+				// Use the same list for the TableView
+				partsTableView.setItems(com.inventory.Inventory.getAllParts());
 			}
 			
 			// Products loading
 			try ( PreparedStatement stmt = conn.prepareStatement("SELECT * FROM products") ) {
 				ResultSet rs = stmt.executeQuery();
-				ObservableList<com.inventory.Product> productsList = FXCollections.observableArrayList();
+				// Clear existing products
+				com.inventory.Inventory.getAllProducts().clear();
 				while ( rs.next() ) {
 					com.inventory.Product product = new com.inventory.Product(
 							rs.getInt("id"),
@@ -135,9 +187,10 @@ public class InventoryController implements Initializable {
 							rs.getInt("max"),
 							FXCollections.observableArrayList()  // Empty list of associated parts
 					);
-					productsList.add(product);
+					com.inventory.Inventory.getAllProducts().add(product);
 				}
-				productsTableView.setItems(productsList);
+				// Use the same list for the TableView
+				productsTableView.setItems(com.inventory.Inventory.getAllProducts());
 			}
 		}
 		catch ( SQLException e ) {
@@ -172,117 +225,100 @@ public class InventoryController implements Initializable {
 	}
 	
 	private void setupButtonListeners() {
-		mainFormExitButton.setOnAction(event -> exitButtonListener(event));
+		mainFormExitButton.setOnAction(this::exitButtonListener);
 		mainFormExitButton.setOnMouseEntered(this::onButtonHover);
 		mainFormExitButton.setOnMouseExited(this::onButtonExit);
 		mainFormExitButton.setOnMousePressed(this::onButtonPress);
 		mainFormExitButton.setOnMouseReleased(this::onButtonRelease);
 		
-		partsAddButton.setOnMouseEntered(event -> onButtonHover(event));
-		partsAddButton.setOnMouseExited(event -> onButtonExit(event));
-		partsAddButton.setOnMousePressed(event -> onButtonPress(event));
-		partsAddButton.setOnMouseReleased(event -> onButtonRelease(event));
+		partsAddButton.setOnAction(event -> {
+			try {
+				partsAddButtonListener(event);
+			} catch (Exception e) {
+				partsErrorLabel.setText("Error opening add part window: " + e.getMessage());
+				e.printStackTrace();
+			}
+		});
+		partsAddButton.setOnMouseEntered(this::onButtonHover);
+		partsAddButton.setOnMouseExited(this::onButtonExit);
+		partsAddButton.setOnMousePressed(this::onButtonPress);
+		partsAddButton.setOnMouseReleased(this::onButtonRelease);
 		
-		partsModifyButton.setOnMouseEntered(event -> onButtonHover(event));
-		partsModifyButton.setOnMouseExited(event -> onButtonExit(event));
-		partsModifyButton.setOnMousePressed(event -> onButtonPress(event));
-		partsModifyButton.setOnMouseReleased(event -> onButtonRelease(event));
+		partsModifyButton.setOnAction(this::partsModifyButtonListener);
+		partsModifyButton.setOnMouseEntered(this::onButtonHover);
+		partsModifyButton.setOnMouseExited(this::onButtonExit);
+		partsModifyButton.setOnMousePressed(this::onButtonPress);
+		partsModifyButton.setOnMouseReleased(this::onButtonRelease);
 		
-		partsDeleteButton.setOnMouseEntered(event -> onButtonHover(event));
-		partsDeleteButton.setOnMouseExited(event -> onButtonExit(event));
-		partsDeleteButton.setOnMousePressed(event -> onButtonPress(event));
-		partsDeleteButton.setOnMouseReleased(event -> onButtonRelease(event));
+		partsDeleteButton.setOnAction(this::partsDeleteButtonListener);
+		partsDeleteButton.setOnMouseEntered(this::onButtonHover);
+		partsDeleteButton.setOnMouseExited(this::onButtonExit);
+		partsDeleteButton.setOnMousePressed(this::onButtonPress);
+		partsDeleteButton.setOnMouseReleased(this::onButtonRelease);
 		
-		productsAddButton.setOnMouseEntered(event -> onButtonHover(event));
-		productsAddButton.setOnMouseExited(event -> onButtonExit(event));
-		productsAddButton.setOnMousePressed(event -> onButtonPress(event));
-		productsAddButton.setOnMouseReleased(event -> onButtonRelease(event));
+		productsAddButton.setOnAction(event -> {
+			try {
+				productsAddButtonListener(event);
+			} catch (Exception e) {
+				productsErrorLabel.setText("Error opening add product window: " + e.getMessage());
+				e.printStackTrace();
+			}
+		});
+		productsAddButton.setOnMouseEntered(this::onButtonHover);
+		productsAddButton.setOnMouseExited(this::onButtonExit);
+		productsAddButton.setOnMousePressed(this::onButtonPress);
+		productsAddButton.setOnMouseReleased(this::onButtonRelease);
 		
-		productsModifyButton.setOnMouseEntered(event -> onButtonHover(event));
-		productsModifyButton.setOnMouseExited(event -> onButtonExit(event));
-		productsModifyButton.setOnMousePressed(event -> onButtonPress(event));
-		productsModifyButton.setOnMouseReleased(event -> onButtonRelease(event));
+		productsModifyButton.setOnAction(this::productsModifyButtonListener);
+		productsModifyButton.setOnMouseEntered(this::onButtonHover);
+		productsModifyButton.setOnMouseExited(this::onButtonExit);
+		productsModifyButton.setOnMousePressed(this::onButtonPress);
+		productsModifyButton.setOnMouseReleased(this::onButtonRelease);
 		
-		productsDeleteButton.setOnMouseEntered(event -> onButtonHover(event));
-		productsDeleteButton.setOnMouseExited(event -> onButtonExit(event));
-		productsDeleteButton.setOnMousePressed(event -> onButtonPress(event));
-		productsDeleteButton.setOnMouseReleased(event -> onButtonRelease(event));
+		productsDeleteButton.setOnAction(this::productsDeleteButtonListener);
+		productsDeleteButton.setOnMouseEntered(this::onButtonHover);
+		productsDeleteButton.setOnMouseExited(this::onButtonExit);
+		productsDeleteButton.setOnMousePressed(this::onButtonPress);
+		productsDeleteButton.setOnMouseReleased(this::onButtonRelease);
 	}
 	
 	private void setupSearchAndFilter() {
-		// Associate the data with the columns
-		TableColumn<com.inventory.Part, Integer> partsIdColumn = (TableColumn<com.inventory.Part, Integer>) partsTableView.getColumns()
-		                                                                                                                  .get(0);
-		TableColumn<com.inventory.Part, String> partsNameColumn = (TableColumn<com.inventory.Part, String>) partsTableView.getColumns()
-		                                                                                                                  .get(1);
-		TableColumn<com.inventory.Part, Double> partsPriceColumn = (TableColumn<com.inventory.Part, Double>) partsTableView.getColumns()
-		                                                                                                                   .get(2);
-		TableColumn<com.inventory.Part, Integer> partsStockColumn = (TableColumn<com.inventory.Part, Integer>) partsTableView.getColumns()
-		                                                                                                                     .get(3);
+		// Create filtered lists
+		FilteredList<com.inventory.Part> filteredParts = new FilteredList<>(com.inventory.Inventory.getAllParts(), p -> true);
+		FilteredList<com.inventory.Product> filteredProducts = new FilteredList<>(com.inventory.Inventory.getAllProducts(), p -> true);
 		
-		partsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue()
-		                                                                                .getId()).asObject());
-		partsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-		partsPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue()
-		                                                                                  .getPrice()).asObject());
-		partsStockColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue()
-		                                                                                   .getStock()).asObject());
-		
-		TableColumn<com.inventory.Product, Integer> productsIdColumn = (TableColumn<com.inventory.Product, Integer>) productsTableView.getColumns()
-		                                                                                                                              .get(0);
-		TableColumn<com.inventory.Product, String> productsNameColumn = (TableColumn<com.inventory.Product, String>) productsTableView.getColumns()
-		                                                                                                                              .get(1);
-		TableColumn<com.inventory.Product, Double> productsPriceColumn = (TableColumn<com.inventory.Product, Double>) productsTableView.getColumns()
-		                                                                                                                               .get(2);
-		TableColumn<com.inventory.Product, Integer> productsStockColumn = (TableColumn<com.inventory.Product, Integer>) productsTableView.getColumns()
-		                                                                                                                                 .get(3);
-		
-		productsIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue()
-		                                                                                   .getId()).asObject());
-		productsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-		productsPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue()
-		                                                                                     .getPrice()).asObject());
-		productsStockColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue()
-		                                                                                      .getStock()).asObject());
-		
-		// Set up filtering for parts
-		FilteredList<com.inventory.Part> filteredData = new FilteredList<>(partsTableView.getItems(), t -> true);
+		// Add listeners to the search fields
 		filterFieldParts.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredData.setPredicate(part -> {
-				if ( newValue == null || newValue.isEmpty() ) {
+			filteredParts.setPredicate(part -> {
+				if (newValue == null || newValue.isEmpty()) {
 					return true;
 				}
-				
 				String lowerCaseFilter = newValue.toLowerCase();
-				
-				if ( part.getName().toLowerCase().contains(lowerCaseFilter) ) {
-					return true;
-				} else return String.valueOf(part.getId()).contains(lowerCaseFilter);
+				return part.getName().toLowerCase().contains(lowerCaseFilter);
 			});
 		});
-		SortedList<com.inventory.Part> sortedData = new SortedList<>(filteredData);
-		sortedData.comparatorProperty().bind(partsTableView.comparatorProperty());
-		partsTableView.setItems(sortedData);
 		
-		// Set up filtering for products
-		FilteredList<com.inventory.Product> filteredProductData = new FilteredList<>(productsTableView.getItems(),
-		                                                                             t -> true);
 		filterFieldProducts.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredProductData.setPredicate(product -> {
-				if ( newValue == null || newValue.isEmpty() ) {
+			filteredProducts.setPredicate(product -> {
+				if (newValue == null || newValue.isEmpty()) {
 					return true;
 				}
-				
 				String lowerCaseFilter = newValue.toLowerCase();
-				
-				if ( product.getName().toLowerCase().contains(lowerCaseFilter) ) {
-					return true;
-				} else return String.valueOf(product.getId()).contains(lowerCaseFilter);
+				return product.getName().toLowerCase().contains(lowerCaseFilter);
 			});
 		});
-		SortedList<com.inventory.Product> sortedProductData = new SortedList<>(filteredProductData);
-		sortedProductData.comparatorProperty().bind(productsTableView.comparatorProperty());
-		productsTableView.setItems(sortedProductData);
+		
+		// Wrap filtered lists in sorted lists
+		SortedList<com.inventory.Part> sortedParts = new SortedList<>(filteredParts);
+		SortedList<com.inventory.Product> sortedProducts = new SortedList<>(filteredProducts);
+		
+		// Bind sorted lists to table views
+		sortedParts.comparatorProperty().bind(partsTableView.comparatorProperty());
+		sortedProducts.comparatorProperty().bind(productsTableView.comparatorProperty());
+		
+		// Set items to table views
+		partsTableView.setItems(sortedParts);
+		productsTableView.setItems(sortedProducts);
 	}
 	
 	public void exitButtonListener(ActionEvent actionEvent) {
@@ -340,135 +376,167 @@ public class InventoryController implements Initializable {
 	public void partsAddButtonListener(ActionEvent actionEvent) throws Exception {
 		Parent parent;
 		partsErrorLabel.setText("");
-		parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("com/inventory/addPart.fxml")));
+		parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/inventory/addPart.fxml")));
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
 		stage.setTitle("Add Part");
 		stage.setScene(scene);
+		stage.setOnHidden(e -> refreshTables());  // Add refresh on window close
 		stage.show();
 	}
 	
-	public void partsModifyButtonListener(ActionEvent actionEvent) throws Exception {
-		partsErrorLabel.setText("");
-		com.inventory.Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
-		if ( selectedPart == null ) {
-			partsErrorLabel.setText("Error: Please selected a part to modify!");
-		} else {
-			int selectedPartId = selectedPart.getId();
-			com.inventory.Inventory.selectedPart = selectedPart;
-			com.inventory.Inventory.selectedPartId = selectedPartId;
-			com.inventory.Inventory.selectedPartIndex = partsTableView.getItems().indexOf(selectedPart);
-			Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(
-					"com/inventory/modifyPart.fxml")));
-			Stage stage = new Stage();
-			Scene scene = new Scene(parent);
-			stage.setTitle("Modify Part");
-			stage.setScene(scene);
-			stage.show();
+	@FXML
+	private void partsModifyButtonListener(ActionEvent actionEvent) {
+		try {
+			partsErrorLabel.setText("");
+			partsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
+			com.inventory.Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+			if (selectedPart == null) {
+				partsErrorLabel.setText("Error: Please select a part to modify!");
+			} else {
+				int selectedPartId = selectedPart.getId();
+				com.inventory.Inventory.setSelectedPart(selectedPart);
+				com.inventory.Inventory.setSelectedPartId(selectedPartId);
+				com.inventory.Inventory.setSelectedPartIndex(partsTableView.getItems().indexOf(selectedPart));
+				
+				Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/inventory/modifyPart.fxml")));
+				Stage stage = new Stage();
+				Scene scene = new Scene(parent);
+				stage.setTitle("Modify Part");
+				stage.setScene(scene);
+				stage.setOnHidden(e -> refreshTables());
+				stage.show();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			partsErrorLabel.setText("Error loading modify part window: " + e.getMessage());
 		}
 	}
-	
-	public void partsDeleteButtonListener(ActionEvent actionEvent) {
-		partsErrorLabel.setText("");
-		if ( com.inventory.Inventory.allParts.size() == 0 ) {
-			partsErrorLabel.setText("Error: Cannot Delete, the parts list is empty!");
-		} else {
-			com.inventory.Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
-			if ( selectedPart == null ) {
-				partsErrorLabel.setText("Error: Please select a part to delete!");
-				return;
-			}
-			
-			// Check if part is associated with any products
-			try {
-				String checkSql = "SELECT COUNT(*) FROM product_parts WHERE part_id = ?";
-				ResultSet rs;
-				try ( PreparedStatement checkStmt = com.inventory.DatabaseConnection.getConnection()
-				                                                                    .prepareStatement(checkSql) ) {
-					checkStmt.setInt(1, selectedPart.getId());
-					rs = checkStmt.executeQuery();
-				}
-				rs.next();
-				int count = rs.getInt(1);
+
+	@FXML
+	private void productsModifyButtonListener(ActionEvent actionEvent) {
+		try {
+			productsErrorLabel.setText("");
+			productsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
+			com.inventory.Product selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
+			if (selectedProduct == null) {
+				productsErrorLabel.setText("Error: Please select a product to modify!");
+			} else {
+				int selectedProductId = selectedProduct.getId();
+				com.inventory.Inventory.setSelectedProduct(selectedProduct);
+				com.inventory.Inventory.setSelectedProductId(selectedProductId);
+				com.inventory.Inventory.setSelectedProductIndex(productsTableView.getItems().indexOf(selectedProduct));
 				
-				if ( count > 0 ) {
-					partsErrorLabel.setText("Error: Cannot delete a part that is associated with products!");
-					partsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-					return;
-				}
+				Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/inventory/modifyProduct.fxml")));
+				Stage stage = new Stage();
+				Scene scene = new Scene(parent);
+				stage.setTitle("Modify Product");
+				stage.setScene(scene);
+				stage.setOnHidden(e -> refreshTables());
+				stage.show();
 			}
-			catch ( SQLException e ) {
-				System.out.println("Error checking product associations:");
-				e.printStackTrace();
-				return;
-			}
-			
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setContentText("Are you sure you want to delete this part?");
-			alert.showAndWait().ifPresent(response -> {
-				if ( response == ButtonType.OK ) {
-					try {
-						// Delete from database
-						String sql = "DELETE FROM parts WHERE id = ?";
-						int rowsAffected;
-						try ( PreparedStatement stmt = com.inventory.DatabaseConnection.getConnection()
-						                                                               .prepareStatement(sql) ) {
-							stmt.setInt(1, selectedPart.getId());
-							rowsAffected = stmt.executeUpdate();
-						}
-						
-						if ( rowsAffected > 0 ) {
-							// If database delete successful, remove from UI list
-							com.inventory.Inventory.allParts.remove(selectedPart);
-							partsErrorLabel.setText("Part Deleted!");
-							partsErrorLabel.setStyle("-fx-text-fill: #00ff00;");
-						} else {
-							partsErrorLabel.setText("Error: Part not found in database!");
-							partsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-						}
-					}
-					catch ( SQLException e ) {
-						System.out.println("Error deleting part from database:");
-						e.printStackTrace();
-						partsErrorLabel.setText("Error deleting from database: " + e.getMessage());
-						partsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-					}
-				} else if ( response == ButtonType.CANCEL ) {
-					System.out.println("Deletion cancelled");
-				}
-			});
+		} catch (IOException e) {
+			e.printStackTrace();
+			productsErrorLabel.setText("Error loading modify product window: " + e.getMessage());
 		}
 	}
 	
 	public void productsAddButtonListener(ActionEvent actionEvent) throws Exception {
 		productsErrorLabel.setText("");
 		productsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-		Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("com/inventory/addProduct.fxml")));
+		Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/inventory/addProduct.fxml")));
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
 		stage.setTitle("Add Product");
 		stage.setScene(scene);
+		stage.setOnHidden(e -> refreshTables());  // Add refresh on window close
 		stage.show();
 	}
 	
-	public void productsModifyButtonListener(ActionEvent actionEvent) throws Exception {
-		productsErrorLabel.setText("");
-		productsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-		com.inventory.Product selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
-		if ( selectedProduct == null ) {
-			productsErrorLabel.setText("Error: Please select a product to modify! ");
-		} else {
-			int selectedProductId = selectedProduct.getId();
-			com.inventory.Inventory.selectedProduct = selectedProduct;
-			com.inventory.Inventory.selectedProductId = selectedProductId;
-			com.inventory.Inventory.selectedProductIndex = productsTableView.getItems().indexOf(selectedProduct);
-			Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(
-					"com/inventory/modifyProduct.fxml")));
-			Stage stage = new Stage();
-			Scene scene = new Scene(parent);
-			stage.setTitle("Modify Product");
-			stage.setScene(scene);
-			stage.show();
+	@FXML
+	public void partsDeleteButtonListener(ActionEvent actionEvent) {
+		partsErrorLabel.setText("");
+		partsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
+		
+		// Check if there are any parts to delete
+		if (partsTableView.getItems().isEmpty()) {
+			partsErrorLabel.setText("Error: No parts available to delete!");
+			return;
+		}
+		
+		// Get selected part
+		com.inventory.Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+		if (selectedPart == null) {
+			partsErrorLabel.setText("Error: Please select a part to delete!");
+			return;
+		}
+		
+		Connection conn = null;
+		try {
+			conn = com.inventory.DatabaseConnection.getConnection();
+			conn.setAutoCommit(false);  // Start transaction
+			
+			// Check if part is associated with any products
+			String checkSql = "SELECT COUNT(*) FROM product_parts WHERE part_id = ?";
+			try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+				checkStmt.setInt(1, selectedPart.getId());
+				ResultSet rs = checkStmt.executeQuery();
+				if (rs.next() && rs.getInt(1) > 0) {
+					partsErrorLabel.setText("Error: Cannot delete a part that is associated with products!");
+					return;
+				}
+			}
+			
+			// Show confirmation dialog
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Delete Part");
+			alert.setHeaderText("Delete Part Confirmation");
+			alert.setContentText("Are you sure you want to delete this part?\nName: " + selectedPart.getName() + "\nID: " + selectedPart.getId());
+			
+			if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+				// Delete from database
+				String sql = "DELETE FROM parts WHERE id = ?";
+				try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+					stmt.setInt(1, selectedPart.getId());
+					int rowsAffected = stmt.executeUpdate();
+					
+					if (rowsAffected > 0) {
+						// Commit transaction
+						conn.commit();
+						
+						// Remove from UI
+						com.inventory.Inventory.getAllParts().remove(selectedPart);
+						partsTableView.refresh();
+						
+						// Show success message
+						partsErrorLabel.setStyle("-fx-text-fill: #00ff00;");
+						partsErrorLabel.setText("Part successfully deleted!");
+					} else {
+						conn.rollback();
+						partsErrorLabel.setText("Error: Part not found in database!");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException ex) {
+					System.err.println("Error rolling back transaction: " + ex.getMessage());
+				}
+			}
+			System.err.println("Error deleting part: " + e.getMessage());
+			e.printStackTrace();
+			partsErrorLabel.setText("Database error: " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.setAutoCommit(true);
+					com.inventory.DatabaseConnection.releaseConnection(conn);
+				} catch (SQLException e) {
+					System.err.println("Error resetting auto-commit: " + e.getMessage());
+				}
+			}
 		}
 	}
 	
@@ -515,7 +583,7 @@ public class InventoryController implements Initializable {
 						
 						if ( rowsAffected > 0 ) {
 							// If database delete successful, remove from UI
-							com.inventory.Inventory.allProducts.remove(selectedProduct);
+							com.inventory.Inventory.getAllProducts().remove(selectedProduct);
 							productsErrorLabel.setText("Product Deleted!");
 							productsErrorLabel.setStyle("-fx-text-fill: #00ff00;");
 						} else {
@@ -564,5 +632,75 @@ public class InventoryController implements Initializable {
 	private void generateInventoryReport() {
 		com.inventory.InventoryReportGenerator reportGenerator = new com.inventory.InventoryReportGenerator();
 		reportGenerator.generateInventorySummaryReport();
+	}
+	
+	private void refreshTables() {
+		Platform.runLater(() -> {
+			// Create new observable lists
+			ObservableList<com.inventory.Part> newParts = FXCollections.observableArrayList();
+			ObservableList<com.inventory.Product> newProducts = FXCollections.observableArrayList();
+			
+			com.inventory.Inventory.setAllParts(newParts);
+			com.inventory.Inventory.setAllProducts(newProducts);
+			
+			// Set the new lists to the table views
+			partsTableView.setItems(com.inventory.Inventory.getAllParts());
+			productsTableView.setItems(com.inventory.Inventory.getAllProducts());
+			
+			// Reload data from database
+			loadDataFromDatabase();
+		});
+	}
+	
+	@FXML
+	private void handlePartSearch() {
+		String searchText = filterFieldParts.getText().toLowerCase();
+		ObservableList<com.inventory.Part> filteredParts = FXCollections.observableArrayList();
+		
+		if (searchText == null || searchText.isEmpty()) {
+			partsTableView.setItems(com.inventory.Inventory.getAllParts());
+			partsErrorLabel.setText("");
+			return;
+		}
+		
+		for (com.inventory.Part part : com.inventory.Inventory.getAllParts()) {
+			if (part.getName().toLowerCase().contains(searchText) || 
+				String.valueOf(part.getId()).contains(searchText)) {
+				filteredParts.add(part);
+			}
+		}
+		
+		if (filteredParts.isEmpty()) {
+			partsErrorLabel.setText("No matching parts found");
+		} else {
+			partsTableView.setItems(filteredParts);
+			partsErrorLabel.setText("");
+		}
+	}
+	
+	@FXML
+	private void handleProductSearch() {
+		String searchText = filterFieldProducts.getText().toLowerCase();
+		ObservableList<com.inventory.Product> filteredProducts = FXCollections.observableArrayList();
+		
+		if (searchText == null || searchText.isEmpty()) {
+			productsTableView.setItems(com.inventory.Inventory.getAllProducts());
+			productsErrorLabel.setText("");
+			return;
+		}
+		
+		for (com.inventory.Product product : com.inventory.Inventory.getAllProducts()) {
+			if (product.getName().toLowerCase().contains(searchText) || 
+				String.valueOf(product.getId()).contains(searchText)) {
+				filteredProducts.add(product);
+			}
+		}
+		
+		if (filteredProducts.isEmpty()) {
+			productsErrorLabel.setText("No matching products found");
+		} else {
+			productsTableView.setItems(filteredProducts);
+			productsErrorLabel.setText("");
+		}
 	}
 }

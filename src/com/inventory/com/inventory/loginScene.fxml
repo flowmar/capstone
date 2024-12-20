@@ -20,6 +20,8 @@
         
         <Label fx:id="errorLabel" textFill="RED" style="-fx-font-weight: bold;"/>
         
+        <Label fx:id="loadingLabel" textFill="#006400" style="-fx-font-weight: bold;"/>
+        
         <Button fx:id="loginButton" text="Login" onAction="#handleLogin"
 				style="-fx-background-color: #27B611;
                        -fx-text-fill: white; 

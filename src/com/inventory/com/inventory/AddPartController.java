@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import static com.inventory.Inventory.allParts;
+import static com.inventory.Inventory.getAllParts;
 
 /**
  * @author Omar Imam
@@ -105,84 +105,55 @@ public class AddPartController implements Initializable {
 	 * @param actionEvent fired when the save button is clicked
 	 */
 	public void addPartSaveListener(ActionEvent actionEvent) {
-		// Get the information from the text fields and place them into variables
-		String newPartName = addPartNameTextField.getText();
-		int newPartStock = Integer.parseInt(addPartInventoryTextField.getText());
-		double newPartPrice = Double.parseDouble(addPartPriceTextField.getText());
-		int newPartMax = Integer.parseInt(addPartMaxTextField.getText());
-		int newPartMin = Integer.parseInt(addPartMinTextField.getText());
-		int randomId = Integer.parseInt(addPartIdTextField.getText());
-		
-		// Input Validation Logic
-		boolean passCheck = true;
-		if ( newPartMin > newPartMax ) {
-			addPartErrorLabel.setText("Error: Minimum cannot be more than maximum!");
-			passCheck = false;
-		} else if ( newPartStock > newPartMax ) {
-			addPartErrorLabel.setText("Error: Current Stock cannot be more than the maximum!");
-			passCheck = false;
-		} else if ( newPartStock < newPartMin ) {
-			addPartErrorLabel.setText("Error: Current Stock cannot be less than the minimum!");
-			passCheck = false;
-		} else {
-			addPartErrorLabel.setText("");
-		}
-		
-		if ( passCheck ) {
-			// Depending on which radio button is selected, the information is saved and a part is added to the inventory
-			try {
-				Connection conn = com.inventory.DatabaseConnection.getConnection();
-				String sql = "INSERT INTO parts (id, name, price, stock, min, max, type, machine_id, company_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				
-				stmt.setInt(1, randomId);
-				stmt.setString(2, newPartName);
-				stmt.setDouble(3, newPartPrice);
-				stmt.setInt(4, newPartStock);
-				stmt.setInt(5, newPartMin);
-				stmt.setInt(6, newPartMax);
-				
-				if ( addPartInHouseRadio.isSelected() ) {
-					// If InHouse is selected, create an InHouse part
-					int newPartExtra = Integer.parseInt(addPartExtraTextField.getText());
-					stmt.setString(7, "InHouse");
-					stmt.setInt(8, newPartExtra);
-					stmt.setNull(9, java.sql.Types.VARCHAR);
-					
-					allParts.add(new com.inventory.InHouse(randomId,
-					                                       newPartName,
-					                                       newPartPrice,
-					                                       newPartStock,
-					                                       newPartMin,
-					                                       newPartMax,
-					                                       newPartExtra));
-				} else {
-					// Otherwise if Outsourced is selected, create an Outsourced part
-					String newPartExtra = addPartExtraTextField.getText();
-					stmt.setString(7, "Outsourced");
-					stmt.setNull(8, java.sql.Types.INTEGER);
-					stmt.setString(9, newPartExtra);
-					
-					allParts.add(new com.inventory.Outsourced(randomId,
-					                                          newPartName,
-					                                          newPartPrice,
-					                                          newPartStock,
-					                                          newPartMin,
-					                                          newPartMax,
-					                                          newPartExtra));
+		try {
+			String name = addPartNameTextField.getText();
+			int stock = Integer.parseInt(addPartInventoryTextField.getText());
+			double price = Double.parseDouble(addPartPriceTextField.getText());
+			int max = Integer.parseInt(addPartMaxTextField.getText());
+			int min = Integer.parseInt(addPartMinTextField.getText());
+			
+			// Input validation
+			if (name.isEmpty()) {
+				addPartErrorLabel.setText("Name cannot be empty");
+				return;
+			}
+			if (min > max) {
+				addPartErrorLabel.setText("Min cannot be greater than Max");
+				return;
+			}
+			if (stock < min || stock > max) {
+				addPartErrorLabel.setText("Stock must be between Min and Max");
+				return;
+			}
+			
+			com.inventory.Part newPart;
+			if (addPartInHouseRadio.isSelected()) {
+				int machineId = Integer.parseInt(addPartExtraTextField.getText());
+				newPart = new com.inventory.InHouse(generateNewId(), name, price, stock, min, max, machineId);
+			} else {
+				String companyName = addPartExtraTextField.getText();
+				if (companyName.isEmpty()) {
+					addPartErrorLabel.setText("Company name cannot be empty");
+					return;
 				}
-				
-				stmt.executeUpdate();
-				Stage stage = (Stage) addPartSaveButton.getScene().getWindow();
-				stage.close();
+				newPart = new com.inventory.Outsourced(generateNewId(), name, price, stock, min, max, companyName);
 			}
-			catch ( SQLException e ) {
-				System.out.println("Error saving part to database:");
-				e.printStackTrace();
-				addPartErrorLabel.setText("Error saving to database: " + e.getMessage());
-			}
-		} else {
-			System.out.print("Didn't pass.");
+			
+			// Add to database first
+			addPartToDatabase(newPart);
+			
+			// If database update successful, update UI
+			getAllParts().add(newPart);
+			
+			// Close the window
+			Stage stage = (Stage) addPartSaveButton.getScene().getWindow();
+			stage.close();
+			
+		} catch (NumberFormatException e) {
+			addPartErrorLabel.setText("Please enter valid numbers");
+		} catch (Exception e) {
+			addPartErrorLabel.setText("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -205,7 +176,7 @@ public class AddPartController implements Initializable {
 	 *                    the formatter for the MachineID/Company Name fields
 	 */
 	public void addPartRadioListener(ActionEvent actionEvent) {
-		if ( addPartInHouseRadio.isSelected() ) {
+		if (addPartInHouseRadio.isSelected()) {
 			addPartExtraLabel.setText("Machine ID");
 		} else {
 			addPartExtraLabel.setText("Company Name");
@@ -224,10 +195,10 @@ public class AddPartController implements Initializable {
 		// Set TextFormatters on each TextField to apply input validation
 		// Display an error message if incorrect characters are typed
 		addPartInventoryTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") ) {
+			if (change.getText().matches("\\d+")) {
 				addPartErrorLabel.setText("");
 				return change;
-			} else if ( change.getText().equals("") ) {
+			} else if (change.getText().equals("")) {
 				addPartErrorLabel.setText("");
 				return change;
 			} else {
@@ -238,10 +209,10 @@ public class AddPartController implements Initializable {
 		}));
 		
 		addPartMaxTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") ) {
+			if (change.getText().matches("\\d+")) {
 				addPartErrorLabel.setText("");
 				return change;
-			} else if ( change.getText().equals("") ) {
+			} else if (change.getText().equals("")) {
 				addPartErrorLabel.setText("");
 				return change;
 			} else {
@@ -252,10 +223,10 @@ public class AddPartController implements Initializable {
 		}));
 		
 		addPartMinTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") ) {
+			if (change.getText().matches("\\d+")) {
 				addPartErrorLabel.setText("");
 				return change;
-			} else if ( change.getText().equals("") ) {
+			} else if (change.getText().equals("")) {
 				addPartErrorLabel.setText("");
 				return change;
 			} else {
@@ -266,10 +237,10 @@ public class AddPartController implements Initializable {
 		}));
 		
 		addPartNameTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("^[a-zA-Z0-9 ]+$") ) {
+			if (change.getText().matches("^[a-zA-Z0-9 ]+$")) {
 				addPartErrorLabel.setText("");
 				return change;
-			} else if ( change.getText().equals("") ) {
+			} else if (change.getText().equals("")) {
 				addPartErrorLabel.setText("");
 				return change;
 			} else {
@@ -280,10 +251,10 @@ public class AddPartController implements Initializable {
 		}));
 		
 		addPartPriceTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") || change.getText().matches("\\.") ) {
+			if (change.getText().matches("\\d+") || change.getText().matches("\\.")) {
 				addPartErrorLabel.setText("");
 				return change;
-			} else if ( change.getText().equals("") ) {
+			} else if (change.getText().equals("")) {
 				addPartErrorLabel.setText("");
 				return change;
 			} else {
@@ -294,10 +265,10 @@ public class AddPartController implements Initializable {
 		}));
 		
 		addPartExtraTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("^[a-zA-Z0-9 _-]+$") ) {
+			if (change.getText().matches("^[a-zA-Z0-9 _-]+$")) {
 				addPartErrorLabel.setText("");
 				return change;
-			} else if ( change.getText().equals("") ) {
+			} else if (change.getText().equals("")) {
 				addPartErrorLabel.setText("");
 				return change;
 			} else {
@@ -368,11 +339,43 @@ public class AddPartController implements Initializable {
 	}
 	
 	private String getButtonColor(Button button) {
-		if ( button == addPartSaveButton ) {
+		if (button == addPartSaveButton) {
 			return "#27B611";
-		} else if ( button == addPartCancelButton ) {
+		} else if (button == addPartCancelButton) {
 			return "#ff0000";
 		}
 		return "#000000";
+	}
+	
+	private int generateNewId() {
+		Random randomNumbers = new Random();
+		return Math.abs(randomNumbers.nextInt(1000));
+	}
+	
+	private void addPartToDatabase(com.inventory.Part newPart) throws SQLException {
+		Connection conn = com.inventory.DatabaseConnection.getConnection();
+		String sql = "INSERT INTO parts (id, name, price, stock, min, max, type, machine_id, company_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		stmt.setInt(1, newPart.getId());
+		stmt.setString(2, newPart.getName());
+		stmt.setDouble(3, newPart.getPrice());
+		stmt.setInt(4, newPart.getStock());
+		stmt.setInt(5, newPart.getMin());
+		stmt.setInt(6, newPart.getMax());
+		
+		if (newPart instanceof com.inventory.InHouse) {
+			com.inventory.InHouse inHousePart = (com.inventory.InHouse) newPart;
+			stmt.setString(7, "InHouse");
+			stmt.setInt(8, inHousePart.getMachineId());
+			stmt.setNull(9, java.sql.Types.VARCHAR);
+		} else {
+			com.inventory.Outsourced outsourcedPart = (com.inventory.Outsourced) newPart;
+			stmt.setString(7, "Outsourced");
+			stmt.setNull(8, java.sql.Types.INTEGER);
+			stmt.setString(9, outsourcedPart.getCompanyName());
+		}
+		
+		stmt.executeUpdate();
 	}
 }

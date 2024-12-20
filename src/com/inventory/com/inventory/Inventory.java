@@ -16,14 +16,89 @@ import java.util.Objects;
 
 public class Inventory extends Application {
 	
-	public static ObservableList<com.inventory.Part> allParts = FXCollections.observableArrayList();
-	public static ObservableList<com.inventory.Product> allProducts = FXCollections.observableArrayList();
-	public static com.inventory.Part selectedPart;
-	public static int selectedPartIndex;
-	public static int selectedPartId;
-	public static com.inventory.Product selectedProduct;
-	public static int selectedProductIndex;
-	public static int selectedProductId;
+	private static ObservableList<com.inventory.Part> allParts = FXCollections.observableArrayList();
+	private static ObservableList<com.inventory.Product> allProducts = FXCollections.observableArrayList();
+	private static com.inventory.Part selectedPart;
+	private static int selectedPartIndex;
+	private static int selectedPartId;
+	private static com.inventory.Product selectedProduct;
+	private static int selectedProductIndex;
+	private static int selectedProductId;
+	
+	public static ObservableList<com.inventory.Part> getAllParts() {
+		return allParts;
+	}
+	
+	public static void setAllParts(ObservableList<com.inventory.Part> parts) {
+		allParts = parts;
+	}
+	
+	public static ObservableList<com.inventory.Product> getAllProducts() {
+		return allProducts;
+	}
+	
+	public static void setAllProducts(ObservableList<com.inventory.Product> products) {
+		allProducts = products;
+	}
+	
+	public static com.inventory.Part getSelectedPart() {
+		return selectedPart;
+	}
+	
+	public static void setSelectedPart(com.inventory.Part part) {
+		selectedPart = part;
+	}
+	
+	public static int getSelectedPartIndex() {
+		return selectedPartIndex;
+	}
+	
+	public static void setSelectedPartIndex(int index) {
+		selectedPartIndex = index;
+	}
+	
+	public static int getSelectedPartId() {
+		return selectedPartId;
+	}
+	
+	public static void setSelectedPartId(int id) {
+		selectedPartId = id;
+	}
+	
+	public static com.inventory.Product getSelectedProduct() {
+		return selectedProduct;
+	}
+	
+	public static void setSelectedProduct(com.inventory.Product product) {
+		selectedProduct = product;
+	}
+	
+	public static int getSelectedProductIndex() {
+		return selectedProductIndex;
+	}
+	
+	public static void setSelectedProductIndex(int index) {
+		selectedProductIndex = index;
+	}
+	
+	public static int getSelectedProductId() {
+		return selectedProductId;
+	}
+	
+	public static void setSelectedProductId(int id) {
+		selectedProductId = id;
+	}
+	
+	public static void updateProduct(int index, com.inventory.Product product) {
+		if (index >= 0 && index < getAllProducts().size()) {
+			getAllProducts().set(index, product);
+		}
+	}
+	
+	protected void updateLoadingMessage(String message) {
+		System.out.println(message);
+		// This method will be overridden in the anonymous subclass
+	}
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -77,13 +152,15 @@ public class Inventory extends Application {
 							rs.getString("company_name")
 					);
 				}
-				allParts.add(part);
-				System.out.println("Loaded part: " + part.getName());
+				getAllParts().add(part);
+				updateLoadingMessage("Loaded part: " + part.getName());
 			}
 		}
 		catch ( SQLException e ) {
-			System.out.println("Error loading parts from database:");
+			String errorMsg = "Error loading parts from database: " + e.getMessage();
+			System.out.println(errorMsg);
 			e.printStackTrace();
+			updateLoadingMessage(errorMsg);
 		}
 	}
 	
@@ -103,35 +180,52 @@ public class Inventory extends Application {
 						associatedParts
 				);
 				
-				// Load associated parts
-				String partsSql = "SELECT p.* FROM parts p " +
-				                  "JOIN product_parts pp ON p.id = pp.part_id " +
-				                  "WHERE pp.product_id = ?";
-				try ( PreparedStatement partsStmt = com.inventory.DatabaseConnection.getConnection()
-				                                                                    .prepareStatement(partsSql) ) {
-					partsStmt.setInt(1, product.getId());
-					ResultSet partsRs = partsStmt.executeQuery();
-					while ( partsRs.next() ) {
-						for ( com.inventory.Part part : allParts ) {
-							if ( part.getId() == partsRs.getInt("id") ) {
-								product.addAssociatedPart(part);
-								break;
-							}
+				// Load associated parts for this product
+				String assocSql = "SELECT p.* FROM parts p JOIN product_parts pp ON p.id = pp.part_id WHERE pp.product_id = ?";
+				try ( PreparedStatement assocStmt = com.inventory.DatabaseConnection.getConnection()
+				                                                                    .prepareStatement(assocSql) ) {
+					assocStmt.setInt(1, product.getId());
+					ResultSet assocRs = assocStmt.executeQuery();
+					while ( assocRs.next() ) {
+						if ( assocRs.getString("type").equals("InHouse") ) {
+							associatedParts.add(new com.inventory.InHouse(
+									assocRs.getInt("id"),
+									assocRs.getString("name"),
+									assocRs.getDouble("price"),
+									assocRs.getInt("stock"),
+									assocRs.getInt("min"),
+									assocRs.getInt("max"),
+									assocRs.getInt("machine_id")
+							));
+						} else {
+							associatedParts.add(new com.inventory.Outsourced(
+									assocRs.getInt("id"),
+									assocRs.getString("name"),
+									assocRs.getDouble("price"),
+									assocRs.getInt("stock"),
+									assocRs.getInt("min"),
+									assocRs.getInt("max"),
+									assocRs.getString("company_name")
+							));
 						}
 					}
 				}
-				allProducts.add(product);
-				System.out.println("Loaded product: " + product.getName());
+				
+				getAllProducts().add(product);
+				updateLoadingMessage("Loaded product: " + product.getName());
 			}
+			updateLoadingMessage("Loading complete!");
 		}
 		catch ( SQLException e ) {
-			System.out.println("Error loading products from database:");
+			String errorMsg = "Error loading products from database: " + e.getMessage();
+			System.out.println(errorMsg);
 			e.printStackTrace();
+			updateLoadingMessage(errorMsg);
 		}
 	}
 	
 	public void addPart(com.inventory.Part newPart) {
-		allParts.add(newPart);
+		getAllParts().add(newPart);
 		// Add to database
 		String sql = "INSERT INTO parts (name, price, stock, min, max, type, machine_id, company_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try ( PreparedStatement stmt = com.inventory.DatabaseConnection.getConnection().prepareStatement(sql) ) {
@@ -160,7 +254,7 @@ public class Inventory extends Application {
 	}
 	
 	public void addProduct(com.inventory.Product newProduct) {
-		allProducts.add(newProduct);
+		getAllProducts().add(newProduct);
 		// Add to database
 		String sql = "INSERT INTO products (name, price, stock, min, max) VALUES (?, ?, ?, ?, ?)";
 		try ( PreparedStatement stmt = com.inventory.DatabaseConnection.getConnection()

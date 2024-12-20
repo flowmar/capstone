@@ -13,7 +13,7 @@
   - Redistributions of source code must retain the above copyright
     notice, this list of conditions and the following disclaimer.
   - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
+    notice, this list of conditions and the disclaimer in
     the documentation and/or other materials provided with the distribution.
   - Neither the name of Oracle Corporation nor the names of its
     contributors may be used to endorse or promote products derived
@@ -132,7 +132,7 @@
                       <TextField fx:id="addProductMaxTextField" layoutX="238.0" layoutY="371.0" prefHeight="23.0"
 								 prefWidth="155.0"/>
                       <Button fx:id="addProductSaveButton" layoutX="1174.0" layoutY="595.0" mnemonicParsing="false"
-							  onAction="#addProductSaveListener" text="Save">
+							  onAction="#addProductSaveButtonListener" text="Save">
                           <font>
                               <Font size="16.0"/>
                           </font>
@@ -165,7 +165,7 @@
                       <Label fx:id="addProductPartsSearchLabel" layoutX="1020.0" layoutY="23.0" text="Search for Parts:"
 							 textFill="WHITE" style="-fx-font-weight: bold;"/>
                       <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0"
-								 onAction="#addProductsSearchFieldListener"/>
+                                onAction="#handlePartSearch" onKeyReleased="#handlePartSearch"/>
                       <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0"
 							 prefWidth="335.0" textFill="#f54b4b">
                           <font>

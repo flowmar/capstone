@@ -1,5 +1,9 @@
 package com.inventory;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -8,267 +12,86 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/**
- * @author Omar Imam
- * @version %I% %G%
- */
-
+@SuppressWarnings("unchecked")
 public class ModifyProductController implements Initializable {
 	
-	/*
-	 * Fields
-	 */
-	
-	/**
-	 * a list that holds each {@link com.inventory.Part} associated with the product
-	 */
-	@FXML
-	ObservableList<com.inventory.Part> associatedPartsList = FXCollections.observableArrayList();
-	/**
-	 * saves the {@link com.inventory.Product} to the {@link com.inventory.Inventory}
-	 */
-	@FXML
-	private Button modifyProductSaveButton;
-	/**
-	 * Cancels the form and closes the window
-	 */
-	@FXML
-	private Button modifyProductCancelButton;
-	/**
-	 * the {@link javafx.scene.control.Label} that is used to display error messages
-	 */
-	@FXML
-	private Label modifyProductErrorLabel;
-	/**
-	 * the {@link javafx.scene.control.Label} that is used to display error messages related to saving
-	 */
-	@FXML
-	private Label modifyProductSaveErrorLabel;
-	/**
-	 * a {@link javafx.scene.control.TableView} that displays each {@link com.inventory.Part} in the {@link
-	 * com.inventory.Inventory}
-	 */
-	@FXML
-	private TableView<com.inventory.Part> modifyProductPartsTableView;
-	/**
-	 * a {@link javafx.scene.control.TableView} that displays each {@link com.inventory.Part} associated with the current
-	 * {@link com.inventory.Product}
-	 */
-	@FXML
-	private TableView<com.inventory.Part> modifyProductAssociatedPartsTableView;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the product id
-	 */
 	@FXML
 	private TextField modifyProductIdTextField;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the product name
-	 */
+	
 	@FXML
 	private TextField modifyProductNameTextField;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the product stock
-	 */
+	
 	@FXML
 	private TextField modifyProductStockTextField;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the product price
-	 */
+	
 	@FXML
 	private TextField modifyProductPriceTextField;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the product max
-	 */
+	
 	@FXML
 	private TextField modifyProductMaxTextField;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the product min
-	 */
+	
 	@FXML
 	private TextField modifyProductMinTextField;
-	/**
-	 * the {@link javafx.scene.control.TextField} that is used for the filtering the {@link #modifyProductPartsTableView}
-	 */
+	
+	@FXML
+	private TableView<com.inventory.Part> modifyProductPartsTableView;
+	
+	@FXML
+	private TableView<com.inventory.Part> modifyProductAssociatedPartsTableView;
+	
 	@FXML
 	private TextField modifyProductSearchField;
 	
-	/**
-	 * Associates the selected part in the top TableView with the Product on the left.&nbsp;The Part will be copied
-	 * into the bottom TableView to show the association
-	 *
-	 * @param actionEvent fires when the Add button is clicked
-	 */
-	public void addAssociatedPartButtonListener(ActionEvent actionEvent) {
-		modifyProductSaveErrorLabel.setText("");
-		// Get the selected part from the top table view
-		com.inventory.Part selectedPart = modifyProductPartsTableView.getSelectionModel().getSelectedItem();
-		
-		// Add the selected Part to the associated parts list
-		associatedPartsList.add(selectedPart);
-		
-		// Set the data from the parts list into the TableView
-		modifyProductAssociatedPartsTableView.setItems(associatedPartsList);
-	}
+	@FXML
+	private Label modifyProductErrorLabel;
 	
-	/**
-	 * Removes the selected part in the bottom TableView's association with the product on the left hand side.&nbsp;The
-	 * part will be removed from the bottom TableView
-	 *
-	 * @param actionEvent fired when the Remove button is clicked
-	 */
-	public void removeAssociatedPartButtonListener(ActionEvent actionEvent) {
-		// Get the selected part from the bottom table view
-		com.inventory.Part selectedPart = modifyProductAssociatedPartsTableView.getSelectionModel()
-		                                                                       .getSelectedItem();
-		
-		if ( selectedPart == null ) {
-			modifyProductErrorLabel.setText("Error: No part selected!");
-		} else {
-			// Create a dialog box that confirms the deletion
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			
-			alert.setContentText("Are you sure you want to remove this part association?");
-			
-			alert.showAndWait().ifPresent(response ->
-			                              {
-				                              if ( response == ButtonType.OK ) {
-					                              // Remove the selected part from the associated parts list
-					                              associatedPartsList.remove(selectedPart);
-					                              modifyProductSaveErrorLabel.setText("Part association removed!");
-					                              modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #00ff00;");
-				                              } else if ( response == ButtonType.CANCEL ) {
-					                              // If no, close out the window
-					                              System.out.println("Association removal cancelled");
-				                              }
-			                              });
-		}
-	}
+	@FXML
+	private Label modifyProductSaveErrorLabel;
 	
-	/**
-	 * Creates a new Product using the information from the TextFields.&nbsp;It also includes input
-	 * validation for the Stock, Min and Max fields.
-	 *
-	 * @param actionEvent fired when the Save button is clicked
-	 */
-	public void modifyProductSaveButtonListener(ActionEvent actionEvent) {
-		// Get the information from the text fields and place them into variables
-		String modifyProductName = modifyProductNameTextField.getText();
-		int modifyProductStock = Integer.parseInt(modifyProductStockTextField.getText());
-		double modifyProductPrice = Double.parseDouble(modifyProductPriceTextField.getText());
-		int modifyProductMax = Integer.parseInt(modifyProductMaxTextField.getText());
-		int modifyProductMin = Integer.parseInt(modifyProductMinTextField.getText());
-		int randomId = Integer.parseInt(modifyProductIdTextField.getText());
-		
-		boolean passCheck = true;
-		// Input Validation Logic
-		if ( modifyProductMin > modifyProductMax ) {
-			modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-			modifyProductSaveErrorLabel.setText("Error: Minimum cannot be more than maximum!");
-			passCheck = false;
-		} else if ( modifyProductStock > modifyProductMax ) {
-			modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-			modifyProductSaveErrorLabel.setText("Error: Current Stock cannot be more than the maximum!");
-			passCheck = false;
-		} else if ( modifyProductStock < modifyProductMin ) {
-			modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000;");
-			modifyProductSaveErrorLabel.setText("Error: Current Stock cannot be less than the minimum!");
-			passCheck = false;
-		} else {
-			modifyProductSaveErrorLabel.setText("");
-		}
-		
-		if ( passCheck ) {
-			try {
-				Connection conn = com.inventory.DatabaseConnection.getConnection();
-				
-				// First update the product
-				String productSql = "UPDATE products SET name = ?, price = ?, stock = ?, min = ?, max = ? WHERE id = ?";
-				PreparedStatement productStmt = conn.prepareStatement(productSql);
-				productStmt.setString(1, modifyProductName);
-				productStmt.setDouble(2, modifyProductPrice);
-				productStmt.setInt(3, modifyProductStock);
-				productStmt.setInt(4, modifyProductMin);
-				productStmt.setInt(5, modifyProductMax);
-				productStmt.setInt(6, randomId);
-				
-				int productRowsAffected = productStmt.executeUpdate();
-				
-				if ( productRowsAffected > 0 ) {
-					// If product was updated successfully, update the associated parts
-					
-					// First, delete all existing associations
-					String deleteAssocSql = "DELETE FROM product_parts WHERE product_id = ?";
-					PreparedStatement deleteAssocStmt = conn.prepareStatement(deleteAssocSql);
-					deleteAssocStmt.setInt(1, randomId);
-					deleteAssocStmt.executeUpdate();
-					
-					// Then add all current associations
-					String associationSql = "INSERT INTO product_parts (product_id, part_id) VALUES (?, ?)";
-					PreparedStatement associationStmt = conn.prepareStatement(associationSql);
-					
-					for ( com.inventory.Part part : associatedPartsList ) {
-						associationStmt.setInt(1, randomId);
-						associationStmt.setInt(2, part.getId());
-						associationStmt.executeUpdate();
-					}
-					
-					// If everything was successful, update the UI
-					com.inventory.Product modifiedProduct = new com.inventory.Product(randomId,
-					                                                                  modifyProductName,
-					                                                                  modifyProductPrice,
-					                                                                  modifyProductStock,
-					                                                                  modifyProductMin,
-					                                                                  modifyProductMax,
-					                                                                  associatedPartsList);
-					com.inventory.Inventory.allProducts.set(com.inventory.Inventory.selectedProductIndex,
-					                                        modifiedProduct);
-					
-					// Close the window
-					Stage stage = (Stage) modifyProductSaveButton.getScene().getWindow();
-					stage.close();
-				} else {
-					modifyProductSaveErrorLabel.setText("Error: Product not found in database!");
-					modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
-				}
-			}
-			catch ( SQLException e ) {
-				System.out.println("Error updating product in database:");
-				e.printStackTrace();
-				modifyProductSaveErrorLabel.setText("Error: " + e.getMessage());
-				modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
-			}
-		} else {
-			System.out.println("Didn't Pass");
-		}
-	}
+	@FXML
+	private Button modifyProductSaveButton;
 	
-	/**
-	 * Cancels the form and closes out the window
-	 *
-	 * @param actionEvent fires when the cancel button is clicked
-	 */
-	public void modifyProductCancelButtonListener(ActionEvent actionEvent) {
-		Stage stage = (Stage) modifyProductCancelButton.getScene().getWindow();
-		stage.close();
-	}
+	@FXML
+	private Button modifyProductCancelButton;
 	
-	/**
-	 * Initializes the new scene by placing the selected product data into the UI, creating TableColumns for
-	 * the TableViews, associating the data with the columns, and adding a filtering function to the TextField in the
-	 * upper right corner.&nbsp;It also sets TextFormatters on the TextFields for input validation.
-	 */
+	@FXML
+	private ObservableList<com.inventory.Part> associatedPartsList = FXCollections.observableArrayList();
+	
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		// Get the selected product
+		com.inventory.Product selectedProduct = com.inventory.Inventory.getSelectedProduct();
+		
+		// Set up the product details
+		modifyProductIdTextField.setText(String.valueOf(selectedProduct.getId()));
+		modifyProductNameTextField.setText(selectedProduct.getName());
+		modifyProductStockTextField.setText(String.valueOf(selectedProduct.getStock()));
+		modifyProductPriceTextField.setText(String.valueOf(selectedProduct.getPrice()));
+		modifyProductMaxTextField.setText(String.valueOf(selectedProduct.getMax()));
+		modifyProductMinTextField.setText(String.valueOf(selectedProduct.getMin()));
+		
+		// Set up the available parts table
+		setupAvailablePartsTable();
+		
+		// Set up the associated parts table
+		setupAssociatedPartsTable();
+		
+		// Load associated parts from database
+		loadAssociatedParts(selectedProduct.getId());
+		
+		// Set up the search functionality
+		setupSearch();
+		
 		// Add button hover and click animation with consistent styling
 		modifyProductSaveButton.setStyle(modifyProductSaveButton.getStyle() +
 		                                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);");
@@ -285,68 +108,99 @@ public class ModifyProductController implements Initializable {
 		modifyProductCancelButton.setOnMouseExited(event -> onButtonExit(event));
 		modifyProductCancelButton.setOnMousePressed(event -> onButtonPress(event));
 		modifyProductCancelButton.setOnMouseReleased(event -> onButtonRelease(event));
+	}
+	
+	private void setupAvailablePartsTable() {
+		// Set up columns for available parts table
+		TableColumn<com.inventory.Part, Integer> partIdCol = new TableColumn<>("Part ID");
+		partIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
 		
-		// Fill the TextFields with the information from the selected product
-		com.inventory.Product selectedProduct = com.inventory.Inventory.selectedProduct;
-		modifyProductIdTextField.setText(Integer.toString(selectedProduct.getId()));
-		modifyProductNameTextField.setText(selectedProduct.getName());
-		modifyProductStockTextField.setText(Integer.toString(selectedProduct.getStock()));
-		modifyProductPriceTextField.setText(Double.toString(selectedProduct.getPrice()));
-		modifyProductMaxTextField.setText(Integer.toString(selectedProduct.getMax()));
-		modifyProductMinTextField.setText(Integer.toString(selectedProduct.getMin()));
+		TableColumn<com.inventory.Part, String> partNameCol = new TableColumn<>("Part Name");
+		partNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 		
-		// Set the associated parts
-		associatedPartsList.setAll(selectedProduct.getAllAssociatedParts());
-		modifyProductAssociatedPartsTableView.setItems(associatedPartsList);
+		TableColumn<com.inventory.Part, Integer> partStockCol = new TableColumn<>("Stock");
+		partStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
 		
-		// Create the table columns
-		TableColumn<com.inventory.Part, Integer> partsIdColumn = new TableColumn<>("id");
-		TableColumn<com.inventory.Part, String> partsNameColumn = new TableColumn<>("Name");
-		TableColumn<com.inventory.Part, Double> partsPriceColumn = new TableColumn<>("Price");
-		TableColumn<com.inventory.Part, Integer> partsStockColumn = new TableColumn<>("Stock");
-		modifyProductPartsTableView.getColumns().addAll(partsIdColumn, partsNameColumn, partsPriceColumn,
-		                                                partsStockColumn);
+		TableColumn<com.inventory.Part, Double> partPriceCol = new TableColumn<>("Price");
+		partPriceCol.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
 		
-		TableColumn<com.inventory.Part, Integer> associatedPartsIdColumn = new TableColumn<>("id");
-		TableColumn<com.inventory.Part, String> associatedPartsNameColumn = new TableColumn<>("Name");
-		TableColumn<com.inventory.Part, Double> associatedPartsPriceColumn = new TableColumn<>("Price");
-		TableColumn<com.inventory.Part, Integer> associatedPartsStockColumn = new TableColumn<>("Stock");
-		modifyProductAssociatedPartsTableView.getColumns().addAll(associatedPartsIdColumn, associatedPartsNameColumn,
-		                                                          associatedPartsPriceColumn,
-		                                                          associatedPartsStockColumn);
+		modifyProductPartsTableView.getColumns().addAll(partIdCol, partNameCol, partStockCol, partPriceCol);
 		
-		// Associate the data with the columns
-		partsIdColumn.setCellValueFactory(new PropertyValueFactory<>(("id")));
-		partsNameColumn.setCellValueFactory(new PropertyValueFactory<com.inventory.Part, String>(("Name")));
-		partsStockColumn.setCellValueFactory(new PropertyValueFactory<com.inventory.Part, Integer>(("Stock")));
-		partsPriceColumn.setCellValueFactory(new PropertyValueFactory<com.inventory.Part, Double>(("Price")));
+		// Load all available parts
+		modifyProductPartsTableView.setItems(com.inventory.Inventory.getAllParts());
+	}
+	
+	private void setupAssociatedPartsTable() {
+		// Set up columns for associated parts table
+		TableColumn<com.inventory.Part, Integer> assocPartIdCol = new TableColumn<>("Part ID");
+		assocPartIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
 		
-		associatedPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>(("id")));
-		associatedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<com.inventory.Part, String>(("Name")));
-		associatedPartsStockColumn.setCellValueFactory(new PropertyValueFactory<com.inventory.Part, Integer>(("Stock")));
-		associatedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<com.inventory.Part, Double>(("Price")));
+		TableColumn<com.inventory.Part, String> assocPartNameCol = new TableColumn<>("Part Name");
+		assocPartNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 		
-		// Add data to the table view
-		modifyProductPartsTableView.setItems(com.inventory.Inventory.allParts);
+		TableColumn<com.inventory.Part, Integer> assocPartStockCol = new TableColumn<>("Stock");
+		assocPartStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
 		
+		TableColumn<com.inventory.Part, Double> assocPartPriceCol = new TableColumn<>("Price");
+		assocPartPriceCol.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+		
+		modifyProductAssociatedPartsTableView.getColumns().addAll(assocPartIdCol, assocPartNameCol, assocPartStockCol, assocPartPriceCol);
+	}
+	
+	private void loadAssociatedParts(int productId) {
+		String sql = "SELECT p.* FROM parts p JOIN product_parts pp ON p.id = pp.part_id WHERE pp.product_id = ?";
+		try (PreparedStatement stmt = com.inventory.DatabaseConnection.getConnection().prepareStatement(sql)) {
+			stmt.setInt(1, productId);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				com.inventory.Part part;
+				if (rs.getString("type").equals("InHouse")) {
+					part = new com.inventory.InHouse(
+							rs.getInt("id"),
+							rs.getString("name"),
+							rs.getDouble("price"),
+							rs.getInt("stock"),
+							rs.getInt("min"),
+							rs.getInt("max"),
+							rs.getInt("machine_id")
+					);
+				} else {
+					part = new com.inventory.Outsourced(
+							rs.getInt("id"),
+							rs.getString("name"),
+							rs.getDouble("price"),
+							rs.getInt("stock"),
+							rs.getInt("min"),
+							rs.getInt("max"),
+							rs.getString("company_name")
+					);
+				}
+				associatedPartsList.add(part);
+			}
+			modifyProductAssociatedPartsTableView.setItems(associatedPartsList);
+		} catch (SQLException e) {
+			System.err.println("Error loading associated parts: " + e.getMessage());
+			e.printStackTrace();
+			modifyProductErrorLabel.setText("Error loading associated parts: " + e.getMessage());
+		}
+	}
+	
+	private void setupSearch() {
 		// Wrap the Observable list in a FilteredList
-		FilteredList<com.inventory.Part> filteredProductData = new FilteredList<com.inventory.Part>(com.inventory.Inventory.allParts,
+		FilteredList<com.inventory.Part> filteredProductData = new FilteredList<com.inventory.Part>(com.inventory.Inventory.getAllParts(),
 		                                                                                            t -> true);
 		
 		// Set the filter to change whenever the filter changes
 		modifyProductSearchField.textProperty().addListener((observable, oldValue, newValue) ->
 		                                                    {
-			                                                    
 			                                                    filteredProductData.setPredicate(product -> {
-				                                                    
 				                                                    if ( newValue == null || newValue.isEmpty() ) {
 					                                                    modifyProductErrorLabel.setText("");
 					                                                    return true;
 				                                                    }
-				                                                    
 				                                                    // Compare each part with the filter text
 				                                                    String lowerCaseFilter = newValue.toLowerCase();
-				                                                    
 				                                                    if ( product.getName()
 				                                                                .toLowerCase()
 				                                                                .contains(lowerCaseFilter) ) {
@@ -357,12 +211,7 @@ public class ModifyProductController implements Initializable {
 					                                                    modifyProductErrorLabel.setText("");
 					                                                    return true;
 				                                                    }
-				                                                    //      else if ( String.valueOf( product.getName( ) ).indexOf( lowerCaseFilter ) != -1 ) {
-				                                                    //        productsErrorLabel.setText("3");
-				                                                    //        return true;
-				                                                    //      }
 				                                                    else {
-					                                                    //                modifyProductErrorLabel.setText( "4" );
 					                                                    return false;
 				                                                    }
 			                                                    });
@@ -373,78 +222,150 @@ public class ModifyProductController implements Initializable {
 		sortedProductData.comparatorProperty().bind(modifyProductPartsTableView.comparatorProperty());
 		
 		modifyProductPartsTableView.setItems(sortedProductData);
-
-// Set TextFormatters on each TextField to apply input validation
-// Display an error message if incorrect characters are typed
-		modifyProductStockTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else if ( change.getText().equals("") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else {
-				change.setText("");
-				modifyProductSaveErrorLabel.setText("Integers only!");
-				return change;
-			}
-		}));
+	}
+	
+	@FXML
+	private void modifyProductSaveButtonListener(ActionEvent actionEvent) {
+		modifyProductSaveErrorLabel.setText("");
+		modifyProductSaveErrorLabel.setStyle("-fx-text-fill: #ff0000");
 		
-		modifyProductMaxTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else if ( change.getText().equals("") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else {
-				change.setText("");
-				modifyProductSaveErrorLabel.setText("Integers only!");
-				return change;
+		try {
+			int id = Integer.parseInt(modifyProductIdTextField.getText().trim());
+			String name = modifyProductNameTextField.getText().trim();
+			if (name.isEmpty()) {
+				modifyProductSaveErrorLabel.setText("Error: Name cannot be empty!");
+				return;
 			}
-		}));
-		
-		modifyProductMinTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else if ( change.getText().equals("") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else {
-				change.setText("");
-				modifyProductSaveErrorLabel.setText("Integers only!");
-				return change;
+			
+			int stock = Integer.parseInt(modifyProductStockTextField.getText().trim());
+			double price = Double.parseDouble(modifyProductPriceTextField.getText().trim());
+			int min = Integer.parseInt(modifyProductMinTextField.getText().trim());
+			int max = Integer.parseInt(modifyProductMaxTextField.getText().trim());
+			
+			boolean passCheck = true;
+			// Input Validation Logic
+			if (min > max) {
+				modifyProductSaveErrorLabel.setText("Error: Minimum cannot be more than maximum!");
+				passCheck = false;
+			} else if (stock > max) {
+				modifyProductSaveErrorLabel.setText("Error: Current Stock cannot be more than the maximum!");
+				passCheck = false;
+			} else if (stock < min) {
+				modifyProductSaveErrorLabel.setText("Error: Current Stock cannot be less than the minimum!");
+				passCheck = false;
 			}
-		}));
-		
-		modifyProductNameTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("[a-zA-Z]+") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else if ( change.getText().equals("") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else {
-				change.setText("");
-				modifyProductSaveErrorLabel.setText("Letters only!");
-				return change;
+			
+			if (passCheck) {
+				Connection conn = null;
+				try {
+					conn = com.inventory.DatabaseConnection.getConnection();
+					conn.setAutoCommit(false);  // Start transaction
+					
+					// Update product in database
+					String sql = "UPDATE products SET name = ?, stock = ?, price = ?, min = ?, max = ? WHERE id = ?";
+					try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+						stmt.setString(1, name);
+						stmt.setInt(2, stock);
+						stmt.setDouble(3, price);
+						stmt.setInt(4, min);
+						stmt.setInt(5, max);
+						stmt.setInt(6, id);
+						
+						int rowsAffected = stmt.executeUpdate();
+						
+						if (rowsAffected > 0) {
+							// Delete existing associated parts
+							String deleteSql = "DELETE FROM product_parts WHERE product_id = ?";
+							try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+								deleteStmt.setInt(1, id);
+								deleteStmt.executeUpdate();
+							}
+							
+							// Save new associated parts
+							String assocSql = "INSERT INTO product_parts (product_id, part_id) VALUES (?, ?)";
+							try (PreparedStatement assocStmt = conn.prepareStatement(assocSql)) {
+								for (com.inventory.Part part : associatedPartsList) {
+									assocStmt.setInt(1, id);
+									assocStmt.setInt(2, part.getId());
+									assocStmt.executeUpdate();
+								}
+							}
+							
+							// If we got here, commit the transaction
+							conn.commit();
+							
+							// Update UI list
+							com.inventory.Product updatedProduct = new com.inventory.Product(id, name, price, stock, min, max, associatedPartsList);
+							com.inventory.Inventory.updateProduct(com.inventory.Inventory.getSelectedProductIndex(), updatedProduct);
+							
+							// Close window
+							Stage stage = (Stage) modifyProductNameTextField.getScene().getWindow();
+							stage.close();
+						} else {
+							conn.rollback();
+							modifyProductSaveErrorLabel.setText("Error: Failed to update product in database!");
+						}
+					}
+				} catch (SQLException e) {
+					if (conn != null) {
+						try {
+							conn.rollback();
+						} catch (SQLException ex) {
+							ex.printStackTrace();
+						}
+					}
+					System.err.println("Error updating product in database: " + e.getMessage());
+					e.printStackTrace();
+					modifyProductSaveErrorLabel.setText("Database error: " + e.getMessage());
+				} finally {
+					if (conn != null) {
+						try {
+							conn.setAutoCommit(true);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 			}
-		}));
-		
-		modifyProductPriceTextField.setTextFormatter(new TextFormatter<>(change -> {
-			if ( change.getText().matches("\\d+") || change.getText().matches("\\.") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
-			} else if ( change.getText().equals("") ) {
-				modifyProductSaveErrorLabel.setText("");
-				return change;
+		} catch (NumberFormatException e) {
+			modifyProductSaveErrorLabel.setText("Error: Please enter valid numbers for Stock, Price, Min, and Max!");
+		} catch (Exception e) {
+			System.err.println("Error updating product: " + e.getMessage());
+			e.printStackTrace();
+			modifyProductSaveErrorLabel.setText("Error: " + e.getMessage());
+		}
+	}
+	
+	@FXML
+	private void addAssociatedPartButtonListener(ActionEvent actionEvent) {
+		com.inventory.Part selectedPart = modifyProductPartsTableView.getSelectionModel().getSelectedItem();
+		if (selectedPart != null) {
+			if (!associatedPartsList.contains(selectedPart)) {
+				associatedPartsList.add(selectedPart);
+				modifyProductAssociatedPartsTableView.setItems(associatedPartsList);
 			} else {
-				change.setText("");
-				modifyProductSaveErrorLabel.setText("Prices don't contain letters!!");
-				return change;
+				modifyProductErrorLabel.setText("Part is already associated with this product");
 			}
-		}));
+		} else {
+			modifyProductErrorLabel.setText("Please select a part to add");
+		}
+	}
+	
+	@FXML
+	private void removeAssociatedPartButtonListener(ActionEvent actionEvent) {
+		com.inventory.Part selectedPart = modifyProductAssociatedPartsTableView.getSelectionModel().getSelectedItem();
+		if (selectedPart != null) {
+			associatedPartsList.remove(selectedPart);
+			modifyProductAssociatedPartsTableView.setItems(associatedPartsList);
+		} else {
+			modifyProductErrorLabel.setText("Please select a part to remove");
+		}
+	}
+	
+	@FXML
+	private void modifyProductCancelButtonListener(ActionEvent actionEvent) {
+		Stage stage = (Stage) modifyProductCancelButton.getScene().getWindow();
+		stage.close();
 	}
 	
 	@FXML
@@ -488,13 +409,8 @@ public class ModifyProductController implements Initializable {
 		return "#000000";
 	}
 	
-	/**
-	 * Called when "Enter" is pressed when searching for a part in the parts table.&nbsp;It selects the matching
-	 * part
-	 *
-	 * @param actionEvent fired when the user presses "Enter"
-	 */
-	public void modifyProductsSearchFieldListener(ActionEvent actionEvent) {
+	@FXML
+	private void modifyProductsSearchFieldListener(ActionEvent actionEvent) {
 		modifyProductPartsTableView.getSelectionModel().clearSelection();
 		modifyProductPartsTableView.getSelectionModel().selectFirst();
 		com.inventory.Part selected = modifyProductPartsTableView.getSelectionModel().getSelectedItem();

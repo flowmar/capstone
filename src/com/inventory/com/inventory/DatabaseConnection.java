@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-	private static final String URL = "jdbc:mysql://sql.freedb.tech:3306/freedb_inventory_app";
-	private static final String USER = "freedb_flowmar";
-	private static final String PASSWORD = "vG&7GQ3Q5u%Mv9h";
-	
+	// private static final String URL = "jdbc:mysql://sql.freedb.tech:3306/freedb_inventory_app";
+	// private static final String USER = "freedb_flowmar";
+	// private static final String PASSWORD = "vG&7GQ3Q5u%Mv9h";
+	private static final String URL = "jdbc:mysql://localhost:3306/inventory";
+	private static final String USER = "flowmar";
+	private static final String PASSWORD = "passing321";
 	
 	static {
 		try {
