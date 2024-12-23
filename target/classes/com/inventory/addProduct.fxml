@@ -40,46 +40,6 @@
          <children>
             <VBox prefHeight="676.0" prefWidth="1403.0" style="-fx-border-radius: 50%;">
               <children>
-                <MenuBar fx:id="mainWindow" prefHeight="25.0" prefWidth="640.0" style="-fx-border-radius: 2%;"
-						 VBox.vgrow="NEVER">
-                  <menus>
-                    <Menu mnemonicParsing="false" text="File">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="New"/>
-                        <MenuItem mnemonicParsing="false" text="Open…"/>
-                        <Menu mnemonicParsing="false" text="Open Recent"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
-                        <MenuItem mnemonicParsing="false" text="Save"/>
-                        <MenuItem mnemonicParsing="false" text="Save As…"/>
-                        <MenuItem mnemonicParsing="false" text="Revert"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Preferences…"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Quit"/>
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Edit">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Undo"/>
-                        <MenuItem mnemonicParsing="false" text="Redo"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Cut"/>
-                        <MenuItem mnemonicParsing="false" text="Copy"/>
-                        <MenuItem mnemonicParsing="false" text="Paste"/>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Select All"/>
-                        <MenuItem mnemonicParsing="false" text="Unselect All"/>
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Help">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp"/>
-                      </items>
-                    </Menu>
-                  </menus>
-                </MenuBar>
                 <AnchorPane id="mainForm" maxHeight="-1.0" maxWidth="-1.0" prefHeight="642.0" prefWidth="662.0"
 							style="-fx-background-color: #0d2c54; -fx-border-radius: 2%;" VBox.vgrow="ALWAYS">
                   <children>
@@ -165,7 +125,7 @@
                       <Label fx:id="addProductPartsSearchLabel" layoutX="1020.0" layoutY="23.0" text="Search for Parts:"
 							 textFill="WHITE" style="-fx-font-weight: bold;"/>
                       <TextField fx:id="addProductFilterField" layoutX="1164.0" layoutY="23.0"
-                                onAction="#handlePartSearch" onKeyReleased="#handlePartSearch"/>
+								 onAction="#handlePartSearch" onKeyReleased="#handlePartSearch"/>
                       <Label fx:id="addProductErrorLabel" layoutX="792.0" layoutY="23.0" prefHeight="23.0"
 							 prefWidth="335.0" textFill="#f54b4b">
                           <font>
