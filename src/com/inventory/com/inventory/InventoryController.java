@@ -480,10 +480,12 @@ public class InventoryController implements Initializable {
 			String checkSql = "SELECT COUNT(*) FROM product_parts WHERE part_id = ?";
 			try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
 				checkStmt.setInt(1, selectedPart.getId());
-				ResultSet rs = checkStmt.executeQuery();
-				if (rs.next() && rs.getInt(1) > 0) {
-					partsErrorLabel.setText("Error: Cannot delete a part that is associated with products!");
-					return;
+				try (ResultSet rs = checkStmt.executeQuery()) {
+					rs.next();
+					if (rs.getInt(1) > 0) {
+						partsErrorLabel.setText("Error: Cannot delete a part that is associated with products!");
+						return;
+					}
 				}
 			}
 			
@@ -552,16 +554,17 @@ public class InventoryController implements Initializable {
 		try {
 			// Check if product has associated parts
 			String checkSql = "SELECT COUNT(*) FROM product_parts WHERE product_id = ?";
-			ResultSet rs;
-			try ( PreparedStatement checkStmt = com.inventory.DatabaseConnection.getConnection()
-			                                                                    .prepareStatement(checkSql) ) {
+			int count;
+			try (PreparedStatement checkStmt = com.inventory.DatabaseConnection.getConnection()
+					.prepareStatement(checkSql)) {
 				checkStmt.setInt(1, selectedProduct.getId());
-				rs = checkStmt.executeQuery();
+				try (ResultSet rs = checkStmt.executeQuery()) {
+					rs.next();
+					count = rs.getInt(1);
+				}
 			}
-			rs.next();
-			int count = rs.getInt(1);
 			
-			if ( count > 0 ) {
+			if (count > 0) {
 				productsErrorLabel.setStyle("-fx-text-fill: #ff0000;");
 				productsErrorLabel.setText("Error: Cannot delete a product that has associated parts.");
 				return;
@@ -576,7 +579,7 @@ public class InventoryController implements Initializable {
 						String sql = "DELETE FROM products WHERE id = ?";
 						int rowsAffected;
 						try ( PreparedStatement stmt = com.inventory.DatabaseConnection.getConnection()
-						                                                               .prepareStatement(sql) ) {
+								.prepareStatement(sql) ) {
 							stmt.setInt(1, selectedProduct.getId());
 							rowsAffected = stmt.executeUpdate();
 						}

@@ -1,0 +1,248 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.inventory.Inventory",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_2020599460 { 
+   	label=inventory
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   DatabaseConnection1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DatabaseConnection</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ closeAllConnections()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getConnection(): Connection</TD></TR>
+<TR><TD ALIGN="LEFT" >+ releaseConnection(conn: Connection)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+InHouse1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)InHouse</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   machineId: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ InHouse(id: int, name: String, price: double, stock: int, min: int, max: int, machineId: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMachineId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMachineId(machineId: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Inventory1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Inventory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addPart(newPart: Part)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addProduct(newProduct: Product)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAllParts(): ObservableList&lt;Part&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAllProducts(): ObservableList&lt;Product&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSelectedPart(): Part</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSelectedPartId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSelectedPartIndex(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSelectedProduct(): Product</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSelectedProductId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSelectedProductIndex(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadPartsFromDatabase()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadProductsFromDatabase()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setAllParts(parts: ObservableList&lt;Part&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setAllProducts(products: ObservableList&lt;Product&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSelectedPart(part: Part)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSelectedPartId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSelectedPartIndex(index: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSelectedProduct(product: Product)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSelectedProductId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSelectedProductIndex(index: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ start(primaryStage: Stage)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stop()</TD></TR>
+<TR><TD ALIGN="LEFT" ># updateLoadingMessage(message: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProduct(index: int, product: Product)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Outsourced1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Outsourced</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   companyName: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Outsourced(id: int, name: String, price: double, stock: int, min: int, max: int, companyName: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getCompanyName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCompanyName(companyName: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Part1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Part</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   max: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   min: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stock: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Part(id: int, name: String, price: double, stock: int, min: int, max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMax(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMin(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStock(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMax(max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMin(min: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStock(stock: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Product1691664687[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Product</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   associatedParts: ObservableList&lt;Part&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   max: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   min: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stock: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Product(id: int, name: String, price: double, stock: int, min: int, max: int, associatedParts: ObservableList&lt;Part&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addAssociatedPart(part: Part)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteAssociatedPart(selectedAssociatedPart: Part): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAllAssociatedParts(): ObservableList&lt;Part&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMax(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMin(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStock(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >- setId(id: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMax(max: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMin(min: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStock(stock: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+Part1691664687 -> InHouse1691664687[arrowhead=none, arrowtail=empty, dir=both];
+Part1691664687 -> Outsourced1691664687[arrowhead=none, arrowtail=empty, dir=both];
+Product1691664687 -> Part1691664687[label="associatedParts
+[0..*]"];
+    
+}
+@enduml

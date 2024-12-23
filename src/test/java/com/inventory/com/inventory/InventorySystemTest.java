@@ -20,9 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestMethodOrder( MethodOrderer.OrderAnnotation.class )
 public class InventorySystemTest {
 	// MySQL Connection Configuration
-	private static final String DB_URL = "jdbc:mysql://sql.freedb.tech:3306/freedb_inventory_app";
-	private static final String DB_USER = "freedb_flowmar";
-	private static final String DB_PASSWORD = "vG&7GQ3Q5u%Mv9h";
+	// private static final String DB_URL = "jdbc:mysql://sql.freedb.tech:3306/freedb_inventory_app";
+	// private static final String DB_USER = "freedb_flowmar";
+	// private static final String DB_PASSWORD = "vG&7GQ3Q5u%Mv9h";
+	private static final String DB_URL = "jdbc:mysql://inventobot-1.c1k6qe4uye0z.us-east-2.rds.amazonaws" +
+	                                     ".com:3306/inventory";
+	private static final String DB_USER = "admin";
+	private static final String DB_PASSWORD = "passing123";
 	private static Connection dbConnection;
 	private static com.inventory.Inventory inventory;
 	private static int testProductId;
