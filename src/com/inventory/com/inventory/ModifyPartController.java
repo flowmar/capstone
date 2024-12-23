@@ -1,7 +1,5 @@
 package com.inventory;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -126,13 +124,12 @@ public class ModifyPartController implements Initializable {
 		if ( modifyPartMin > modifyPartMax ) {
 			modifyPartSaveErrorLabel.setText("Error: Minimum cannot be more than maximum!");
 			passCheck = false;
-		} else if ( modifyPartStock > modifyPartMax ) {
-			modifyPartSaveErrorLabel.setText("Error: Current Stock cannot be more than the maximum!");
-			passCheck = false;
-		} else if ( modifyPartStock < modifyPartMin ) {
-			modifyPartSaveErrorLabel.setText("Error: Current Stock cannot be less than the minimum!");
-			passCheck = false;
-		} else {
+		}
+		// else if ( modifyPartStock > modifyPartMax ) {
+		// modifyPartSaveErrorLabel.setText("Error: Current Stock cannot be more than the maximum!");
+		// passCheck = false;
+		// } 
+		else {
 			modifyPartSaveErrorLabel.setText("");
 		}
 		
@@ -173,9 +170,11 @@ public class ModifyPartController implements Initializable {
 						// Update UI on JavaFX thread
 						javafx.application.Platform.runLater(() -> {
 							// Update the list safely
-							if (com.inventory.Inventory.getSelectedPartIndex() >= 0 && 
-									com.inventory.Inventory.getSelectedPartIndex() < com.inventory.Inventory.getAllParts().size()) {
-								com.inventory.Inventory.getAllParts().set(com.inventory.Inventory.getSelectedPartIndex(), newPart);
+							if ( com.inventory.Inventory.getSelectedPartIndex() >= 0 &&
+							     com.inventory.Inventory.getSelectedPartIndex() <
+							     com.inventory.Inventory.getAllParts().size() ) {
+								com.inventory.Inventory.getAllParts()
+								                       .set(com.inventory.Inventory.getSelectedPartIndex(), newPart);
 							}
 							
 							// Close the window
@@ -208,9 +207,11 @@ public class ModifyPartController implements Initializable {
 						// Update UI on JavaFX thread
 						javafx.application.Platform.runLater(() -> {
 							// Update the list safely
-							if (com.inventory.Inventory.getSelectedPartIndex() >= 0 && 
-									com.inventory.Inventory.getSelectedPartIndex() < com.inventory.Inventory.getAllParts().size()) {
-								com.inventory.Inventory.getAllParts().set(com.inventory.Inventory.getSelectedPartIndex(), newPart);
+							if ( com.inventory.Inventory.getSelectedPartIndex() >= 0 &&
+							     com.inventory.Inventory.getSelectedPartIndex() <
+							     com.inventory.Inventory.getAllParts().size() ) {
+								com.inventory.Inventory.getAllParts()
+								                       .set(com.inventory.Inventory.getSelectedPartIndex(), newPart);
 							}
 							
 							// Close the window
@@ -334,7 +335,7 @@ public class ModifyPartController implements Initializable {
 		
 		// Set TextFormatters on each TextField to apply input validation
 		// Set the text of the form based upon which radio button is selected
-		if (selectedPart instanceof com.inventory.InHouse) {
+		if ( selectedPart instanceof com.inventory.InHouse ) {
 			modifyPartInHouseRadio.setSelected(true);
 			modifyPartExtraLabel.setText("Machine ID");
 			modifyPartExtraTextField.setText(String.valueOf(((com.inventory.InHouse) selectedPart).getMachineId()));
@@ -342,14 +343,14 @@ public class ModifyPartController implements Initializable {
 			// Set TextFormatter for Machine ID (Integers only)
 			modifyPartExtraTextField.setTextFormatter(new TextFormatter<>(change -> {
 				String newText = change.getControlNewText();
-				if (newText.matches("\\d*")) {
+				if ( newText.matches("\\d*") ) {
 					return change;
 				}
 				return null;
 			}));
 		}
 		// Otherwise, set it to the Company Name
-		else if (selectedPart instanceof com.inventory.Outsourced) {
+		else if ( selectedPart instanceof com.inventory.Outsourced ) {
 			modifyPartOutsourcedRadio.setSelected(true);
 			modifyPartExtraLabel.setText("Company Name");
 			modifyPartExtraTextField.setText(((com.inventory.Outsourced) selectedPart).getCompanyName());
@@ -357,7 +358,7 @@ public class ModifyPartController implements Initializable {
 			// Set TextFormatter for Company Name
 			modifyPartExtraTextField.setTextFormatter(new TextFormatter<>(change -> {
 				String newText = change.getControlNewText();
-				if (newText.matches("[a-zA-Z0-9\\s]*")) {
+				if ( newText.matches("[a-zA-Z0-9\\s]*") ) {
 					return change;
 				}
 				return null;
@@ -521,7 +522,7 @@ public class ModifyPartController implements Initializable {
 						// Update the list safely
 						javafx.collections.ObservableList<com.inventory.Part> parts = com.inventory.Inventory.getAllParts();
 						int index = com.inventory.Inventory.getSelectedPartIndex();
-						if (index >= 0 && index < parts.size()) {
+						if ( index >= 0 && index < parts.size() ) {
 							parts.set(index, newPart);
 						}
 						
@@ -557,7 +558,7 @@ public class ModifyPartController implements Initializable {
 						// Update the list safely
 						javafx.collections.ObservableList<com.inventory.Part> parts = com.inventory.Inventory.getAllParts();
 						int index = com.inventory.Inventory.getSelectedPartIndex();
-						if (index >= 0 && index < parts.size()) {
+						if ( index >= 0 && index < parts.size() ) {
 							parts.set(index, newPart);
 						}
 						
@@ -569,10 +570,12 @@ public class ModifyPartController implements Initializable {
 					modifyPartSaveErrorLabel.setText("Error: Part not found in database!");
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch ( SQLException e ) {
 			e.printStackTrace();
 			modifyPartSaveErrorLabel.setText("Error updating database: " + e.getMessage());
-		} catch (NumberFormatException e) {
+		}
+		catch ( NumberFormatException e ) {
 			modifyPartSaveErrorLabel.setText("Please enter valid numbers!");
 		}
 	}

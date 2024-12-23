@@ -47,7 +47,8 @@ public class InventoryReportGenerator {
 			                      "ROUND(MIN(price), 2) as min_price, " +
 			                      "ROUND(MAX(price), 2) as max_price, " +
 			                      "ROUND(SUM(stock * price), 2) as total_inventory_value, " +
-			                      "SUM(CASE WHEN stock <= (min + 3) THEN 1 ELSE 0 END) as low_stock_products " +
+			                      "SUM(CASE WHEN stock < min THEN 1 ELSE 0 END) as low_stock_products, " +
+			                      "SUM(CASE WHEN stock > max THEN 1 ELSE 0 END) as overstock_products " +
 			                      "FROM products";
 			
 			String partsQuery = "SELECT " +
@@ -56,7 +57,8 @@ public class InventoryReportGenerator {
 			                    "ROUND(AVG(price), 2) as avg_part_price, " +
 			                    "ROUND(MIN(price), 2) as min_part_price, " +
 			                    "ROUND(MAX(price), 2) as max_part_price, " +
-			                    "SUM(CASE WHEN stock <= (min + 3) THEN 1 ELSE 0 END) as low_stock_parts, " +
+			                    "SUM(CASE WHEN stock < min THEN 1 ELSE 0 END) as low_stock_parts, " +
+			                    "SUM(CASE WHEN stock > max THEN 1 ELSE 0 END) as overstock_parts, " +
 			                    "COUNT(CASE WHEN type = 'InHouse' THEN 1 END) as inhouse_parts, " +
 			                    "COUNT(CASE WHEN type = 'Outsourced' THEN 1 END) as outsourced_parts " +
 			                    "FROM parts";
@@ -89,14 +91,14 @@ public class InventoryReportGenerator {
 				
 				// Title label
 				Label titleLabel = new Label("INVENTORY SUMMARY REPORT");
-				titleLabel.setFont(Font.font("System", FontWeight.BOLD, 20));
+				titleLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
 				GridPane.setHalignment(titleLabel, HPos.LEFT);
 				
 				// Timestamp label
 				Label timestampLabel = new Label(LocalDateTime.now()
 				                                              .format(DateTimeFormatter.ofPattern(
 						                                              "EEEE, MMMM d, yyyy 'at' h:mm a")));
-				timestampLabel.setFont(Font.font("System", FontWeight.BOLD, 16));
+				timestampLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
 				GridPane.setHalignment(timestampLabel, HPos.RIGHT);
 				
 				headerPane.add(titleLabel, 0, 0);
@@ -129,7 +131,9 @@ public class InventoryReportGenerator {
 						new ReportRow("Total Inventory Value",
 						              currencyFormat.format(productRs.getDouble("total_inventory_value"))),
 						new ReportRow("Low Stock Products",
-						              numberFormat.format(productRs.getInt("low_stock_products")))
+						              numberFormat.format(productRs.getInt("low_stock_products"))),
+						new ReportRow("Overstock Products",
+						              numberFormat.format(productRs.getInt("overstock_products")))
 				);
 				
 				productTable.setItems(productData);
@@ -153,6 +157,7 @@ public class InventoryReportGenerator {
 						new ReportRow("Lowest Part Price", currencyFormat.format(partsRs.getDouble("min_part_price"))),
 						new ReportRow("Highest Part Price", currencyFormat.format(partsRs.getDouble("max_part_price"))),
 						new ReportRow("Low Stock Parts", numberFormat.format(partsRs.getInt("low_stock_parts"))),
+						new ReportRow("Overstock Parts", numberFormat.format(partsRs.getInt("overstock_parts"))),
 						new ReportRow("In-House Parts", numberFormat.format(partsRs.getInt("inhouse_parts"))),
 						new ReportRow("Outsourced Parts", numberFormat.format(partsRs.getInt("outsourced_parts")))
 				);

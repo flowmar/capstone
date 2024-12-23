@@ -4,33 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9a393b3-5e0b-41eb-85ae-cbee3e391bfd" name="Changes" comment="Fixed all features including search bars, adding, modifying and deleting parts and products.">
-      <change afterPath="$PROJECT_DIR$/src/com/inventory/Inventory_structure.puml" afterDir="false" />
+    <list default="true" id="e9a393b3-5e0b-41eb-85ae-cbee3e391bfd" name="Changes" comment="Removed the menu bar from the Add and Modify Part and Product screens.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/AddProductController_structure.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/AddProductController_structure.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/addPart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/addPart.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/addProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/addProduct.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyPart.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyPart.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyProduct.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/inventory/com/inventory/InventorySystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/inventory/com/inventory/InventorySystemTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/AddPartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/AddPartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/AddProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/AddProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/DatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/DatabaseConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InHouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InHouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Inventory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator$ReportRow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator$ReportRow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/LoginController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/LoginController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/ModifyPartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/ModifyPartController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/ModifyProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/ModifyProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Outsourced.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Outsourced.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Part.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Part.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Product.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +158,7 @@
       <workItem from="1733943356767" duration="15429000" />
       <workItem from="1734610232735" duration="5173000" />
       <workItem from="1734643708728" duration="7995000" />
-      <workItem from="1734662995211" duration="30848000" />
+      <workItem from="1734662995211" duration="38989000" />
     </task>
     <task id="LOCAL-00001" summary="Added new features including password protection, reporting and database connection.">
       <option name="closed" value="true" />
@@ -194,7 +176,23 @@
       <option name="project" value="LOCAL" />
       <updated>1734663839423</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Completed all functionality and removed the menu bar from the Add and Modify Part and Product screens.">
+      <option name="closed" value="true" />
+      <created>1734959909901</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1734959909901</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Removed the menu bar from the Add and Modify Part and Product screens.">
+      <option name="closed" value="true" />
+      <created>1734959942196</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1734959942196</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +201,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added new features including password protection, reporting and database connection." />
     <MESSAGE value="Fixed all features including search bars, adding, modifying and deleting parts and products." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed all features including search bars, adding, modifying and deleting parts and products." />
+    <MESSAGE value="Completed all functionality and removed the menu bar from the Add and Modify Part and Product screens." />
+    <MESSAGE value="Removed the menu bar from the Add and Modify Part and Product screens." />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed the menu bar from the Add and Modify Part and Product screens." />
   </component>
 </project>
