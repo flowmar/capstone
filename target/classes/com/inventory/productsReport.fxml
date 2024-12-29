@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.inventory.ProductsReportController"
+      prefHeight="600.0" prefWidth="800.0" spacing="10">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <GridPane>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+        
+        <Label text="Products Summary Report" style="-fx-font-size: 20px; -fx-font-weight: bold" 
+               GridPane.columnIndex="0" GridPane.halignment="LEFT"/>
+        <Label fx:id="timestampLabel" style="-fx-font-size: 14px; -fx-font-weight: bold"
+               GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+    </GridPane>
+    
+    <TableView fx:id="productsTableView" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="200"/>
+            <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
+            <TableColumn fx:id="stockColumn" text="Stock" prefWidth="75"/>
+            <TableColumn fx:id="minColumn" text="Min" prefWidth="75"/>
+            <TableColumn fx:id="maxColumn" text="Max" prefWidth="75"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+    
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="exportButton" text="Export Report" onAction="#handleExportReport"
+                style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button fx:id="closeButton" text="Close" onAction="#handleClose"
+                style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+    
+</VBox>

@@ -11,6 +11,8 @@
                 <Menu mnemonicParsing="false" text="Reports">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Inventory Summary" onAction="#generateInventoryReport"/>
+                        <MenuItem mnemonicParsing="false" text="Parts Summary" onAction="#generatePartsReport"/>
+                        <MenuItem mnemonicParsing="false" text="Products Summary" onAction="#generateProductsReport"/>
                     </items>
                 </Menu>
               </menus>

@@ -1,23 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="InventoryApp:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9a393b3-5e0b-41eb-85ae-cbee3e391bfd" name="Changes" comment="Removed the menu bar from the Add and Modify Part and Product screens.">
+    <list default="true" id="e9a393b3-5e0b-41eb-85ae-cbee3e391bfd" name="Changes" comment="Edit the ModifyPartController and ModifyProductController error messages for overstock and minimum stock. Edit the font size of the title and timestamp. Re-add overstock Parts and Products and adjust calculation for the low stocks.">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/InventoryApp_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libglib-lite.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libgstreamer-lite.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libjfxwebkit.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/openjfx-23.0.1_osx-aarch64_bin-sdk.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddPartController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/AddProductController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/DatabaseConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InHouse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Inventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/InventoryReportGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyPartController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/ModifyProductController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Outsourced.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Part.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/addPart.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/addProduct.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/inventoryScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/loginScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyPart.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/inventory/com/inventory/modifyProduct.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/inventory/com/inventory/InventorySystemTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/AddPartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/AddPartController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/AddProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/AddProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/DatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/DatabaseConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InHouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InHouse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Inventory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator$ReportRow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator$ReportRow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/InventoryReportGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/LoginController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/LoginController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/ModifyPartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/ModifyPartController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/ModifyProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/ModifyProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Outsourced.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Outsourced.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Part.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Part.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/inventory/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/inventory/Product.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/inventory/InventorySystemTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
@@ -40,8 +97,31 @@
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="alwaysUpdateSnapshots" value="true" />
+        <option name="printErrorStackTraces" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadAnnotationsAutomatically" value="true" />
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="delegateBuildToMaven" value="true" />
+    <option name="jreName" value="jbr-17" />
+  </component>
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -54,32 +134,50 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InventorySystemTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;/Users/flowmar/code/repos/github/flowmar/InventorySystemJavaFXApp/src/test/java/com/inventory&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.34001744&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;,
-    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JAR Application.InventoryApp-1.0-SNAPSHOT.jar.executor": "Run",
+    "JUnit.InventorySystemTest.executor": "Run",
+    "Maven.Inventory.executor": "Run",
+    "Maven.InventoryApp [clean].executor": "Run",
+    "Maven.InventoryApp [compile].executor": "Run",
+    "Maven.InventoryApp [deploy].executor": "Run",
+    "Maven.InventoryApp [install,--non-recursive].executor": "Run",
+    "Maven.InventoryApp [install].executor": "Run",
+    "Maven.InventoryApp [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.InventoryApp [package].executor": "Run",
+    "Maven.InventoryApp [site].executor": "Run",
+    "Maven.InventoryApp [test].executor": "Run",
+    "Maven.InventoryApp [validate].executor": "Run",
+    "Maven.InventoryApp [verify].executor": "Run",
+    "Maven.Main.executor": "Run",
+    "Maven.Unknown [install,--non-recursive].executor": "Run",
+    "OpenRewrite.Faces2xMigrationToJakarta4x.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "code.cleanup.on.save": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/Users/flowmar/code/repos/github/flowmar/InventorySystemJavaFXApp/src/test/java/com/inventory",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.45348838",
+    "rearrange.code.on.save": "true",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.build.tools.auto.reload": "ALL",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/com/inventory" />
@@ -87,8 +185,22 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
+    <configuration name="Inventory" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.inventory.Inventory" />
+      <module name="InventoryApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.inventory.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="jbr-17 (2)" />
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/Library/Java/JavaVirtualMachines/liberica-full-17.0.13" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.inventory.Main" />
       <module name="InventoryApp" />
       <option name="VM_PARAMETERS" value="--module-path $USER_HOME$/Java/javafx-sdk-17.0.11/lib --add-modules javafx.controls,javafx.media,javafx.graphics,javafx.fxml" />
@@ -117,6 +229,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="InventoryApp-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/InventoryApp-1.0-SNAPSHOT.jar" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="InventorySystemJavaFXApp" />
       <method v="2">
@@ -128,10 +244,25 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <configuration name="Faces2xMigrationToJakarta4x" type="OpenRewriteRunConfigurationType" factoryName="OpenRewrite" temporary="true" nameIsGenerated="true">
+      <option name="activeRecipes" value="org.openrewrite.java.migrate.jakarta.Faces2xMigrationToJakarta4x" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Inventory" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JAR Application.InventoryApp-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JUnit.InventorySystemTest" />
+      <item itemvalue="OpenRewrite.Faces2xMigrationToJakarta4x" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="OpenRewrite.Faces2xMigrationToJakarta4x" />
+        <item itemvalue="JAR Application.InventoryApp-1.0-SNAPSHOT.jar" />
         <item itemvalue="JUnit.InventorySystemTest" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Inventory" />
       </list>
     </recent_temporary>
   </component>
@@ -158,7 +289,13 @@
       <workItem from="1733943356767" duration="15429000" />
       <workItem from="1734610232735" duration="5173000" />
       <workItem from="1734643708728" duration="7995000" />
-      <workItem from="1734662995211" duration="38989000" />
+      <workItem from="1734662995211" duration="40954000" />
+      <workItem from="1735011296120" duration="21310000" />
+      <workItem from="1735047145017" duration="1410000" />
+      <workItem from="1735048588186" duration="20837000" />
+      <workItem from="1735126890884" duration="48754000" />
+      <workItem from="1735277914729" duration="5305000" />
+      <workItem from="1735300734022" duration="11366000" />
     </task>
     <task id="LOCAL-00001" summary="Added new features including password protection, reporting and database connection.">
       <option name="closed" value="true" />
@@ -192,7 +329,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734959942196</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Edit the ModifyPartController and ModifyProductController error messages for overstock and minimum stock. Edit the font size of the title and timestamp. Re-add overstock Parts and Products and adjust calculation for the low stocks.">
+      <option name="closed" value="true" />
+      <created>1734989765668</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1734989765668</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +348,11 @@
     <MESSAGE value="Fixed all features including search bars, adding, modifying and deleting parts and products." />
     <MESSAGE value="Completed all functionality and removed the menu bar from the Add and Modify Part and Product screens." />
     <MESSAGE value="Removed the menu bar from the Add and Modify Part and Product screens." />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the menu bar from the Add and Modify Part and Product screens." />
+    <MESSAGE value="Edit the ModifyPartController and ModifyProductController error messages for overstock and minimum stock. Edit the font size of the title and timestamp. Re-add overstock Parts and Products and adjust calculation for the low stocks." />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit the ModifyPartController and ModifyProductController error messages for overstock and minimum stock. Edit the font size of the title and timestamp. Re-add overstock Parts and Products and adjust calculation for the low stocks." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
